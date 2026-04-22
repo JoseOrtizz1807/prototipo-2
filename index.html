@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Museo Interactivo — Historia de los Videojuegos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161/build/three.module.js","jsm/":"https://cdn.jsdelivr.net/npm/three@0.161/examples/jsm/"}}
+  </script>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+
+  <div id="transOverlay"></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <canvas id="earthScene" aria-hidden="true"></canvas>
+  <canvas id="museumCanvas"></canvas>
+
+  <!-- ══ MENÚ PRINCIPAL ══════════════════════════════ -->
+  <div id="menuUI">
+    <header class="topbar"><div class="brand">EXPERIENCIA INTERACTIVA</div></header>
+    <main class="center">
+      <h1 class="title">Historia y Beneficios<br/>de los Videojuegos</h1>
+      <p class="subtitle">Museo interactivo · Tesis de grado</p>
+      <nav class="menu">
+        <a class="btn primary" href="#" id="btnStart"> &nbsp;Museo</a>
+        <a class="btn accent" href="#" id="btnTimeline"> &nbsp;Beneficios cognitivos</a>
+        <a class="btn" href="#" id="btnAbout"> &nbsp;Sobre el Autor</a>
+        <a class="btn" href="#" id="btnEstudio"> &nbsp;Participar en el Estudio</a>
+      </nav>
+    </main>
+    <footer class="hint">Arrastra para mirar · Scroll para acercar/alejar</footer>
+  </div>
+
+  <!-- ══ PANEL SOBRE MÍ (CV) ══════════════════════════ -->
+  <div id="aboutPanel" class="side-panel">
+    <div class="side-panel-inner">
+      <button class="panel-close" id="btnCloseAbout">← volver</button>
+
+      <div class="cv-header">
+        <div class="cv-avatar">
+          <div class="cv-avatar-placeholder">👤</div>
+        </div>
+        <div class="cv-info">
+          <div class="cv-tag">AUTOR · INVESTIGADOR</div>
+          <h2 class="cv-name">Jose Daniel Ortiz Quintero</h2>
+          <p class="cv-role">Estudiante de Ingenieria multimedia · San Buenaventura</p>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-section-label">¿QUÉ ES ESTO?</div>
+        <p class="cv-text">
+          Esta experiencia interactiva 3D es el componente digital de mi tesis de grado.
+          Construido con <span class="cv-tech">Three.js</span>, explora la historia y los
+          beneficios cognitivos y sociales de los videojuegos mediante un museo caminable
+          en primera persona y una línea de tiempo interactiva.
+        </p>
+        <p class="cv-text">
+          Navega el corredor, acércate a las vitrinas y descubre datos científicos
+          respaldados por investigación académica. Cada zona representa una era
+          del gaming con su propia estética y atmósfera.
+        </p>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-section-label">SOBRE MÍ</div>
+        <p class="cv-text">
+            Elegi este proyecto sobre tesis por que queria demostrar que los videojuegos son mas que simple diversion, tratar de dar mi granito de arena, informando de manera seria y con criterios academicos 
+        </p>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-section-label">TESIS</div>
+        <div class="cv-grid">
+          <div class="cv-card">
+            <span class="cv-card-icon">📚</span>
+            <strong>Tema</strong>
+            <span>Historia y Beneficios de los Videojuegos</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-card-icon">🎓</span>
+            <strong>Grado</strong>
+            <span>Ingenieria Multimedia
+            </span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-card-icon">🏛️</span>
+            <strong>Institución</strong>
+            <span>Universidad San Buenaventura de Cali</span>
+          </div>
+          <div class="cv-card">
+            <span class="cv-card-icon">📅</span>
+            <strong>Año</strong>
+            <span>2025</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-section-label">TECNOLOGÍA</div>
+        <div class="cv-tech-list">
+          <span class="cv-badge">Three.js</span>
+          <span class="cv-badge">WebGL</span>
+          <span class="cv-badge">JavaScript ES2023</span>
+          <span class="cv-badge">GLSL Shaders</span>
+          <span class="cv-badge">EffectComposer</span>
+          <span class="cv-badge">GLTFLoader</span>
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <div class="cv-section-label">CONTACTO</div>
+        <div class="cv-contact">
+          <a href="mailto:tuemail@ejemplo.com" class="cv-contact-item">✉️ &nbsp;tuemail@ejemplo.com</a>
+          <a href="#" class="cv-contact-item">🔗 &nbsp;linkedin.com/in/tuperfil</a>
+          <a href="#" class="cv-contact-item">📁 &nbsp;Tu repositorio / portafolio</a>
+        </div>
+      </div>
+
+      <div class="cv-footer-note">
+        Desarrollado como parte de la tesis de grado · 2026<br/>
+        Experiencia interactiva construida enteramente con tecnologías web estándar.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MUSEO FIRST PERSON ══════════════════════════ -->
+  <div id="museumUI">
+    <header class="museum-topbar">
+      <button id="btnBackMenu" class="btn-back">← Salir</button>
+      <div class="museum-brand">
+        <span id="salaNombre">El Origen</span>
+        <span class="museum-sub">MUSEO INTERACTIVO · FIRST PERSON</span>
+      </div>
+      <div class="sala-counter">WASD · Ratón para mirar</div>
+    </header>
+  </div>
+
+  <!-- ══ LÍNEA DE TIEMPO ══════════════════════════════ -->
+  <div id="timelineUI">
+    <header class="museum-topbar">
+      <button id="btnBackMenuTimeline" class="btn-back">← Menú</button>
+      <div class="museum-brand">
+        <span id="salaNombreTimeline">Historia</span>
+        <span class="museum-sub">LÍNEA DE TIEMPO INTERACTIVA</span>
+      </div>
+      <div class="sala-counter" id="salaLabel">1 / 5</div>
+    </header>
+    <nav class="nav-salas">
+      <button id="btnPrev" class="nav-btn" disabled>&#8592;</button>
+      <div class="dots">
+        <button class="dot active" title="Historia"></button>
+        <button class="dot" title="Cognitivo"></button>
+        <button class="dot" title="Social"></button>
+        <button class="dot" title="Estadísticas"></button>
+        <button class="dot" title="Galería"></button>
+      </div>
+      <button id="btnNext" class="nav-btn">&#8594;</button>
+    </nav>
+    <footer class="hint">← → Teclas de flecha para navegar entre épocas</footer>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
