@@ -41,7 +41,7 @@ const ZONAS = [
     datos:[
       { z:-8,  t:"🕹️ Tennis for Two (1958)", d:"Creado en un osciloscopio en Brookhaven. No era entretenimiento — era para demostrar que la ciencia podía ser divertida en una feria pública." },
       { z:-19, t:"🖥️ Spacewar! (1962)",      d:"Primer juego distribuido digitalmente entre universidades en cintas magnéticas. La PDP-1 que lo ejecutaba costaba $120,000 USD." },
-      { z:-28, t:"💡 Alan Turing y los juegos", d:"En 1950 Turing propuso que las máquinas podían aprender. Concibió un algoritmo de ajedrez y sentó las bases de la IA y los mundos virtuales." },
+      { z:-28, t:"Alan Turing y los juegos", d:"En 1950 Turing propuso que las máquinas podían aprender. Concibió un algoritmo de ajedrez y sentó las bases de la IA y los mundos virtuales." },
     ],
     graffiti:{ z:-16, x:-3.85, text:"GAME\nOVER?", color:"#f0a030" },
   },
@@ -59,9 +59,9 @@ const ZONAS = [
         type:"orb", video:"assets/audio/Videos/pacman.mp4", imdb:"8.5" },
     ],
     datos:[
-      { z:-36, t:"👾 Pong (1972)", d:"La primera máquina en un bar de California falló en días: estaba atascada de monedas. Atari vendió 8,000 unidades en 6 meses." },
-      { z:-48, t:"🛸 Space Invaders (1978)", d:"Causó escasez nacional de monedas de ¥100 en Japón. Las ventas arcade alcanzaron $2.8B anuales." },
-      { z:-58, t:"🍒 Pac-Man (1980)", d:"Diseñado para atraer a un público femenino a los arcades. Primer personaje de videojuego con identidad icónica reconocida globalmente. Vendió más de 400,000 máquinas." },
+      { z:-36, t:"Pong (1972)", d:"La primera máquina en un bar de California falló en días: estaba atascada de monedas. Atari vendió 8,000 unidades en 6 meses.", extra:"Los ingenieros de Atari no podían patentar el concepto de \"pelota rebotando\" porque ya existía en Magnavox Odyssey (1972). La industria de los videojuegos nació en litigios. Nolan Bushnell fundó Atari con solo $500 y lo vendió por $28 millones en 1976." },
+      { z:-48, t:"Space Invaders (1978)", d:"Causó escasez nacional de monedas de ¥100 en Japón. Las ventas arcade alcanzaron $2.8B anuales.", extra:"Toshihiro Nishikado diseñó cada alien manualmente porque los chips de 1978 no podían hacer cálculos de física complejos. El juego se hace más rápido conforme eliminas aliens porque el CPU tiene menos que procesar, no por diseño. Fue un accidente que se convirtió en mecánica icónica." },
+      { z:-58, t:"Pac-Man (1980)", d:"Diseñado para atraer a un público femenino a los arcades. Primer personaje de videojuego con identidad icónica reconocida globalmente. Vendió más de 400,000 máquinas.", extra:"Toru Iwatani se inspiró en una pizza con un trozo faltante. Los cuatro fantasmas tienen IA distinta: Blinky persigue, Pinky embosca, Inky es impredecible y Clyde actúa al azar. Esta fue la primera vez que NPCs tuvieron \"personalidades\" programadas." },
     ],
     graffiti:{ z:-50, x:3.85, text:"INSERT\nCOIN", color:"#ff4400" },
   },
@@ -77,9 +77,9 @@ const ZONAS = [
         type:"orb", video:"assets/audio/Videos/ET.mp4", imdb:"2.4" },
     ],
     datos:[
-      { z:-70, t:"💥 El Gran Crash (1983)", d:"La industria colapsó de $3.2B a $100M. E.T. de Atari terminó enterrado literalmente en el desierto de Nuevo México. Considerado el peor juego de la historia." },
-      { z:-80, t:"🍄 Super Mario Bros (1985)", d:"El mundo 1-1 fue diseñado para enseñar sin palabras. Cada elemento introduce una mecánica. Salvó la industria del videojuego tras el crash." },
-      { z:-91, t:"🎮 Game Boy (1989)", d:"15h con 4 pilas AA. Su pantalla borrosa fue deliberada para reducir costos. 118 millones vendidas en 14 años." },
+      { z:-70, t:"El Gran Crash (1983)", d:"La industria colapsó de $3.2B a $100M. E.T. de Atari terminó enterrado literalmente en el desierto de Nuevo México. Considerado el peor juego de la historia." },
+      { z:-80, t:"Super Mario Bros (1985)", d:"El mundo 1-1 fue diseñado para enseñar sin palabras. Cada elemento introduce una mecánica. Salvó la industria del videojuego tras el crash.", extra:"Miyamoto diseñó el nivel 1-1 con una metodología que hoy se enseña en diseño de videojuegos: primero el hongo (reward), luego el koopa (riesgo), luego el pozo (obstáculo). Sin una sola palabra de texto, el juego enseña sus mecánicas en 30 segundos." },
+      { z:-91, t:"Game Boy (1989)", d:"15h con 4 pilas AA. Su pantalla borrosa fue deliberada para reducir costos. 118 millones vendidas en 14 años." },
     ],
     graffiti:{ z:-80, x:-3.85, text:"LEVEL\nUP!", color:"#44ff88" },
   },
@@ -109,13 +109,13 @@ const ZONAS = [
         type:"orb", video:"assets/audio/Videos/halo2001.mp4", imdb:"9.4" },
     ],
     datos:[
-      { z:-100, t:"💿 PlayStation (1994)", d:"Sony entró tras un acuerdo roto con Nintendo. El CD-ROM permitió bandas sonoras orquestales y FMV que transformaron la narrativa en los videojuegos." },
-      { z:-115, t:"⭐ Super Mario 64 (1996)", d:"Metacritic 94/100 · IMDb 9.8/10. Inventó la cámara libre en 3D, el joystick analógico y el diseño de mundo abierto que todo juego posterior adoptó." },
-      { z:-129, t:"🗡️ Zelda: Ocarina of Time (1998)", d:"Metacritic 99/100 — la puntuación más alta de la historia. Inventó el Z-targeting para combate 3D y la narrativa cinematográfica que definió el estándar del género." },
-      { z:-143, t:"🎭 Metal Gear Solid (1998)", d:"Hideo Kojima creó el primer juego que se anunciaba explícitamente como 'tactical espionage action'. Sus cutscenes de 10 minutos demostrarion que los videojuegos podían contar historias complejas." },
-      { z:-157, t:"🔫 GoldenEye 007 (1997)", d:"El primer FPS exitoso en consola. Inventó el multijugador en pantalla dividida para 4 jugadores que dominó los salones de todo el mundo durante años." },
-      { z:-171, t:"🚀 Halo: Combat Evolved (2001)", d:"Lanzado con Xbox, demostró que los FPS podían funcionar perfectamente en consola con joystick. Estableció el modelo de online gaming que dominó la siguiente década." },
-      { z:-186, t:"🌐 Los primeros MMORPG (1999)", d:"EverQuest y luego World of Warcraft (2004) introdujeron mundos persistentes con millones de jugadores simultáneos. Psicólogos estudiaron la adicción a los mundos virtuales como fenómeno nuevo." },
+      { z:-100, t:"PlayStation (1994)", d:"Sony entró tras un acuerdo roto con Nintendo. El CD-ROM permitió bandas sonoras orquestales y FMV que transformaron la narrativa en los videojuegos." },
+      { z:-115, t:"Super Mario 64 (1996)", d:"Metacritic 94/100 · IMDb 9.8/10. Inventó la cámara libre en 3D, el joystick analógico y el diseño de mundo abierto que todo juego posterior adoptó." },
+      { z:-129, t:"Zelda: Ocarina of Time (1998)", d:"Metacritic 99/100 — la puntuación más alta de la historia. Inventó el Z-targeting para combate 3D y la narrativa cinematográfica que definió el estándar del género." },
+      { z:-143, t:"Metal Gear Solid (1998)", d:"Hideo Kojima creó el primer juego que se anunciaba explícitamente como 'tactical espionage action'. Sus cutscenes de 10 minutos demostrarion que los videojuegos podían contar historias complejas." },
+      { z:-157, t:"GoldenEye 007 (1997)", d:"El primer FPS exitoso en consola. Inventó el multijugador en pantalla dividida para 4 jugadores que dominó los salones de todo el mundo durante años." },
+      { z:-171, t:"Halo: Combat Evolved (2001)", d:"Lanzado con Xbox, demostró que los FPS podían funcionar perfectamente en consola con joystick. Estableció el modelo de online gaming que dominó la siguiente década." },
+      { z:-186, t:"Los primeros MMORPG (1999)", d:"EverQuest y luego World of Warcraft (2004) introdujeron mundos persistentes con millones de jugadores simultáneos. Psicólogos estudiaron la adicción a los mundos virtuales como fenómeno nuevo.", extra:"World of Warcraft en su pico (2010) tenía 12 millones de suscriptores pagando $15/mes = $180M al mes. El economista Eyjolfur Gudmundsson fue contratado por CCP Games como \"economista en jefe\" de EVE Online para analizar su economía virtual. Los MMORPG inventaron la economía digital antes que las criptomonedas." },
     ],
     graffiti:{ z:-142, x:-3.85, text:"3D\nWORLD", color:"#4488ff" },
   },
@@ -129,9 +129,9 @@ const ZONAS = [
       { z:-221, x:3.4,  label:"iPhone",   year:"2007", sub:"La revolución del mobile gaming",  type:"phone", imdb:"8.7" },
     ],
     datos:[
-      { z:-200, t:"📱 El iPhone cambia todo (2007)", d:"La App Store lanzó con 500 apps. Hoy tiene 1.8M. El gaming móvil representa el 50% del mercado global: $92B anuales." },
-      { z:-213, t:"🎯 E-Sports (2009-2015)", d:"El Mundial de LoL 2019 atrajo 100M de espectadores — más que cualquier final de la NBA ese año." },
-      { z:-226, t:"🧬 Beneficios Cognitivos", d:"U. Rochester (Bavelier, 2012): jugadores de acción tienen 58% más resolución visual, 25% más velocidad de procesamiento. Los videojuegos mejoran toma de decisiones, memoria espacial y coordinación ojo-mano." },
+      { z:-200, t:"El iPhone cambia todo (2007)", d:"La App Store lanzó con 500 apps. Hoy tiene 1.8M. El gaming móvil representa el 50% del mercado global: $92B anuales.", extra:"Steve Jobs presentó el iPhone diciendo que era \"un iPod, un teléfono y un comunicador de internet\". No mencionó los juegos. Un año después, la App Store lanzó con 500 apps y Angry Birds no existía todavía. Hoy el gaming móvil representa $92B anuales — el 50% de toda la industria." },
+      { z:-213, t:"E-Sports (2009-2015)", d:"El Mundial de LoL 2019 atrajo 100M de espectadores — más que cualquier final de la NBA ese año.", extra:"El Mundial de League of Legends 2019: 100 millones de espectadores simultáneos. La final NBA 2019: 19 millones. Los e-sports superaron el deporte convencional en audiencia digital. La Universidad de Robert Morris (EE.UU.) ofreció becas de e-sports en 2014 — la primera del mundo." },
+      { z:-226, t:"Beneficios Cognitivos", d:"U. Rochester (Bavelier, 2012): jugadores de acción tienen 58% más resolución visual, 25% más velocidad de procesamiento. Los videojuegos mejoran toma de decisiones, memoria espacial y coordinación ojo-mano.", extra:"El Dr. Daphne Bavelier de la Universidad de Rochester descubrió en 2012 que jugadores de shooters de acción tienen 58% más resolución visual que no-jugadores. El entrenamiento con videojuegos de acción mejora la capacidad de detectar detalles en contextos de alta densidad de información — habilidad aplicable a radiología, control de tráfico aéreo y cirugía." },
     ],
     graffiti:{ z:-214, x:3.85, text:"GG\nWP", color:"#cc44ff" },
   },
@@ -145,9 +145,9 @@ const ZONAS = [
       { z:-257, x:3.4,  label:"Meta Quest 3",  year:"2023", sub:"El futuro es realidad mixta",     type:"orb", imdb:"8.9" },
     ],
     datos:[
-      { z:-238, t:"🥽 VR Terapéutica", d:"La VR reduce ansiedad hospitalaria un 24% (AppliedVR, 2021). Usada en fisioterapia, rehabilitación cognitiva y fobias." },
-      { z:-249, t:"🤖 IA Generativa", d:"AlphaGo derrotó al campeón mundial de Go en 2016. No Man\'s Sky genera 18 quintillones de planetas únicos con IA procedural." },
-      { z:-261, t:"🌍 El impacto total", d:"$184B en 2023. Supera cine ($33B) y música ($26B) combinados. 3.2 mil millones de jugadores. El arte más influyente del siglo XXI." },
+      { z:-238, t:"VR Terapéutica", d:"La VR reduce ansiedad hospitalaria un 24% (AppliedVR, 2021). Usada en fisioterapia, rehabilitación cognitiva y fobias.", extra:"AppliedVR realizó el primer ensayo clínico randomizado de realidad virtual para dolor crónico (2021). 547 pacientes. Resultado: 65.7% reportaron reducción de dolor vs 40.7% en el grupo de control. La FDA aprobó el primer tratamiento de VR para dolor lumbar crónico en noviembre 2021." },
+      { z:-249, t:"IA Generativa", d:"AlphaGo derrotó al campeón mundial de Go en 2016. No Man\'s Sky genera 18 quintillones de planetas únicos con IA procedural." },
+      { z:-261, t:"El impacto total", d:"$184B en 2023. Supera cine ($33B) y música ($26B) combinados. 3.2 mil millones de jugadores. El arte más influyente del siglo XXI.", extra:"En 2023, la industria del videojuego generó $184 mil millones — más que el cine ($33B) y la música ($26B) combinados. Hay 3.2 mil millones de jugadores activos. En Colombia, la industria creció 15% en 2023. Los videojuegos son el arte más influyente y rentable del siglo XXI." },
     ],
     graffiti:{ z:-251, x:-3.85, text:"THE\nFUTURE", color:"#00ffee" },
   },
@@ -775,7 +775,7 @@ function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} =
   });
 
   // 8 chispas orbitando
-  for(let i=0;i<8;i++){
+  for(let i=0;i<4;i++){
     const ang=(i/8)*Math.PI*2;
     const spark = new THREE.Mesh(new THREE.SphereGeometry(0.016,5,5),
       new THREE.MeshBasicMaterial({color, transparent:true, opacity:0.95}));
@@ -784,30 +784,15 @@ function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} =
     floaters.push({obj:spark, baseY:0.07, phase:ang, speed:2.5+i*0.15, type:"glow"});
   }
 
-  // ── ILUMINACIÓN — MUY FUERTE PARA VER EL MODELO ─────
-  const underLight = new THREE.PointLight(color, 5.0, 5.0);
-  underLight.position.set(x, 0.05, z); scene.add(underLight);
-  floaters.push({obj:underLight, baseY:0.05, phase:Math.random()*Math.PI*2, speed:1.2, type:"light"});
+  // ── ILUMINACIÓN OPTIMIZADA — 2 luces por altar ───────
+  // Luz hemisférica falsa: MeshBasicMaterial en el disco ya da color
+  // Solo 2 PointLights por modelo para no reventar el límite de WebGL
+  const keyLight = new THREE.PointLight(0xfff4e0, 6.0, 8.0);
+  keyLight.position.set(x, 3.0, z+2.0); scene.add(keyLight);
 
-  const keyLight = new THREE.PointLight(0xfff8e8, 8.0, 9.0);
-  keyLight.position.set(x, 3.2, z+2.5); scene.add(keyLight);
-
-  const keyLow = new THREE.PointLight(0xfff0d0, 5.0, 7.0);
-  keyLow.position.set(x, 1.0, z+2.0); scene.add(keyLow);
-
-  const topLight = new THREE.PointLight(0xffffff, 5.0, 7.0);
-  topLight.position.set(x, 5.0, z); scene.add(topLight);
-
-  const fillL = new THREE.PointLight(0xffe0b0, 4.0, 6.5);
-  fillL.position.set(x-2.0, 2.0, z+0.5); scene.add(fillL);
-
-  const fillR = new THREE.PointLight(color, 2.5, 5.5);
-  fillR.position.set(x+2.0, 2.0, z+0.5); scene.add(fillR);
-  floaters.push({obj:fillR, baseY:2.0, phase:Math.random()*Math.PI*2+1, speed:0.7, type:"light"});
-
-  const backLight = new THREE.PointLight(color, 2.0, 4.5);
-  backLight.position.set(x, 2.5, z-2.0); scene.add(backLight);
-  floaters.push({obj:backLight, baseY:2.5, phase:Math.random()*Math.PI*2+3, speed:0.9, type:"light"});
+  const fillLight = new THREE.PointLight(color, 3.5, 5.0);
+  fillLight.position.set(x, 0.1, z); scene.add(fillLight);
+  floaters.push({obj:fillLight, baseY:0.1, phase:Math.random()*Math.PI*2, speed:1.0, type:"light"});
 
   // ── CARGA GLB ───────────────────────────────────────
   _gltfLoader.load(
@@ -1358,7 +1343,7 @@ function createUI() {
     width:min(600px,92vw);background:rgba(4,6,12,.96);border:1px solid rgba(255,255,255,.09);
     border-radius:20px;padding:20px 24px;backdrop-filter:blur(22px);
     box-shadow:0 20px 70px rgba(0,0,0,.92);opacity:0;
-    transition:opacity .45s,transform .45s;pointer-events:none;z-index:50;font-family:'Space Mono',monospace;`;
+    transition:opacity .45s,transform .45s;pointer-events:all;z-index:50;font-family:'Space Mono',monospace;`;
   document.body.appendChild(card);
 
   const hud=document.createElement("div"); hud.id="museum-hud";
@@ -1379,7 +1364,7 @@ function createUI() {
 let _cardVisible=false;
 let _cardAnimFrame=null;
 
-function showCard(card, titulo, texto, hex){
+function showCard(card, titulo, texto, hex, extra){
   // Cancelar animación previa si existe
   if(_cardAnimFrame){ cancelAnimationFrame(_cardAnimFrame); _cardAnimFrame=null; }
 
@@ -1388,8 +1373,8 @@ function showCard(card, titulo, texto, hex){
                       titulo.toLowerCase().includes("beneficio");
 
   card.innerHTML = esBeneficio
-    ? _buildCognCard(titulo, texto, hex)
-    : _buildNormalCard(titulo, texto, hex);
+    ? _buildCognCard(titulo, texto, hex, extra)
+    : _buildNormalCard(titulo, texto, hex, extra);
 
   card.style.borderColor = hex+"55";
   card.style.opacity     = "1";
@@ -1403,7 +1388,7 @@ function showCard(card, titulo, texto, hex){
   }
 }
 
-function _buildNormalCard(titulo, texto, hex){
+function _buildNormalCard(titulo, texto, hex, extra){
   return `<div style="position:relative;overflow:hidden">
     <div style="font-size:8px;letter-spacing:.28em;color:${hex};font-family:'Orbitron',sans-serif;
       margin-bottom:7px;opacity:.75">MUSEO · DATO HISTÓRICO</div>
@@ -1413,13 +1398,12 @@ function _buildNormalCard(titulo, texto, hex){
     <div style="font-size:12px;color:#c8d4ce;line-height:1.82">${texto}</div>
     <div style="margin-top:11px;height:1.5px;
       background:linear-gradient(90deg,${hex},${hex}44,transparent);border-radius:2px;"></div>
-    <div style="position:absolute;top:0;right:0;width:3px;height:100%;
-      background:linear-gradient(180deg,${hex},transparent);border-radius:2px;opacity:.5"></div>
+
   </div>`;
 }
 
-function _buildCognCard(titulo, texto, hex){
-  return `<div style="position:relative;overflow:hidden;min-height:180px">
+function _buildCognCard(titulo, texto, hex, extra){
+  return `<div style="position:relative;max-height:62vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:${hex} transparent">
 
     <!-- Canvas wireframe de fondo -->
     <canvas id="cog-bg" width="530" height="200"
@@ -1432,7 +1416,7 @@ function _buildCognCard(titulo, texto, hex){
         background:linear-gradient(90deg,${hex}22,transparent);
         border:1px solid ${hex}44;border-radius:20px;
         padding:4px 13px;margin-bottom:10px">
-        <span style="font-size:15px">🧠</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:900;letter-spacing:.12em">COGN</span>
         <span style="font-size:8px;letter-spacing:.28em;color:${hex};
           font-family:'Orbitron',sans-serif;font-weight:700">BENEFICIOS COGNITIVOS</span>
       </div>
@@ -1460,6 +1444,25 @@ function _buildCognCard(titulo, texto, hex){
 
       <div style="margin-top:10px;font-size:9px;color:${hex}88;font-family:'Orbitron',monospace;
         letter-spacing:.15em">FUENTE: U. ROCHESTER · BAVELIER LAB · 2012</div>
+      ${extra ? `
+      <div id="card-extra-btn" onclick="
+        var ex=document.getElementById('card-extra-text');
+        var btn=document.getElementById('card-extra-btn');
+        if(ex.style.display==='none'||!ex.style.display){
+          ex.style.display='block'; btn.textContent='CERRAR';
+          btn.style.background='${hex}33';
+        } else {
+          ex.style.display='none'; btn.textContent='SABER MAS +';
+          btn.style.background='transparent';
+        }
+      " style="margin-top:10px;cursor:pointer;font-family:'Orbitron',sans-serif;
+        font-size:8px;letter-spacing:.2em;color:${hex};border:1px solid ${hex}44;
+        border-radius:6px;padding:5px 12px;display:inline-block;
+        transition:background .2s;background:transparent;user-select:none">SABER MAS +</div>
+      <div id="card-extra-text" style="display:none;margin-top:10px;
+        font-size:11px;color:#b0c4bc;line-height:1.8;
+        border-left:2px solid ${hex}44;padding-left:10px">${extra}</div>
+      ` : ''}
     </div>
   </div>`;
 }
@@ -1558,6 +1561,229 @@ function createControls(camera,canvas){
 // ═══════════════════════════════════════════════════════
 //  INIT PRINCIPAL
 // ═══════════════════════════════════════════════════════
+
+
+// ═══════════════════════════════════════════════════════
+//  FLECHAS NEON EN EL SUELO — guían al usuario
+// ═══════════════════════════════════════════════════════
+const ARROW_INTERVAL = 22; // cada 22u
+const ARROW_TOTAL    = 12; // sets de 3 flechas
+const _arrowMeshes   = []; // { meshes:[], z }
+
+function buildFloorArrows(scene) {
+  // Materiales compartidos para las 3 flechas de cada set
+  // Color neutro blanco — se tiñe con emissive
+  const arrowShape = new THREE.Shape();
+  // Flecha apuntando hacia -Z (al frente en Three.js)
+  // Dibujada en plano XY, luego rotamos -90° en X para ponerla en el suelo
+  arrowShape.moveTo( 0,    0.35);  // punta
+  arrowShape.lineTo( 0.22, 0);
+  arrowShape.lineTo( 0.10, 0);
+  arrowShape.lineTo( 0.10,-0.30);
+  arrowShape.lineTo(-0.10,-0.30);
+  arrowShape.lineTo(-0.10, 0);
+  arrowShape.lineTo(-0.22, 0);
+  arrowShape.closePath();
+
+  const arrowGeo = new THREE.ShapeGeometry(arrowShape);
+
+  for(let s = 0; s < ARROW_TOTAL; s++) {
+    const zPos = -8 - s * ARROW_INTERVAL;
+    const setMeshes = [];
+
+    // 3 flechas escalonadas en Z (efecto secuencial al parpadear)
+    for(let a = 0; a < 3; a++) {
+      const mat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.0,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+      });
+      const mesh = new THREE.Mesh(arrowGeo, mat);
+      mesh.rotation.x = -Math.PI / 2; // plano horizontal
+      mesh.rotation.z = 0;            // punta hacia -Z (adelante en Three.js)
+      mesh.position.set(0, 0.035, zPos - a * 0.55);
+      scene.add(mesh);
+      setMeshes.push({ mesh, mat, phase: a });
+    }
+    _arrowMeshes.push({ meshes: setMeshes, z: zPos });
+  }
+}
+
+function updateArrows(t, camZ, zonaColor) {
+  // Color de la zona actual
+  const c = new THREE.Color(zonaColor ?? 0x58f0c4);
+
+  _arrowMeshes.forEach(set => {
+    // Solo animar si está cerca (< 30u)
+    if(Math.abs(set.z - camZ) > 30) {
+      set.meshes.forEach(({mat}) => { mat.opacity = 0; });
+      return;
+    }
+
+    set.meshes.forEach(({mesh, mat, phase}) => {
+      // Parpadeo secuencial: cada flecha desfasada 0.35s
+      const pulse = (Math.sin((t * 2.8) - phase * 1.1) + 1) / 2;
+      mat.color.copy(c);
+      mat.opacity = 0.15 + pulse * 0.65;
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  SISTEMA DE MONEDAS COLECCIONABLES
+// ═══════════════════════════════════════════════════════
+const COINS_CONFIG = [
+  { z:-8,   color:0xf0a030, label:"Origen"  },
+  { z:-22,  color:0xf0a030, label:"Origen"  },
+  { z:-38,  color:0xff4400, label:"Arcade"  },
+  { z:-52,  color:0xff4400, label:"Arcade"  },
+  { z:-60,  color:0xff4400, label:"Arcade"  },
+  { z:-72,  color:0x44ff88, label:"Consolas"},
+  { z:-85,  color:0x44ff88, label:"Consolas"},
+  { z:-112, color:0x4488ff, label:"3D"      },
+  { z:-130, color:0x4488ff, label:"3D"      },
+  { z:-148, color:0x4488ff, label:"3D"      },
+  { z:-162, color:0x4488ff, label:"3D"      },
+  { z:-176, color:0x4488ff, label:"3D"      },
+  { z:-202, color:0xcc44ff, label:"Online"  },
+  { z:-218, color:0xcc44ff, label:"Online"  },
+  { z:-240, color:0x00ffee, label:"Futuro"  },
+  { z:-255, color:0x00ffee, label:"Futuro"  },
+];
+
+const _coinMeshes = [];
+let _coinsCollected = 0;
+const _COIN_RADIUS = 3.0; // radio generoso para detección fiable
+
+function buildCoins(scene) {
+  COINS_CONFIG.forEach((cfg, i) => {
+    const col = new THREE.Color(cfg.color);
+    const side = (i % 2 === 0) ? -1.8 : 1.8;
+
+    // Moneda dorada
+    const coinMat = new THREE.MeshStandardMaterial({
+      color:0xffd700, emissive:col, emissiveIntensity:0.7,
+      metalness:0.95, roughness:0.10
+    });
+    const coin = new THREE.Mesh(new THREE.CylinderGeometry(0.26,0.26,0.055,20), coinMat);
+    coin.position.set(side, 1.25, cfg.z);
+    coin.rotation.x = Math.PI/2;
+    scene.add(coin);
+
+    // Aro de zona
+    const ringMat = new THREE.MeshStandardMaterial({
+      color:cfg.color, emissive:cfg.color, emissiveIntensity:2.2,
+      metalness:0.9, roughness:0.05
+    });
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.28,0.022,8,32), ringMat);
+    ring.position.copy(coin.position);
+    ring.rotation.x = Math.PI/2;
+    scene.add(ring);
+
+    // Luz suave
+    const light = new THREE.PointLight(cfg.color, 1.0, 2.2);
+    light.position.copy(coin.position);
+    scene.add(light);
+
+    _coinMeshes.push({ coin, ring, light, collected:false, cfg });
+  });
+}
+
+function _playCoinSound(ctx) {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  [0, 0.09].forEach((delay, i) => {
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880 + i*440, t+delay);
+    osc.frequency.exponentialRampToValueAtTime(1760 + i*440, t+delay+0.07);
+    gain.gain.setValueAtTime(0.20, t+delay);
+    gain.gain.exponentialRampToValueAtTime(0.001, t+delay+0.14);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t+delay); osc.stop(t+delay+0.16);
+  });
+}
+
+function _updateCoinHUD() {
+  const total = COINS_CONFIG.length;
+  let el = document.getElementById('coin-counter');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'coin-counter';
+    el.style.cssText = [
+      'position:fixed','top:74px','right:220px',
+      'font-family:Orbitron,sans-serif','font-size:10px',
+      'letter-spacing:.14em','color:#ffd700',
+      'z-index:60','opacity:.88','pointer-events:none',
+      'text-shadow:0 0 8px #ffd70088'
+    ].join(';');
+    document.body.appendChild(el);
+  }
+  if (_coinsCollected >= total) {
+    el.style.color = '#fff';
+    el.textContent = total + '/' + total + ' - COLECCION COMPLETA!';
+  } else {
+    el.textContent = _coinsCollected + '/' + total + ' MONEDAS';
+  }
+
+  // Toast de recogida
+  let toast = document.getElementById('coin-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'coin-toast';
+    toast.style.cssText = [
+      'position:fixed','top:78px','left:50%',
+      'transform:translateX(-50%)',
+      'background:rgba(255,215,0,.15)',
+      'border:1px solid rgba(255,215,0,.55)',
+      'border-radius:10px','padding:6px 20px',
+      'font-family:Orbitron,sans-serif','font-size:10px',
+      'letter-spacing:.16em','color:#ffd700',
+      'z-index:60','opacity:0',
+      'transition:opacity .3s','pointer-events:none'
+    ].join(';');
+    document.body.appendChild(toast);
+  }
+  toast.textContent = 'MONEDA ' + _coinsCollected + '/' + total + ' RECOGIDA';
+  toast.style.opacity = '1';
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 1600);
+}
+
+function updateCoins(camera, audioCtx) {
+  const camPos = camera.position;
+  const t = performance.now() * 0.001;
+
+  _coinMeshes.forEach((c, i) => {
+    if (c.collected) return;
+
+    // Animación flotante + giro
+    c.coin.rotation.y = t * 2.4 + i * 1.1;
+    c.ring.rotation.y = t * 1.9 + i * 1.1;
+    const fy = 1.25 + Math.sin(t * 2.2 + i * 0.9) * 0.11;
+    c.coin.position.y = fy;
+    c.ring.position.y = fy;
+    c.light.position.y = fy;
+    c.light.intensity = 0.7 + Math.sin(t * 2.8 + i) * 0.35;
+
+    // Colisión
+    const dist = camPos.distanceTo(c.coin.position);
+    if (dist < _COIN_RADIUS) {
+      c.collected = true;
+      _coinsCollected++;
+      c.coin.visible = false;
+      c.ring.visible = false;
+      c.light.intensity = 0;
+      _playCoinSound(audioCtx);
+      _updateCoinHUD();
+    }
+  });
+}
+
+
 export async function initMuseumWalk({canvas}){
   // Crear audioMgr ANTES de la intro para poder pasarlo como callback
   const audioMgr = new AudioManager();
@@ -1604,6 +1830,9 @@ export async function initMuseumWalk({canvas}){
   });
   buildEntrance(scene, welcomeImg);
   buildHoloPanels(scene);
+  buildCoins(scene);           // Monedas coleccionables
+  buildFloorArrows(scene);      // Flechas neon en el suelo
+  setTimeout(_updateCoinHUD, 1200); // Mostrar contador inicial
 
   ZONAS.forEach((zona,i)=>{
     buildZoneArch(scene,zona);
@@ -1653,9 +1882,10 @@ export async function initMuseumWalk({canvas}){
   // Última posición Z para no re-calcular si no se movió
   let lastZ=999;
 
-  function detectZone(){
+  
+function detectZone(){
     const z=camera.position.z;
-    if(Math.abs(z-lastZ)<0.05) return;
+    if(Math.abs(z-lastZ)<0.08) return;
     lastZ=z;
     const zona=ZONAS.find(z0=>z<=z0.zStart&&z>=z0.zEnd);
     if(zona&&zona!==zonaActual){
@@ -1676,7 +1906,7 @@ export async function initMuseumWalk({canvas}){
       const key=`${bestZona.id}_${bestDato.z}`;
       if(key!==_lastCardKey){
         _lastCardKey=key;
-        showCard(card,bestDato.t,bestDato.d,bestZona.hex);
+        showCard(card,bestDato.t,bestDato.d,bestZona.hex,bestDato.extra);
       }
     }
   }
@@ -1746,26 +1976,28 @@ export async function initMuseumWalk({canvas}){
 
     controls.update(dt);
     detectZone();
-    if(frameN%6===0) updateVideos(); // video por mirada: checar dirección de cámara
+    const camZ=camera.position.z;          // debe estar antes de updateArrows y floaters
+    if(frameN%6===0) updateVideos();
+    if(frameN%2===0) updateArrows(t, camZ, zonaActual?.color);
+    if(frameN%3===0) updateCoins(camera, audioMgr?.ctx);  // colisión cada 3f = ~50ms a 60fps
     scene.fog.color.lerp(fogTarget,.02);
     scene.background.lerp(bgTarget,.02);
 
-    // Floaters: solo los que están a menos de 22u de la cámara
-    const camZ=camera.position.z;
-    if(frameN%2===0){
+    // Floaters: solo los que están a menos de 18u de la cámara
+    if(frameN%3===0){
       floaters.forEach(f=>{
         if(!f.obj) return;
-        if(f.obj.position && Math.abs(f.obj.position.z-camZ)>22) return;
+        if(f.obj.position && Math.abs(f.obj.position.z-camZ)>18) return;
         if(f.type==="model"||f.type==="ring"||f.type==="fog"){
           f.obj.position.y=f.baseY+Math.sin(t*f.speed+f.phase)*.085;
           if(f.type==="model") f.obj.rotation.y+=0.008;
         }
       });
     }
-    if(frameN%3===0){
+    if(frameN%4===0){
       floaters.forEach(f=>{
         if(!f.obj) return;
-        if(f.obj.position && Math.abs(f.obj.position.z-camZ)>22) return;
+        if(f.obj.position && Math.abs(f.obj.position.z-camZ)>18) return;
         if(f.type==="glow"){
           // obj puede ser un mesh real o un pseudo-objeto {material:...}
           const mat = f.obj.material ?? f.obj;
@@ -1789,7 +2021,7 @@ export async function initMuseumWalk({canvas}){
     }
 
     // Partículas: SOLO zona actual, cada 5 frames
-    if(frameN%5===0){
+    if(frameN%8===0){
       const ps=particleSystems.find(p=>p.zona===zonaActual);
       if(ps){
         for(let i=0;i<ps.count;i++){

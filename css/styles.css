@@ -215,3 +215,31 @@ body.museo-activo::after{
   border:1.5px solid rgba(255,255,255,.45);border-radius:50%;
   pointer-events:none;z-index:30;
 }
+
+/* ══ CONTACTO MEJORADO ══════════════════════════════ */
+.cv-contact-icon {
+  display:inline-block;font-family:'Orbitron',sans-serif;font-size:8px;
+  letter-spacing:.18em;color:var(--accent2);opacity:.75;
+  min-width:88px;margin-right:10px;
+}
+.cv-contact-item {
+  display:flex;align-items:center;
+}
+
+/* ══ CARD MUSEO — SIN BORDES LATERALES ═════════════ */
+/* Quitar el borde lateral derecho de la card normal */
+#museum-card [data-side-bar] { display:none !important; }
+
+/* ══ CARD COGNITIVA — SCROLL ════════════════════════ */
+#museum-card {
+  max-height: 72vh !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent2) transparent;
+}
+#museum-card::-webkit-scrollbar { width:4px; }
+#museum-card::-webkit-scrollbar-track { background:transparent; }
+#museum-card::-webkit-scrollbar-thumb { background:var(--accent2);border-radius:4px; }
+
+/* Grid de trabajo de grado */
+/* (renombrado en comentario, CSS igual) */
