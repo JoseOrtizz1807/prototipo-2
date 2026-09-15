@@ -1,5 +1,5 @@
 import { initEarthBackdrop } from "./earthBackdrop.js";
-import { initMuseumWalk }   from "./museum_walk.js";
+import { initMuseumWalk }   from "./museum_walk.js?v=3001";
 import { initMuseum }       from "./museum.js";
 
 let earth    = null;
@@ -72,6 +72,109 @@ function exitMuseum() {
   document.exitPointerLock?.();
   if (museum) { museum.destroy(); museum = null; }
   showMenu();
+
+// ── Créditos ──────────────────────────────────────────────
+const creditsPanel = document.getElementById("creditsPanel");
+const btnCredits   = document.getElementById("btnCredits");
+const btnCloseCredits = document.getElementById("btnCloseCredits");
+
+btnCredits?.addEventListener("click", e => {
+  e.preventDefault();
+  creditsPanel?.classList.add("active");
+});
+btnCloseCredits?.addEventListener("click", () => {
+  creditsPanel?.classList.remove("active");
+});
+
+
+// ── Encuesta ──────────────────────────────────────────
+const encuestaPanel = document.getElementById("encuestaPanel");
+const btnEstudio    = document.getElementById("btnEstudio");
+const btnCloseEnc   = document.getElementById("btnCloseEncuesta");
+const encNext       = document.getElementById("enc-next");
+const encPrev       = document.getElementById("enc-prev");
+const progFill      = document.getElementById("enc-progress-fill");
+const progText      = document.getElementById("enc-progress-text");
+const TOTAL_STEPS   = 11;
+let currentStep     = 0;
+const answers       = {};
+
+function encGetStep(n) { return document.querySelector(`.enc-step[data-step="${n}"]`); }
+
+function encUpdateProgress() {
+  const pct = currentStep === 0 ? 5 : Math.round((currentStep / (TOTAL_STEPS-1)) * 100);
+  progFill.style.width = pct + "%";
+  progText.textContent = currentStep === 0 ? "DATOS PERSONALES" : `PREGUNTA ${currentStep} DE ${TOTAL_STEPS-1}`;
+  encPrev.style.display = currentStep > 0 ? "block" : "none";
+  encNext.textContent   = currentStep === TOTAL_STEPS ? "ENVIAR ✓" : "SIGUIENTE →";
+}
+
+function encGoTo(n) {
+  encGetStep(currentStep).style.display = "none";
+  currentStep = n;
+  encGetStep(currentStep).style.display = "block";
+  encUpdateProgress();
+}
+
+function encCollectCurrent() {
+  if(currentStep === 0) {
+    const nombre = document.getElementById('enc-nombre')?.value?.trim();
+    const edad   = document.getElementById('enc-edad')?.value?.trim();
+    if(!nombre || !edad) { alert('Por favor completa tu nombre y edad para continuar.'); return false; }
+    answers.nombre = nombre; answers.edad = edad;
+    const gen = document.querySelector('input[name="genero"]:checked');
+    if(gen) answers.genero = gen.value;
+    return true;
+  }
+  const step = encGetStep(currentStep);
+  const radios    = step.querySelectorAll(`input[type=radio]:checked`);
+  const checks    = step.querySelectorAll(`input[type=checkbox]:checked`);
+  const textarea  = step.querySelector("textarea");
+  if (radios.length)  answers[`p${currentStep}`] = radios[0].value;
+  if (checks.length)  answers[`p${currentStep}`] = [...checks].map(c=>c.value).join(",");
+  if (textarea)       answers[`p${currentStep}`] = textarea.value;
+}
+
+encNext.addEventListener("click", () => {
+  const ok = encCollectCurrent();
+  if(ok === false) return;
+  if (currentStep < TOTAL_STEPS) {
+    encGoTo(currentStep + 1);
+  } else {
+    // Enviar — guardar en localStorage como simulación
+    answers.timestamp = new Date().toISOString();
+    answers.userAgent  = navigator.userAgent;
+    const saved = JSON.parse(localStorage.getItem("enc_responses") || "[]");
+    saved.push(answers);
+    localStorage.setItem("enc_responses", JSON.stringify(saved));
+    // Mostrar pantalla de gracias
+    document.getElementById("enc-form").style.display = "none";
+    encNext.style.display = "none";
+    encPrev.style.display = "none";
+    progFill.style.width  = "100%";
+    progText.style.display = "none";
+    document.getElementById("enc-result").style.display = "block";
+  }
+});
+
+encPrev.addEventListener("click", () => {
+  if (currentStep > 1) if(currentStep > 0) encGoTo(currentStep - 1);
+});
+
+btnEstudio?.addEventListener("click", e => {
+  e.preventDefault();
+  // Reset encuesta
+  currentStep = 0;
+  document.querySelectorAll(".enc-step").forEach((s,i) => s.style.display = i===0?"block":"none");
+  document.getElementById("enc-form").style.display = "block";
+  document.getElementById("enc-result").style.display = "none";
+  encNext.style.display = "block";
+  encUpdateProgress();
+  encuestaPanel.classList.add("active");
+});
+
+btnCloseEnc?.addEventListener("click", () => encuestaPanel.classList.remove("active"));
+
 }
 function exitTimeline() {
   if (timeline) { timeline.destroy(); timeline = null; }

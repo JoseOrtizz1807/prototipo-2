@@ -243,3 +243,64 @@ body.museo-activo::after{
 
 /* Grid de trabajo de grado */
 /* (renombrado en comentario, CSS igual) */
+
+
+/* ══ ENCUESTA ═══════════════════════════════════════ */
+#encuestaPanel { z-index: 200; }
+
+.enc-q {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  color: #e0eee8; line-height: 1.55;
+  margin-bottom: 16px;
+}
+.enc-options {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.enc-opt {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(68,136,255,0.14);
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 12px; color: rgba(190,215,205,0.85);
+  cursor: pointer; transition: background .18s, border-color .18s;
+}
+.enc-opt:hover { background: rgba(68,136,255,0.08); border-color: rgba(68,136,255,0.35); }
+.enc-opt input { accent-color: #4488ff; width: 15px; height: 15px; flex-shrink: 0; }
+.enc-opt input:checked + * { color: #fff; }
+
+/* Likert */
+.enc-likert { margin-top: 4px; }
+.enc-likert-labels {
+  display: flex; justify-content: space-between;
+  font-size: 9px; color: rgba(150,180,170,0.5);
+  margin-bottom: 8px; font-family: 'Orbitron', sans-serif;
+  letter-spacing: .1em;
+}
+.enc-likert-opts { display: flex; gap: 8px; justify-content: center; }
+.enc-likert-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  cursor: pointer;
+}
+.enc-likert-btn span {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(68,136,255,0.25);
+  font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700;
+  color: rgba(180,210,200,0.7);
+  transition: all .18s;
+}
+.enc-likert-btn input { display: none; }
+.enc-likert-btn input:checked + span {
+  background: linear-gradient(135deg, #1a3a7a, #0d5244);
+  border-color: #4488ff;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(68,136,255,0.4);
+}
+.enc-likert-btn:hover span {
+  background: rgba(68,136,255,0.12);
+  border-color: rgba(68,136,255,0.5);
+}
+
+#enc-next:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(68,136,255,0.25); }

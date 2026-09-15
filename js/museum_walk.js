@@ -21,7 +21,7 @@ import { GLTFLoader }      from "jsm/loaders/GLTFLoader.js";
 
 const IS_MAC   = /Mac/i.test(navigator.platform ?? "");
 const DPR      = Math.min(window.devicePixelRatio, 1.0); // cap duro en 1x
-const L=275, W=8.0, H=5.6;
+const L=310, W=8.0, H=5.6;
 
 // ═══════════════════════════════════════════════════════
 //  DATOS DE ZONAS
@@ -60,8 +60,8 @@ const ZONAS = [
     ],
     datos:[
       { z:-36, t:"Pong (1972)", d:"La primera máquina en un bar de California falló en días: estaba atascada de monedas. Atari vendió 8,000 unidades en 6 meses.", extra:"Los ingenieros de Atari no podían patentar el concepto de \"pelota rebotando\" porque ya existía en Magnavox Odyssey (1972). La industria de los videojuegos nació en litigios. Nolan Bushnell fundó Atari con solo $500 y lo vendió por $28 millones en 1976." },
-      { z:-48, t:"Space Invaders (1978)", d:"Causó escasez nacional de monedas de ¥100 en Japón. Las ventas arcade alcanzaron $2.8B anuales.", extra:"Toshihiro Nishikado diseñó cada alien manualmente porque los chips de 1978 no podían hacer cálculos de física complejos. El juego se hace más rápido conforme eliminas aliens porque el CPU tiene menos que procesar, no por diseño. Fue un accidente que se convirtió en mecánica icónica." },
-      { z:-58, t:"Pac-Man (1980)", d:"Diseñado para atraer a un público femenino a los arcades. Primer personaje de videojuego con identidad icónica reconocida globalmente. Vendió más de 400,000 máquinas.", extra:"Toru Iwatani se inspiró en una pizza con un trozo faltante. Los cuatro fantasmas tienen IA distinta: Blinky persigue, Pinky embosca, Inky es impredecible y Clyde actúa al azar. Esta fue la primera vez que NPCs tuvieron \"personalidades\" programadas." },
+      { z:-55, t:"Space Invaders (1978)", d:"Causó escasez nacional de monedas de ¥100 en Japón. Las ventas arcade alcanzaron $2.8B anuales.", extra:"Toshihiro Nishikado diseñó cada alien manualmente porque los chips de 1978 no podían hacer cálculos de física complejos. El juego se hace más rápido conforme eliminas aliens porque el CPU tiene menos que procesar, no por diseño. Fue un accidente que se convirtió en mecánica icónica." },
+      { z:-63, t:"Pac-Man (1980)", d:"Diseñado para atraer a un público femenino a los arcades. Primer personaje de videojuego con identidad icónica reconocida globalmente. Vendió más de 400,000 máquinas.", extra:"Toru Iwatani se inspiró en una pizza con un trozo faltante. Los cuatro fantasmas tienen IA distinta: Blinky persigue, Pinky embosca, Inky es impredecible y Clyde actúa al azar. Esta fue la primera vez que NPCs tuvieron \"personalidades\" programadas." },
     ],
     graffiti:{ z:-50, x:3.85, text:"INSERT\nCOIN", color:"#ff4400" },
   },
@@ -71,15 +71,21 @@ const ZONAS = [
     audio:"assets/audio/supermariobros.mp3", audioId:"track_consolas",
     zStart:-64, zEnd:-96,
     vitrinas:[
-      { z:-74, x:-3.4, label:"Super Mario Bros", year:"1985", sub:"Nintendo · Salvó la industria",
+      { z:-74, x:-3.4, label:"Super Mario Bros", year:"1985", sub:"Nintendo 1985 · 40M copias en NES · Reinventó el gaming",
         type:"orb", video:"assets/audio/Videos/supermariobros.mp4", imdb:"9.0" },
-      { z:-87, x:3.4,  label:"E.T. El Videojuego", year:"1982", sub:"Atari · El Gran Crash",
+      { z:-87, x:3.4,  label:"E.T. El Videojuego", year:"1982", sub:"Atari 1982 · El peor juego de la historia · 7M enterrados",
         type:"orb", video:"assets/audio/Videos/ET.mp4", imdb:"2.4" },
     ],
     datos:[
-      { z:-70, t:"El Gran Crash (1983)", d:"La industria colapsó de $3.2B a $100M. E.T. de Atari terminó enterrado literalmente en el desierto de Nuevo México. Considerado el peor juego de la historia." },
-      { z:-80, t:"Super Mario Bros (1985)", d:"El mundo 1-1 fue diseñado para enseñar sin palabras. Cada elemento introduce una mecánica. Salvó la industria del videojuego tras el crash.", extra:"Miyamoto diseñó el nivel 1-1 con una metodología que hoy se enseña en diseño de videojuegos: primero el hongo (reward), luego el koopa (riesgo), luego el pozo (obstáculo). Sin una sola palabra de texto, el juego enseña sus mecánicas en 30 segundos." },
-      { z:-91, t:"Game Boy (1989)", d:"15h con 4 pilas AA. Su pantalla borrosa fue deliberada para reducir costos. 118 millones vendidas en 14 años." },
+      { z:-67, t:"El Gran Crash (1983)",
+        d:"La industria colapsó de $3.2B a $100M en solo 2 años. Atari fabricó 12 millones de cartuchos de E.T. — devolvieron 7 millones. Los enterraron en el desierto de Nuevo México. Nintendo salvó todo dos años después.",
+        extra:"El Crash de 1983 fue tan severo que los distribuidores dejaron de aceptar videojuegos. Los vendían en baratillos junto a basura. Warner vendió Atari por $25M — lo había comprado por $28M. Muchos creyeron que los videojuegos eran una moda pasada. Nintendo tuvo que convencer a los retailers de que el NES era un 'juguete', no una consola, para conseguir distribución." },
+      { z:-74, t:"Super Mario Bros (1985) — El salvador",
+        d:"Nintendo diseñó el nivel 1-1 para enseñar sin palabras: el hongo enseña recompensa, el Goomba enseña peligro, el pozo enseña cuidado. En 30 segundos entiendes todo. 40 millones de copias en NES.",
+        extra:"Miyamoto diseñó el nivel 1-1 con una metodología que hoy se enseña en game design: primero el hongo (reward), luego el koopa (riesgo), luego el pozo (obstáculo). Sin una sola palabra de texto, el juego enseña sus mecánicas en 30 segundos. El nivel fue diseñado para que el primer obstáculo fuera imposible de perder, generando confianza inmediata en el jugador." },
+      { z:-87, t:"E.T. y el Game Boy (1982–1989)",
+        d:"E.T. de Atari (1982) es considerado el peor juego de la historia — el protagonista del crash. Siete años después, el Game Boy (1989) demostró que el gaming podía ser portable. 118 millones de unidades vendidas.",
+        extra:"El Game Boy usó una pantalla de baja resolución deliberadamente para reducir costos y consumo de batería. La pantalla 'borrosa' era una decisión económica, no técnica. Nintendo incluyó Tetris en lugar de Super Mario Land porque sabía que Tetris engancharía a cualquier persona, independientemente de si jugaba o no. La jugada fue correcta: Tetris vendió 35 millones de copias adicionales." },
     ],
     graffiti:{ z:-80, x:-3.85, text:"LEVEL\nUP!", color:"#44ff88" },
   },
@@ -91,7 +97,7 @@ const ZONAS = [
     vitrinas:[
       { z:-108, x:-3.4, label:"PlayStation", year:"1994",
         sub:"Sony · 102 millones de unidades vendidas",
-        type:"orb", video:"assets/audio/Videos/playstation.mp4", imdb:"9.2" },
+        type:"orb", video:"assets/audio/Videos/playstation1.mp4", imdb:"9.2" },
       { z:-122, x:3.4,  label:"Super Mario 64", year:"1996",
         sub:"Nintendo · El primer mundo 3D libre",
         type:"orb", video:"assets/audio/Videos/supermario64.mp4", imdb:"9.8" },
@@ -120,34 +126,61 @@ const ZONAS = [
     graffiti:{ z:-142, x:-3.85, text:"3D\nWORLD", color:"#4488ff" },
   },
   {
-    id:"online", titulo:"La Era Online", subtitulo:"2005 – 2015",
+    id:"online", titulo:"La Era Online", subtitulo:"2004 – 2015",
     color:0xcc44ff, hex:"#cc44ff", fogHex:0x0d0020, bgHex:0x080015,
-    audio:"assets/audio/spaceinvaders.mp3", audioId:"track_online",
-    zStart:-196, zEnd:-234,
+    audio:"assets/audio/wowaudio.mp3", audioId:"track_online",
+    zStart:-196, zEnd:-252,
     vitrinas:[
-      { z:-208, x:-3.4, label:"Xbox 360", year:"2005", sub:"Gaming online masivo en el hogar", type:"orb", imdb:"8.2" },
-      { z:-221, x:3.4,  label:"iPhone",   year:"2007", sub:"La revolución del mobile gaming",  type:"phone", imdb:"8.7" },
+      { z:-205, x:-3.4, label:"World of Warcraft", year:"2004",
+        sub:"Blizzard · 12M suscriptores · El MMORPG que lo cambió todo",
+        type:"orb", video:"assets/audio/Videos/wowvideo.mp4", imdb:"9.4" },
+      { z:-218, x:3.4,  label:"Call of Duty 4: Modern Warfare", year:"2007",
+        sub:"Infinity Ward · Reinventó el multijugador online en consola",
+        type:"orb", video:"assets/audio/Videos/modernwarfare4video.mp4", imdb:"9.4" },
+      { z:-232, x:-3.4, label:"League of Legends", year:"2009",
+        sub:"Riot Games · 100M jugadores · Nace el e-sport global",
+        type:"orb", video:"assets/audio/Videos/lolvideo.mp4", imdb:"9.0" },
+      { z:-246, x:3.4,  label:"Minecraft", year:"2011",
+        sub:"Mojang · 238M copias · El juego más vendido de la historia",
+        type:"orb", video:"assets/audio/Videos/minecraftvideo.mp4", imdb:"9.2" },
     ],
     datos:[
-      { z:-200, t:"El iPhone cambia todo (2007)", d:"La App Store lanzó con 500 apps. Hoy tiene 1.8M. El gaming móvil representa el 50% del mercado global: $92B anuales.", extra:"Steve Jobs presentó el iPhone diciendo que era \"un iPod, un teléfono y un comunicador de internet\". No mencionó los juegos. Un año después, la App Store lanzó con 500 apps y Angry Birds no existía todavía. Hoy el gaming móvil representa $92B anuales — el 50% de toda la industria." },
-      { z:-213, t:"E-Sports (2009-2015)", d:"El Mundial de LoL 2019 atrajo 100M de espectadores — más que cualquier final de la NBA ese año.", extra:"El Mundial de League of Legends 2019: 100 millones de espectadores simultáneos. La final NBA 2019: 19 millones. Los e-sports superaron el deporte convencional en audiencia digital. La Universidad de Robert Morris (EE.UU.) ofreció becas de e-sports en 2014 — la primera del mundo." },
-      { z:-226, t:"Beneficios Cognitivos", d:"U. Rochester (Bavelier, 2012): jugadores de acción tienen 58% más resolución visual, 25% más velocidad de procesamiento. Los videojuegos mejoran toma de decisiones, memoria espacial y coordinación ojo-mano.", extra:"El Dr. Daphne Bavelier de la Universidad de Rochester descubrió en 2012 que jugadores de shooters de acción tienen 58% más resolución visual que no-jugadores. El entrenamiento con videojuegos de acción mejora la capacidad de detectar detalles en contextos de alta densidad de información — habilidad aplicable a radiología, control de tráfico aéreo y cirugía." },
+      { z:-200, t:"World of Warcraft (2004) — El boom online",
+        d:"12 millones de suscriptores en su pico (2010). $10B en ingresos totales. WoW demostró que los mundos virtuales persistentes podían ser un negocio masivo y sostenido.",
+        extra:"WoW tomó el concepto de MMORPG — ya existía EverQuest — y lo hizo accesible al público general. En su pico tenía 12 millones de suscriptores pagando $15/mes cada uno. El economista Eyjolfur Gudmundsson fue contratado por CCP (EVE Online) como 'economista en jefe' para gestionar su economía virtual. Los MMORPG inventaron la economía de suscripción digital antes que Netflix." },
+      { z:-213, t:"Call of Duty 4: Modern Warfare (2007) — La revolución del FPS",
+        d:"CoD4 inventó el sistema de progresión con XP, rangos y desbloqueos que toda la industria copió. 16 millones de copias. Redefinió el multijugador online en consola para siempre.",
+        extra:"Infinity Ward lanzó CoD4 en 2007 con un modo multijugador que cambió todo. El sistema de XP, killstreaks, prestigio y personalización de clases fue copiado por todos los FPS siguientes. La campaña 'All Ghillied Up' es considerada una de las mejores misiones de la historia. CoD4 demostró que los videojuegos podían tener narrativa cinematográfica y multijugador adictivo al mismo tiempo.", extra:"Infinity Ward lanzó CoD4 en 2007 y revolucionó el género. Vendió 16 millones de copias. Su sistema de progresión XP, killstreaks y prestigio fue adoptado por prácticamente todos los shooters siguientes: Battlefield, Halo, Fortnite. La misión 'All Ghillied Up' es citada como obra maestra del diseño de niveles. El modo multijugador tuvo jugadores activos por más de 5 años." },
+      { z:-225, t:"E-Sports — De hobby a industria (2009-2015)",
+        d:"The International (Dota 2) 2013: primer premio de $2.8M en e-sports. 2019: $40M. El Mundial de LoL 2019: 100M de espectadores simultáneos.",
+        extra:"League of Legends (2009) creó el modelo de 'free-to-play con cosméticos' que hoy domina la industria. En 2012, el gobierno de EEUU reconoció a los jugadores profesionales de LoL como atletas, otorgándoles visas P-1A (de atletas profesionales). En 2014, la Universidad de Robert Morris ofreció las primeras becas universitarias de e-sports del mundo." },
+      { z:-238, t:"Minecraft (2011) — La creatividad sin límites",
+        d:"238 millones de copias vendidas. 35 millones de estudiantes en 115 países usan Minecraft Education. El juego más vendido de la historia humana.",
+        extra:"Notch creó Minecraft solo, en Java, en su tiempo libre. Lo vendió por $2.5B a Microsoft en 2014. Minecraft Education Edition se usa en 115 países para enseñar matemáticas, historia, arquitectura y programación. Roblox, inspirado en Minecraft, tiene 70 millones de usuarios diarios — la mayoría menores de 16 años. Estos juegos definieron cómo aprende la Generación Z." },
+
     ],
-    graffiti:{ z:-214, x:3.85, text:"GG\nWP", color:"#cc44ff" },
+    graffiti:{ z:-222, x:3.85, text:"GG\nWP", color:"#cc44ff" },
   },
   {
     id:"futuro", titulo:"El Futuro", subtitulo:"2015 – Hoy",
     color:0x00ffee, hex:"#00ffee", fogHex:0x001518, bgHex:0x000d10,
-    audio:"assets/audio/halo.mp3", audioId:"track_futuro",
-    zStart:-234, zEnd:-270,
+    audio:"assets/audio/eldenringaudio.mp3", audioId:"track_futuro",
+    zStart:-252, zEnd:-305,
     vitrinas:[
-      { z:-244, x:-3.4, label:"PlayStation 5", year:"2020", sub:"825GB SSD · La nueva generación", type:"orb", imdb:"9.1" },
-      { z:-257, x:3.4,  label:"Meta Quest 3",  year:"2023", sub:"El futuro es realidad mixta",     type:"orb", imdb:"8.9" },
+      { z:-262, x:-3.4, label:"PlayStation 5", year:"2020",
+        sub:"Sony 2020 · 825GB SSD · Ray Tracing · 50M consolas vendidas",
+        type:"orb", video:"assets/audio/Videos/playstation5video.mp4", imdb:"9.1" },
+      { z:-275, x:3.4,  label:"Elden Ring",    year:"2022",
+        sub:"FromSoftware · GOTY 2022 · Open world souls-like",
+        type:"orb", video:"assets/audio/Videos/Eldenringvideo.mp4", imdb:"9.7" },
+      { z:-288, x:-3.4, label:"Meta Quest 3",  year:"2023",
+        sub:"Realidad mixta · Pasthrough 4K · Gaming espacial",
+        type:"orb", video:"assets/audio/Videos/metavideo.mp4", imdb:"8.9" },
     ],
     datos:[
-      { z:-238, t:"VR Terapéutica", d:"La VR reduce ansiedad hospitalaria un 24% (AppliedVR, 2021). Usada en fisioterapia, rehabilitación cognitiva y fobias.", extra:"AppliedVR realizó el primer ensayo clínico randomizado de realidad virtual para dolor crónico (2021). 547 pacientes. Resultado: 65.7% reportaron reducción de dolor vs 40.7% en el grupo de control. La FDA aprobó el primer tratamiento de VR para dolor lumbar crónico en noviembre 2021." },
-      { z:-249, t:"IA Generativa", d:"AlphaGo derrotó al campeón mundial de Go en 2016. No Man\'s Sky genera 18 quintillones de planetas únicos con IA procedural." },
-      { z:-261, t:"El impacto total", d:"$184B en 2023. Supera cine ($33B) y música ($26B) combinados. 3.2 mil millones de jugadores. El arte más influyente del siglo XXI.", extra:"En 2023, la industria del videojuego generó $184 mil millones — más que el cine ($33B) y la música ($26B) combinados. Hay 3.2 mil millones de jugadores activos. En Colombia, la industria creció 15% en 2023. Los videojuegos son el arte más influyente y rentable del siglo XXI." },
+      { z:-262, t:"PlayStation 5 — La nueva generación (2020)", d:"825GB SSD con carga instantánea, Ray Tracing en tiempo real, haptic feedback. Sony vendió 50 millones de unidades. La brecha con el PC casi desapareció.", extra:"AppliedVR realizó el primer ensayo clínico randomizado de realidad virtual para dolor crónico (2021). 547 pacientes. Resultado: 65.7% reportaron reducción de dolor vs 40.7% en el grupo de control. La FDA aprobó el primer tratamiento de VR para dolor lumbar crónico en noviembre 2021." },
+      { z:-275, t:"Elden Ring — GOTY 2022 (FromSoftware)", d:"George R.R. Martin coescribió el mundo. Fusionó mundo abierto con dificultad extrema. 20 millones de copias. Demostró que los jugadores quieren desafío real, no asistencia constante." },
+      { z:-288, t:"El impacto total de los videojuegos", d:"$184B en 2023. Supera cine ($33B) y música ($26B) combinados. 3.2 mil millones de jugadores. El arte más influyente del siglo XXI.", extra:"En 2023, la industria del videojuego generó $184 mil millones — más que el cine ($33B) y la música ($26B) combinados. Hay 3.2 mil millones de jugadores activos. En Colombia, la industria creció 15% en 2023. Los videojuegos son el arte más influyente y rentable del siglo XXI." },
     ],
     graffiti:{ z:-251, x:-3.85, text:"THE\nFUTURE", color:"#00ffee" },
   },
@@ -162,17 +195,16 @@ const ZONAS = [
 // ═══════════════════════════════════════════════════════
 class AudioManager {
   constructor() {
-    this.ctx          = null;
-    this.masterGain   = null;   // gain maestro para fade global
-    this.source       = null;   // BufferSourceNode actual
-    this.bufferCache  = {};     // path → AudioBuffer cacheado
-    this.unlocked     = false;
-    this.currentPath  = null;
-    this.fading       = false;
-    this._targetVol   = 0.65;
+    this.ctx         = null;
+    this.masterGain  = null;
+    this.source      = null;
+    this.bufferCache = {};
+    this.unlocked    = false;
+    this.currentId   = null;   // ID de zona actual
+    this._targetVol  = 0.08;  // muy sutil — protagonista es el narrador/video
+    this._xfadeTimer = null;   // timer del crossfade actual (cancelable)
   }
 
-  // Llamar SINCRÓNICAMENTE dentro del click del botón "Entrar"
   async unlock(audioPath) {
     if (this.unlocked) return;
     try {
@@ -183,77 +215,106 @@ class AudioManager {
       if (this.ctx.state === "suspended") await this.ctx.resume();
       this.unlocked = true;
       if (audioPath) await this._play(audioPath, true);
-    } catch(e) { console.warn("Audio unlock failed:", e); }
+    } catch(e) { console.warn("Audio unlock:", e); }
   }
 
-  async play(zona) {
+  play(zona) {
     if (!this.unlocked || !zona.audio) return;
-    const trackId = zona.audioId || zona.audio;
-    if (trackId === this.currentPath) return;
-    this.currentPath = trackId;
-    // Volumen objetivo por zona — cada pista tiene dinámica distinta
-    this._targetVol = zona.id === "3d"     ? 0.72
-                    : zona.id === "futuro" ? 0.70
-                    : zona.id === "arcade" ? 0.60
-                    :                        0.65;
-    await this._play(zona.audio, false);
+    const id = zona.audioId || zona.audio;
+    if (id === this.currentId) return;
+    this.currentId   = id;
+    this._targetVol  = 0.08; // volumen uniforme bajo para todas las zonas
+    // Cancelar cualquier crossfade en curso y hacer transición limpia
+    this._cancelXfade();
+    this._crossfade(zona.audio);
+  }
+
+  _cancelXfade() {
+    if (this._xfadeTimer) {
+      clearTimeout(this._xfadeTimer);
+      this._xfadeTimer = null;
+    }
+  }
+
+  _crossfade(path) {
+    // Fade out inmediato del actual
+    if (this.source && this.ctx) {
+      const g = this.masterGain.gain;
+      const t = this.ctx.currentTime;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(g.value || 0.0001, t);
+      g.linearRampToValueAtTime(0.0001, t + 1.0);
+    }
+    // Cargar y reproducir nuevo tras 1.1s
+    this._xfadeTimer = setTimeout(async () => {
+      try {
+        const buf = await this._load(path);
+        if (!buf) return;
+        // Parar source anterior
+        try { this.source?.stop(0); } catch {}
+        // Crear nuevo source
+        const src     = this.ctx.createBufferSource();
+        src.buffer    = buf;
+        src.loop      = true;
+        src.connect(this.masterGain);
+        src.start(0);
+        this.source = src;
+        // Fade in suave
+        const g = this.masterGain.gain;
+        const t = this.ctx.currentTime;
+        g.cancelScheduledValues(t);
+        g.setValueAtTime(0.0001, t);
+        g.linearRampToValueAtTime(this._targetVol, t + 1.5);
+      } catch(e) { console.warn("Crossfade error:", e); }
+      this._xfadeTimer = null;
+    }, 1100);
+  }
+
+  async _load(path) {
+    if (!this.bufferCache[path]) {
+      try {
+        const resp = await fetch(path);
+        const arr  = await resp.arrayBuffer();
+        this.bufferCache[path] = await this.ctx.decodeAudioData(arr);
+      } catch(e) { console.warn("Load audio:", e); return null; }
+    }
+    return this.bufferCache[path];
   }
 
   async _play(path, isFirst) {
-    if (this.fading) return;   // evitar solapamiento de transiciones
-    try {
-      // Cargar buffer (con caché)
-      if (!this.bufferCache[path]) {
-        const resp   = await fetch(path);
-        const arrBuf = await resp.arrayBuffer();
-        this.bufferCache[path] = await this.ctx.decodeAudioData(arrBuf);
-      }
-      const buf = this.bufferCache[path];
-      this.currentPath = path;
-
-      if (isFirst) {
-        // Primera reproducción: arrancar y fade-in suave (2s)
-        this._startSource(buf);
-        this._ramp(0, this._targetVol || 0.65, 2.5);
-      } else {
-        // Cambio de zona: fade-out (1.5s) → parar → fade-in (1.5s)
-        this.fading = true;
-        this._ramp(this.masterGain.gain.value, 0, 2.2); // fade-out suave
-        await this._wait(2300);
-        if (this.source) { try { this.source.stop(); } catch {} }
-        this._startSource(buf);
-        this._ramp(0, this._targetVol || 0.65, 2.0);
-        await this._wait(2100);
-        this.fading = false;
-      }
-    } catch(e) { console.warn("Audio error:", e); this.fading = false; }
-  }
-
-  _startSource(buf) {
-    const src   = this.ctx.createBufferSource();
-    src.buffer  = buf;
-    src.loop    = true;
-    src.connect(this.masterGain);
-    src.start(0);
+    const buf = await this._load(path);
+    if (!buf) return;
+    try { this.source?.stop(0); } catch {}
+    const src = this.ctx.createBufferSource();
+    src.buffer = buf; src.loop = true;
+    src.connect(this.masterGain); src.start(0);
     this.source = src;
+    if (isFirst) {
+      const g = this.masterGain.gain;
+      const t = this.ctx.currentTime;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(0.0001, t);
+      g.linearRampToValueAtTime(this._targetVol, t + 2.0);
+    }
   }
 
-  _ramp(from, to, seconds) {
+  // Silenciar música de zona (cuando narrador o video habla)
+  duck(factor=0.0) {
+    if (!this.ctx || !this.masterGain) return;
     const g = this.masterGain.gain;
     const t = this.ctx.currentTime;
     g.cancelScheduledValues(t);
-    g.setValueAtTime(Math.max(from, 0.0001), t);
-    // Curva exponencial: suena más natural que lineal (percepción logarítmica del volumen)
-    g.exponentialRampToValueAtTime(Math.max(to, 0.0001), t + seconds);
+    g.setValueAtTime(Math.max(g.value, 0.0001), t);
+    g.linearRampToValueAtTime(Math.max(this._targetVol * factor, 0.0001), t + 0.4);
   }
 
-  _wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+  unduck() { this.duck(1.0); }
 
   destroy() {
-    try { this.source?.stop(); } catch {}
-    try { this.ctx?.close(); }  catch {}
+    this._cancelXfade();
+    try { this.source?.stop(0); } catch {}
+    try { this.ctx?.close(); }   catch {}
     this.unlocked = false;
-    this.fading   = false;
   }
 }
 
@@ -496,7 +557,7 @@ function buildCorridor(scene) {
 
   // Suelo reflectante
   const suelo = new THREE.Mesh(new THREE.PlaneGeometry(W,L),
-    new THREE.MeshStandardMaterial({color:0x080b12,roughness:0.04,metalness:0.72}));
+    new THREE.MeshStandardMaterial({color:0x020308,roughness:0.008,metalness:0.99}));
   suelo.rotation.x = -Math.PI/2;
   suelo.position.set(0,0,zC);
   scene.add(suelo);
@@ -504,11 +565,11 @@ function buildCorridor(scene) {
   // Techo nebulosa
   const techo = new THREE.Mesh(new THREE.PlaneGeometry(W,L),
     new THREE.MeshStandardMaterial({map:nebTex,roughness:1,metalness:0,
-      emissive:new THREE.Color(0x080a18),emissiveIntensity:0.28}));
+      emissive:new THREE.Color(0x050a20),emissiveIntensity:0.45}));
   techo.rotation.x = Math.PI/2; techo.position.set(0,H,zC); scene.add(techo);
 
   // Paredes mármol (material compartido)
-  const pMat = new THREE.MeshStandardMaterial({color:0x0d1018,map:mblTex,roughness:0.18,metalness:0.05});
+  const pMat = new THREE.MeshStandardMaterial({color:0x060810,map:mblTex,roughness:0.14,metalness:0.08});
   [[Math.PI/2,-W/2],[-Math.PI/2,W/2]].forEach(([ry,px])=>{
     const w = new THREE.Mesh(new THREE.PlaneGeometry(L,H),pMat);
     w.rotation.y=ry; w.position.set(px,H/2,zC); scene.add(w);
@@ -516,29 +577,48 @@ function buildCorridor(scene) {
   const wf = new THREE.Mesh(new THREE.PlaneGeometry(W,H),pMat);
   wf.position.set(0,H/2,-L+2); scene.add(wf);
 
-  // Línea guía dorada
-  const guia = new THREE.Mesh(new THREE.PlaneGeometry(0.07,L),ORO_MAT);
-  guia.rotation.x=-Math.PI/2; guia.position.set(0,0.002,zC); scene.add(guia);
+  // Línea guía doble — línea central cyan + dos líneas laterales azul
+  const guiaMat  = new THREE.MeshStandardMaterial({color:0x00ffee, emissive:0x00ffee, emissiveIntensity:1.8, roughness:0.02});
+  const guiaMat2 = new THREE.MeshStandardMaterial({color:0x2244aa, emissive:0x3366cc, emissiveIntensity:0.8, roughness:0.05});
+  const guia = new THREE.Mesh(new THREE.PlaneGeometry(0.04, L), guiaMat);
+  guia.rotation.x=-Math.PI/2; guia.position.set(0,0.003,zC); scene.add(guia);
+  // Líneas laterales paralelas
+  [-1.2, 1.2].forEach(ox => {
+    const gl = new THREE.Mesh(new THREE.PlaneGeometry(0.02, L), guiaMat2);
+    gl.rotation.x = -Math.PI/2; gl.position.set(ox, 0.002, zC); scene.add(gl);
+  });
 
-  // Columnas instanciadas
-  const colCount = Math.floor(L/13)*2;
-  const colIM = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.055,0.065,H*0.88,8),ORO_MAT,colCount);
+  // Columnas instanciadas — filtradas para no tapar vitrinas
+  // Posiciones de vitrinas a evitar (±3u)
+  const _vitrinaZ = [-11,-24,-29,-42,-55,-62,-74,-87,-108,-122,-136,-150,-164,-178,
+                     -205,-218,-232,-246,-262,-275,-288];
+  const _colPositions = [];
+  for(let z=-1;z>-L;z-=13){
+    const tooClose = _vitrinaZ.some(vz => Math.abs(z-vz) < 4);
+    if(!tooClose) _colPositions.push(z);
+  }
+  const colCount = _colPositions.length * 2;
+  const colIM = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.045,0.055,H*0.85,8),ORO_MAT,colCount);
   const dum = new THREE.Object3D(); let ci=0;
-  for(let z=-1;z>-L;z-=13)[-W/2+0.09,W/2-0.09].forEach(x=>{
-    dum.position.set(x,H*0.44,z); dum.updateMatrix(); colIM.setMatrixAt(ci++,dum.matrix);
+  _colPositions.forEach(z=>{
+    [-W/2+0.09,W/2-0.09].forEach(x=>{
+      dum.position.set(x,H*0.43,z); dum.updateMatrix(); colIM.setMatrixAt(ci++,dum.matrix);
+    });
   });
   colIM.instanceMatrix.needsUpdate=true; scene.add(colIM);
 
-  // Franjas doradas en paredes (solo 2 en vez de 6)
+  // Franjas neon en paredes — azul/cyan futurista
+  const franjaMat = new THREE.MeshStandardMaterial({color:0x0044aa, emissive:0x0044ff, emissiveIntensity:0.8, roughness:0.05});
+  const franjaMat2 = new THREE.MeshStandardMaterial({color:0x00ffcc, emissive:0x00ffcc, emissiveIntensity:0.6, roughness:0.05});
   [-W/2+0.06,W/2-0.06].forEach(x=>{
-    [H-0.28,0.28].forEach(y=>{
-      const f=new THREE.Mesh(new THREE.BoxGeometry(0.04,0.04,L),ORO_MAT);
+    [[H-0.28, franjaMat],[0.28, franjaMat2]].forEach(([y,mat])=>{
+      const f=new THREE.Mesh(new THREE.BoxGeometry(0.03,0.03,L),mat);
       f.position.set(x,y,zC); scene.add(f);
     });
   });
 
   // Focos instanciados (cada 8 unidades en lugar de cada 6)
-  const focoMat = new THREE.MeshStandardMaterial({color:0xfff8dc,emissive:0xfff8dc,emissiveIntensity:1.5});
+  const focoMat = new THREE.MeshStandardMaterial({color:0xaaddff,emissive:0x88ccff,emissiveIntensity:1.8});
   const focos = Math.floor(L/8)*2;
   const focoIM = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.06,0.1,0.12,6),focoMat,focos);
   let fi=0;
@@ -549,10 +629,18 @@ function buildCorridor(scene) {
   focoIM.instanceMatrix.needsUpdate=true; scene.add(focoIM);
 
   // God rays (reducidos — 1 cada 20 en lugar de 14)
-  const rayMat=new THREE.MeshBasicMaterial({color:0xfff8dc,transparent:true,opacity:0.022,side:THREE.BackSide});
+  const rayMat=new THREE.MeshBasicMaterial({color:0x00ccff,transparent:true,opacity:0.026,side:THREE.BackSide});
   for(let z=-10;z>-L;z-=20)[-1.8,1.8].forEach(x=>{
     const ray=new THREE.Mesh(new THREE.CylinderGeometry(0.01,0.55,4,6,1,true),rayMat);
     ray.position.set(x,H-2.1,z); scene.add(ray);
+  });
+
+
+  // Líneas de acento laterales en el suelo — dan profundidad y perspectiva
+  const accentMat = new THREE.MeshStandardMaterial({color:0x0033aa, emissive:0x0033ff, emissiveIntensity:0.5, roughness:0.05});
+  [-1.8, 1.8].forEach(ax => {
+    const acc = new THREE.Mesh(new THREE.PlaneGeometry(0.025, L), accentMat);
+    acc.rotation.x = -Math.PI/2; acc.position.set(ax, 0.001, zC); scene.add(acc);
   });
 
   // Polvo cósmico (400 en lugar de 700)
@@ -564,7 +652,7 @@ function buildCorridor(scene) {
     dPos[i*3+2]=-Math.random()*L;
   }
   dGeo.setAttribute("position",new THREE.BufferAttribute(dPos,3));
-  scene.add(new THREE.Points(dGeo,
+  scene.add(new THREE.Points(dGeo, // partículas azules del espacio
     new THREE.PointsMaterial({size:0.022,color:0x8899cc,transparent:true,opacity:0.4,sizeAttenuation:true})));
 }
 
@@ -757,15 +845,15 @@ function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} =
 
   // Beam de luz hacia arriba — delgado
   const beamMat = new THREE.MeshBasicMaterial({color, transparent:true, opacity:0.05, side:THREE.DoubleSide, depthWrite:false});
-  const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.46, 4.5, 8, 1, true), beamMat);
-  beam.position.set(x, 2.3, z); scene.add(beam);
+  const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.28, 2.8, 8, 1, true), beamMat);
+  beam.position.set(x, 1.4, z); scene.add(beam);
   floaters.push({obj:{material:beamMat}, baseY:0, phase:Math.random()*Math.PI*2+3, speed:0.5, type:"glow"});
 
   // 4 pilares con tope brillante
   const pillarMat = new THREE.MeshStandardMaterial({color:0x0a0f1a, roughness:0.05, metalness:0.90, emissive:new THREE.Color(color), emissiveIntensity:0.10});
   [0, Math.PI/2, Math.PI, Math.PI*1.5].forEach((ang, i) => {
     const px = x + Math.cos(ang)*0.82, pz = z + Math.sin(ang)*0.82;
-    scene.add(new THREE.Mesh(new THREE.CylinderGeometry(0.028,0.034,0.55,6), pillarMat));
+    scene.add(new THREE.Mesh(new THREE.CylinderGeometry(0.020,0.025,0.38,6), pillarMat));
     const last = scene.children[scene.children.length-1];
     last.position.set(px, 0.275, pz);
     const cap = new THREE.Mesh(new THREE.SphereGeometry(0.038,8,8),
@@ -784,15 +872,24 @@ function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} =
     floaters.push({obj:spark, baseY:0.07, phase:ang, speed:2.5+i*0.15, type:"glow"});
   }
 
-  // ── ILUMINACIÓN OPTIMIZADA — 2 luces por altar ───────
-  // Luz hemisférica falsa: MeshBasicMaterial en el disco ya da color
-  // Solo 2 PointLights por modelo para no reventar el límite de WebGL
-  const keyLight = new THREE.PointLight(0xfff4e0, 6.0, 8.0);
-  keyLight.position.set(x, 3.0, z+2.0); scene.add(keyLight);
+  // ── ILUMINACIÓN THREE-POINT CINEMATOGRÁFICA ──────────
+  // KEY LIGHT: frontal-superior, blanca cálida, dominante
+  const keyLight = new THREE.PointLight(0xfff8f0, 11.0, 10.0);
+  keyLight.position.set(x + 1.2, 3.6, z + 2.2); scene.add(keyLight);
 
-  const fillLight = new THREE.PointLight(color, 3.5, 5.0);
-  fillLight.position.set(x, 0.1, z); scene.add(fillLight);
-  floaters.push({obj:fillLight, baseY:0.1, phase:Math.random()*Math.PI*2, speed:1.0, type:"light"});
+  // FILL LIGHT: lateral izquierda, más suave, rellena sombras
+  const fillLight = new THREE.PointLight(0xdde8ff, 5.0, 7.5);
+  fillLight.position.set(x - 2.2, 2.5, z + 1.0); scene.add(fillLight);
+
+  // RIM LIGHT: desde atrás con color de zona — da silueta dramática
+  const rimLight = new THREE.PointLight(color, 6.0, 6.5);
+  rimLight.position.set(x, 2.8, z - 2.5); scene.add(rimLight);
+  floaters.push({obj:rimLight, baseY:2.8, phase:Math.random()*Math.PI*2, speed:0.8, type:"light"});
+
+  // GROUND LIGHT: desde abajo con color zona — efecto altar
+  const groundLight = new THREE.PointLight(color, 3.5, 4.0);
+  groundLight.position.set(x, 0.08, z); scene.add(groundLight);
+  floaters.push({obj:groundLight, baseY:0.08, phase:Math.random()*Math.PI*2+1, speed:1.1, type:"light"});
 
   // ── CARGA GLB ───────────────────────────────────────
   _gltfLoader.load(
@@ -828,15 +925,19 @@ function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} =
         mats.forEach(m => {
           if (!m) return;
           if (m.isMeshBasicMaterial) {
+            // Preservar textura original + añadir recepción de luz
             child.material = new THREE.MeshStandardMaterial({
-              map: m.map, color: m.color,
-              roughness: 0.35, metalness: 0.20,
-              emissive: m.color, emissiveIntensity: 0.22,
+              map:               m.map,
+              color:             m.color,
+              roughness:         0.30,
+              metalness:         0.26,
+              emissive:          m.color,
+              emissiveIntensity: 0.30, // brillo propio moderado + luces externas
             });
           } else if (m.isMeshStandardMaterial || m.isMeshPhysicalMaterial) {
-            m.roughness         = Math.min(m.roughness ?? 0.5, 0.50);
-            m.metalness         = Math.max(m.metalness ?? 0.1, 0.18);
-            m.emissiveIntensity = Math.max(m.emissiveIntensity ?? 0, 0.16);
+            m.roughness         = Math.min(m.roughness ?? 0.6, 0.34);
+            m.metalness         = Math.max(m.metalness ?? 0.0, 0.22);
+            m.emissiveIntensity = 0.28; // brillo propio visible, look cinematográfico
             m.needsUpdate       = true;
           }
         });
@@ -991,20 +1092,45 @@ function buildVitrina(scene, zona, cfg) {
     bg.position.set(wallX, fY, z);
     scene.add(bg);
 
-    // 2. Pantalla de video — lazy: se inicia solo cuando el jugador se acerca
+    // 2. Pantalla de video — lazy + canvas intermediario para mejor FPS
     const videoEl = document.createElement("video");
     videoEl.loop = true;
     videoEl.muted = true;
     videoEl.playsInline = true;
     videoEl.crossOrigin = "anonymous";
     videoEl.style.display = "none";
-    videoEl.preload = "none"; // NO precargar nada hasta que el jugador se acerque
+    videoEl.preload = "none";
+    // Atributos que ayudan al decodificador a mantener FPS estable
+    videoEl.setAttribute("playsinline", "");
+    videoEl.setAttribute("webkit-playsinline", "");
+    videoEl.disablePictureInPicture = true;
     document.body.appendChild(videoEl);
 
-    const vTex = new THREE.VideoTexture(videoEl);
+    // Canvas intermediario 640×360 — el navegador decodifica a resolución reducida
+    // y la textura de Three.js es más liviana. Mejora FPS en pantallas con video 1080p
+    const vCanvas = document.createElement("canvas");
+    vCanvas.width = 640; vCanvas.height = 360;
+    const vCtx2d = vCanvas.getContext("2d");
+
+    // VideoTexture sobre el canvas (no el video directo)
+    const vTex = new THREE.CanvasTexture(vCanvas);
     vTex.minFilter = THREE.LinearFilter;
     vTex.magFilter = THREE.LinearFilter;
     vTex.colorSpace = THREE.SRGBColorSpace;
+
+    // Función para copiar frame del video al canvas
+    let _vFramePending = false;
+    const _updateVFrame = () => {
+      if (videoEl.readyState >= 2 && !videoEl.paused) {
+        vCtx2d.drawImage(videoEl, 0, 0, 640, 360);
+        vTex.needsUpdate = true;
+      }
+      _vFramePending = false;
+    };
+    // Guardar referencia en el video element para llamar desde el loop
+    videoEl._updateFrame = _updateVFrame;
+    videoEl._framePending = () => _vFramePending;
+    videoEl._setFramePending = (v) => { _vFramePending = v; };
 
     const screen = new THREE.Mesh(
       new THREE.PlaneGeometry(fW, fH),
@@ -1049,7 +1175,18 @@ function buildVitrina(scene, zona, cfg) {
     colL.position.set(wallX + (x > 0 ? -0.5 : 0.5), fY - 0.5, z);
     scene.add(colL);
 
-    videoElements.push({ videoEl, texture: vTex, zoneId: zona.id, src: video, videoZ: z, videoX: x, active: false });
+    // Posición 3D de la pantalla para cálculo de distancia real
+    const screenPosX = wallX;
+    const screenPosZ = z;
+    videoElements.push({
+      videoEl, texture: vTex, zoneId: zona.id,
+      src: video, videoZ: z, videoX: x,
+      screenX: screenPosX, screenZ: screenPosZ,
+      label,           // para que updateGaze identifique qué panel es
+      active: false, buffering: false,
+      gainNode: null, sourceNode: null,
+      volume: 0,
+    });
 
   } else {
     // ════════════════════════════════════════════════════
@@ -1165,15 +1302,21 @@ function buildVideoPanel(scene, {z, x, rotY, video, label, year, hex}) {
     c2.rotation.y=rotY; c2.position.set(wallX+sd*0.6, fY+dy, z+dz); scene.add(c2);
   });
 
-  // Video — lazy load igual que las vitrinas
+  // Video — lazy load + canvas intermediario
   const videoEl=document.createElement("video");
   videoEl.loop=true; videoEl.muted=true;
   videoEl.playsInline=true; videoEl.crossOrigin="anonymous";
-  videoEl.preload="none"; // sin precarga
+  videoEl.preload="none";
+  videoEl.setAttribute("playsinline","");
+  videoEl.disablePictureInPicture=true;
   videoEl.style.display="none"; document.body.appendChild(videoEl);
-  const vTex=new THREE.VideoTexture(videoEl);
+  const vCanvas=document.createElement("canvas"); vCanvas.width=640; vCanvas.height=360;
+  const vCtx2d=vCanvas.getContext("2d");
+  const vTex=new THREE.CanvasTexture(vCanvas);
   vTex.minFilter=THREE.LinearFilter; vTex.magFilter=THREE.LinearFilter;
   vTex.colorSpace=THREE.SRGBColorSpace;
+  const _upF=()=>{if(videoEl.readyState>=2&&!videoEl.paused){vCtx2d.drawImage(videoEl,0,0,640,360);vTex.needsUpdate=true;}};
+  videoEl._updateFrame=_upF;
   const screen=new THREE.Mesh(new THREE.PlaneGeometry(fW,fH),
     new THREE.MeshBasicMaterial({map:vTex}));
   screen.rotation.y=rotY; screen.position.set(wallX+sd, fY, z); scene.add(screen);
@@ -1188,7 +1331,15 @@ function buildVideoPanel(scene, {z, x, rotY, video, label, year, hex}) {
   const pl = new THREE.PointLight(col, 0.6, 4);
   pl.position.set(wallX+(x>0?-0.8:0.8), fY+0.6, z); scene.add(pl);
 
-  videoElements.push({videoEl, texture:vTex, zoneId:"panel", src:video, videoZ:z, videoX:x, active:false});
+  videoElements.push({
+    videoEl, texture:vTex, zoneId:"panel",
+    src:video, videoZ:z, videoX:x,
+    screenX: wallX, screenZ: z,
+    active:false,
+    gainNode:null, sourceNode:null, volume:0,
+    noAudio: true,  // Alan Turing: solo video, sin audio — el narrador habla por él
+    label: label,   // para updateGaze
+  });
 }
 
 function buildOrbObj(scene,x,y,z,col){
@@ -1242,10 +1393,12 @@ function buildZoneParticles(scene, zona) {
 //  ILUMINACIÓN BASE (reducida — 5 luces en vez de 10)
 // ═══════════════════════════════════════════════════════
 function buildLighting(scene) {
-  scene.add(new THREE.AmbientLight(0x1a2030,2.5));       // más fuerte → menos PointLights necesarios
-  scene.add(new THREE.HemisphereLight(0x202840,0x080a10,0.8));
-  for(let z=-10;z>-L;z-=55){                            // cada 55u → ~5 luces en vez de 8
-    const pl=new THREE.PointLight(0xfff5e0,1.2,24);
+  scene.add(new THREE.AmbientLight(0x0a1428,2.2));       // ambient reducido — más contraste dramático
+  scene.add(new THREE.HemisphereLight(0x1a2a50,0x030509,0.75));
+  for(let z=-10;z>-L;z-=55){
+    // Alternar entre azul y cyan para dar variedad atmosférica
+    const col = Math.abs(z/55)%2===0 ? 0x4466ff : 0x00aacc;
+    const pl=new THREE.PointLight(col,1.0,26);
     pl.position.set(0,H-0.3,z); scene.add(pl);
   }
 }
@@ -1574,15 +1727,15 @@ function buildFloorArrows(scene) {
   // Materiales compartidos para las 3 flechas de cada set
   // Color neutro blanco — se tiñe con emissive
   const arrowShape = new THREE.Shape();
-  // Flecha apuntando hacia -Z (al frente en Three.js)
-  // Dibujada en plano XY, luego rotamos -90° en X para ponerla en el suelo
-  arrowShape.moveTo( 0,    0.35);  // punta
-  arrowShape.lineTo( 0.22, 0);
-  arrowShape.lineTo( 0.10, 0);
-  arrowShape.lineTo( 0.10,-0.30);
-  arrowShape.lineTo(-0.10,-0.30);
-  arrowShape.lineTo(-0.10, 0);
-  arrowShape.lineTo(-0.22, 0);
+  // rotation.x=-PI/2 mapea Y_local → +Z_mundo, Y-_local → -Z_mundo (adelante)
+  // Por eso la punta va en Y- y la cola en Y+
+  arrowShape.moveTo( 0,    -0.35); // PUNTA → apunta hacia -Z (adelante)
+  arrowShape.lineTo( 0.22,  0);
+  arrowShape.lineTo( 0.10,  0);
+  arrowShape.lineTo( 0.10,  0.30); // cola
+  arrowShape.lineTo(-0.10,  0.30);
+  arrowShape.lineTo(-0.10,  0);
+  arrowShape.lineTo(-0.22,  0);
   arrowShape.closePath();
 
   const arrowGeo = new THREE.ShapeGeometry(arrowShape);
@@ -1724,12 +1877,14 @@ function _updateCoinHUD() {
   }
   if (_coinsCollected >= total) {
     el.style.color = '#fff';
-    el.textContent = total + '/' + total + ' - COLECCION COMPLETA!';
+    el.style.textShadow = '0 0 14px #ffd700';
+    el.textContent = total + '/' + total + ' MONEDAS COMPLETADO!';
+    _mostrarRetroalimentacion();
   } else {
     el.textContent = _coinsCollected + '/' + total + ' MONEDAS';
   }
 
-  // Toast de recogida
+  // Toast de recogida individual
   let toast = document.getElementById('coin-toast');
   if (!toast) {
     toast = document.createElement('div');
@@ -1737,8 +1892,8 @@ function _updateCoinHUD() {
     toast.style.cssText = [
       'position:fixed','top:78px','left:50%',
       'transform:translateX(-50%)',
-      'background:rgba(255,215,0,.15)',
-      'border:1px solid rgba(255,215,0,.55)',
+      'background:rgba(255,215,0,.12)',
+      'border:1px solid rgba(255,215,0,.45)',
       'border-radius:10px','padding:6px 20px',
       'font-family:Orbitron,sans-serif','font-size:10px',
       'letter-spacing:.16em','color:#ffd700',
@@ -1747,10 +1902,90 @@ function _updateCoinHUD() {
     ].join(';');
     document.body.appendChild(toast);
   }
-  toast.textContent = 'MONEDA ' + _coinsCollected + '/' + total + ' RECOGIDA';
-  toast.style.opacity = '1';
-  clearTimeout(toast._t);
-  toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 1600);
+  if (_coinsCollected < total) {
+    toast.textContent = 'MONEDA ' + _coinsCollected + '/' + total + ' RECOGIDA';
+    toast.style.opacity = '1';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 1600);
+  }
+}
+
+function _mostrarRetroalimentacion() {
+  if (document.getElementById('coins-final-panel')) return;
+  document.body.style.cursor = 'default'; // mostrar cursor para interactuar con el panel
+
+  // Fondo oscuro
+  const overlay = document.createElement('div');
+  overlay.id = 'coins-final-panel';
+  overlay.style.cssText = [
+    'position:fixed','inset:0','background:rgba(0,0,0,0.88)',
+    'z-index:200','display:flex','align-items:center','justify-content:center',
+    'flex-direction:column','animation:coinsFadeIn .6s ease','pointer-events:all'
+  ].join(';');
+
+  overlay.innerHTML = `
+    <style>
+      @keyframes coinsFadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+      @keyframes coinsGold{0%,100%{text-shadow:0 0 20px #ffd700}50%{text-shadow:0 0 40px #ffd700,0 0 80px #ffd70088}}
+      .crf-inner{
+        background:linear-gradient(160deg,rgba(8,6,0,.98),rgba(20,15,0,.96));
+        border:1px solid rgba(255,215,0,0.4);border-radius:24px;
+        padding:36px 42px;max-width:560px;width:90%;text-align:center;
+        box-shadow:0 0 80px rgba(255,215,0,0.15),0 32px 80px rgba(0,0,0,0.9);
+        font-family:'Space Mono',monospace;
+      }
+      .crf-icon{font-size:56px;display:block;margin-bottom:12px;animation:coinsGold 2s infinite;}
+      .crf-title{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;
+                 color:#ffd700;margin-bottom:6px;letter-spacing:.08em;}
+      .crf-sub{font-size:11px;color:rgba(255,215,0,0.6);letter-spacing:.18em;
+               font-family:'Orbitron',sans-serif;margin-bottom:20px;}
+      .crf-msg{font-size:12px;color:rgba(210,185,140,0.85);line-height:1.8;
+               margin-bottom:22px;border-left:3px solid rgba(255,215,0,0.3);
+               padding-left:14px;text-align:left;}
+      .crf-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px;}
+      .crf-stat{background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);
+                border-radius:12px;padding:12px 8px;}
+      .crf-stat-num{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;
+                    color:#ffd700;display:block;text-shadow:0 0 12px #ffd70088;}
+      .crf-stat-lbl{font-size:9px;color:rgba(255,215,0,0.5);line-height:1.4;margin-top:3px;}
+      .crf-btn{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;
+               background:linear-gradient(135deg,rgba(60,40,0,.8),rgba(40,28,0,.9));
+               border:1px solid rgba(255,215,0,0.5);color:#ffd700;
+               border-radius:12px;padding:12px 32px;cursor:pointer;
+               transition:all .2s;margin-top:4px;}
+      .crf-btn:hover{background:rgba(255,215,0,0.15);box-shadow:0 0 20px rgba(255,215,0,0.2);}
+    </style>
+    <div class="crf-inner" style="position:relative">
+      <button onclick="
+        document.getElementById('coins-final-panel').style.display='none';
+        document.body.style.cursor='none';
+      " style="position:absolute;top:-8px;right:-8px;width:32px;height:32px;
+        border-radius:50%;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.5);
+        color:#ffd700;font-size:16px;cursor:pointer;display:flex;align-items:center;
+        justify-content:center;font-family:monospace;line-height:1;z-index:10">✕</button>
+      <span class="crf-icon">★</span>
+      <div class="crf-title">COLECCIÓN COMPLETA</div>
+      <div class="crf-sub">16 / 16 MONEDAS RECOLECTADAS</div>
+      <p class="crf-msg">
+        Exploraste 70 años de historia del videojuego de principio a fin. 
+        Desde los osciloscopios de 1952 hasta la realidad virtual de 2023, 
+        recorriste cada zona y descubriste los hitos que construyeron 
+        la industria de entretenimiento más grande del siglo XXI.<br/><br/>
+        Has demostrado que los videojuegos son historia, cultura y ciencia — 
+        no solo entretenimiento.
+      </p>
+      <div class="crf-stats">
+        <div class="crf-stat"><span class="crf-stat-num">6</span><div class="crf-stat-lbl">Zonas exploradas</div></div>
+        <div class="crf-stat"><span class="crf-stat-num">70+</span><div class="crf-stat-lbl">Años de historia</div></div>
+        <div class="crf-stat"><span class="crf-stat-num">16</span><div class="crf-stat-lbl">Monedas · Hitos</div></div>
+      </div>
+      <button class="crf-btn" onclick="
+        document.getElementById('coins-final-panel').style.display='none';
+        document.body.style.cursor='none';
+      ">CONTINUAR EXPLORANDO</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
 }
 
 function updateCoins(camera, audioCtx) {
@@ -1784,6 +2019,227 @@ function updateCoins(camera, audioCtx) {
 }
 
 
+
+// ═══════════════════════════════════════════════════════
+//  NARRADOR — Web Speech API
+//  Narra la experiencia de forma inmersiva al entrar en cada zona
+// ═══════════════════════════════════════════════════════
+const NARRACIONES = {
+  origen: "Bienvenido. Año 1952. Los primeros juegos no tenían pantallas de colores ni sonido. Solo osciloscopios y transistores. Pero algo comenzó aquí que cambiaría para siempre la historia de la humanidad.",
+  arcade: "Década de los 70. Las monedas de 25 centavos alimentaban máquinas que nunca dormían. Los salones recreativos eran el corazón de la cultura juvenil. Pong. Space Invaders. Pac-Man. Nació una industria.",
+  consolas: "1983. El gran crash casi destruyó todo. Pero Nintendo lo resucitó con un italiano que saltaba sobre hongos. La consola doméstica llegó para quedarse. El gaming entró al hogar para siempre.",
+  "3d": "1994. PlayStation. El CD-ROM. La tercera dimensión. Por primera vez, los mundos virtuales tenían profundidad real. Mario corrió libre en el espacio. Zelda redefinió la aventura. Fue una revolución total.",
+  online: "2004. World of Warcraft conectó millones de jugadores en un mundo compartido. El gaming dejó de ser solitario para siempre. Nació el e-sport. Nació la comunidad global. Nació una nueva forma de existir.",
+  futuro: "Hoy. La realidad se mezcla con lo virtual. La inteligencia artificial genera mundos infinitos. Ciento ochenta y cuatro mil millones de dólares. Tres mil millones de jugadores. El arte más importante del siglo veintiuno.",
+};
+
+
+// ── NARRACIONES DE PANELES ─────────────────────────────────────────
+const PANEL_NARRACIONES = {
+  "Alan Turing": "Mil novecientos cincuenta. Alan Turing propuso que las máquinas podían aprender y jugar. Diseñó un algoritmo de ajedrez antes de que existieran computadoras capaces de ejecutarlo. Turing sentó las bases matemáticas de la inteligencia artificial y los mundos virtuales.",
+
+  "Tennis for Two": "Mil novecientos cincuenta y ocho. William Higinbotham diseñó este juego de tenis en un osciloscopio para el Día Abierto del Laboratorio Brookhaven. Nadie imaginó que estaba inventando una industria.",
+  "Spacewar!": "Mil novecientos sesenta y dos. Estudiantes del MIT crearon Spacewar! en una computadora del tamaño de una habitación. Fue el primer juego distribuido digitalmente entre universidades.",
+  "Pong": "Mil novecientos setenta y dos. Atari. La primera máquina fue instalada en un bar. En dos semanas estaba atascada de monedas. Nació la industria del videojuego.",
+  "Space Invaders": "Mil novecientos setenta y ocho. Taito. Space Invaders agotó las monedas de cien yenes en Japón. Fue el primer ícono cultural global de los videojuegos.",
+  "Pac-Man": "Mil novecientos ochenta. Namco. Toru Iwatani se inspiró en una pizza. Los cuatro fantasmas tienen inteligencia artificial distinta. Pac-Man fue el primer videojuego con merchandising masivo.",
+  "Super Mario Bros": "Mil novecientos ochenta y cinco. Nintendo salvó la industria tras el gran crash. Mario corrió, saltó y definió lo que significa un buen diseño de niveles. Noventa millones de copias.",
+  "E.T. El Videojuego": "Mil novecientos ochenta y dos. El peor videojuego de la historia. Atari fabricó doce millones de cartuchos y no vendió ni la mitad. Los enterró en el desierto de Nuevo México. Esto causó el Gran Crash de 1983.",
+  "PlayStation": "Mil novecientos noventa y cuatro. Sony entró al mercado con el CD-ROM. La tercera dimensión se hizo accesible. Ciento dos millones de consolas vendidas. El gaming llegó a los adultos.",
+  "Super Mario 64": "Mil novecientos noventa y seis. Mario corrió libre en el espacio tridimensional por primera vez. Inventó la cámara libre, el joystick analógico y el diseño de mundo abierto. Es la obra maestra de Miyamoto.",
+  "Zelda: Ocarina of Time": "Mil novecientos noventa y ocho. Nintendo. Metacritic noventa y nueve sobre cien. El mejor juego de la historia según la crítica. Ocarina of Time inventó el apuntado con botón Z, el sistema de tiempo y la narrativa épica en 3D.",
+  "Metal Gear Solid": "Mil novecientos noventa y ocho. Konami. Hideo Kojima demostró que los videojuegos podían tener narrativa cinematográfica. Inventó el género stealth. Un juego sobre la guerra que criticaba la guerra.",
+  "GoldenEye 007": "Mil novecientos noventa y siete. Rare. Nueve universitarios que nunca habían hecho un juego crearon el FPS que definió una generación. El multijugador en pantalla dividida se convirtió en rito social.",
+  "Halo: Combat Evolved": "Dos mil uno. Bungie. Lanzado con Xbox, demostró que los shooters funcionaban perfectamente en consola. Estableció el modelo del FPS online que dominó la siguiente década.",
+  "World of Warcraft": "Dos mil cuatro. Blizzard. Doce millones de suscriptores en su pico. World of Warcraft demostró que los mundos virtuales persistentes podían conectar a millones. Inventó la economía de suscripción digital.",
+  "Call of Duty 4: Modern Warfare": "Dos mil siete. Infinity Ward. Call of Duty cuatro reinventó el multijugador online con el sistema de experiencia, rangos y killstreaks. Cada shooter que vino después lo copió. Dieciséis millones de copias.",
+  "League of Legends": "Dos mil nueve. Riot Games. League of Legends creó el modelo free-to-play con cosméticos que hoy domina la industria. El Mundial de dos mil diecinueve: cien millones de espectadores simultáneos.",
+  "Minecraft": "Dos mil once. Mojang. Un solo programador, en Java, en su tiempo libre. Doscientos treinta y ocho millones de copias. El juego más vendido de la historia humana. Hoy enseña matemáticas y arquitectura en ciento quince países.",
+  "PlayStation 5": "Dos mil veinte. Sony. La siguiente generación llegó con unidad de estado sólido de ochocientos veinticinco gigabytes, ray tracing en tiempo real y carga instantánea. El futuro del gaming ya está aquí.",
+  "Elden Ring": "Dos mil veintidós. FromSoftware y George R. R. Martin. Juego del Año dos mil veintidós. Fusionó el mundo abierto con la dificultad extrema. Demostró que los videojuegos son la nueva literatura épica.",
+  "Meta Quest 3": "Dos mil veintitrés. Meta. La realidad mixta permite superponer mundos virtuales sobre el real. El gaming ya no está en una pantalla. Está en todas partes. El futuro comenzó."
+};
+
+// Sistema de detección de mirada fija a un panel
+let _gazeTimer    = null;   // setTimeout de 2.5s
+let _gazeTarget   = null;   // label del panel que se está mirando
+let _lastNarrPanel= "";     // último panel narrado (evitar repetición)
+const GAZE_TIME   = 2500;   // ms que hay que mirar antes de narrar
+const GAZE_DOT    = 0.65;   // dot product mínimo (mirando bastante directo)
+const GAZE_DIST   = 11;     // distancia máxima para detectar mirada
+
+function _narrarPanel(label) {
+  if (!_narratorActive) return;
+  if (label === _lastNarrPanel) return;
+  const texto = PANEL_NARRACIONES[label];
+  if (!texto) return;
+
+  _lastNarrPanel = label;
+
+  // Cancelar narración de zona en curso para dar paso al panel
+  if (window.responsiveVoice) window.responsiveVoice.cancel();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  if (_currentUtterance) { try { _currentUtterance.onend = null; } catch(e){} }
+
+  setTimeout(() => {
+    if (window.responsiveVoice) {
+      window.responsiveVoice.speak(texto, "Spanish Male", {
+        pitch: 0.82, rate: 0.83, volume: 0.88
+      });
+      return;
+    }
+    if (!window.speechSynthesis) return;
+    const _sp = () => {
+      const utt = new SpeechSynthesisUtterance(texto);
+      utt.lang = "es-ES"; utt.rate = 0.84; utt.pitch = 0.90; utt.volume = 0.90;
+      const voices = window.speechSynthesis.getVoices();
+      const esV = voices.find(v => v.lang.startsWith("es") && /male|jorge|pablo/i.test(v.name))
+               || voices.find(v => v.lang === "es-ES") || voices[0];
+      if (esV) utt.voice = esV;
+      _currentUtterance = utt;
+      window.speechSynthesis.speak(utt);
+    };
+    window.speechSynthesis.getVoices().length > 0 ? _sp()
+      : (window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged=null; _sp(); });
+  }, 300);
+}
+
+// _camDir ya declarado arriba en el módulo (para updateVideos)
+const _camDirGaze = new THREE.Vector3();
+
+function updateGaze(videoEls, camera) {
+  if (!_narratorActive) return;
+  camera.getWorldDirection(_camDirGaze);
+
+  // Buscar panel que esté siendo mirado fijamente
+  let gazeLabel = null;
+  let gazeDist  = Infinity;
+
+  videoEls.forEach(v => {
+    if (!v.active) return;
+    const dx = (v.screenX ?? v.videoX) - camera.position.x;
+    const dz  = v.videoZ - camera.position.z;
+    const dist = Math.sqrt(dx*dx + dz*dz);
+    if (dist > GAZE_DIST) return;
+
+    // Vector normalizado cámara→panel
+    const len = Math.sqrt(dx*dx + dz*dz) || 1;
+    const dot = (_camDirGaze.x*(dx/len) + _camDirGaze.z*(dz/len));
+    if (dot > GAZE_DOT && dist < gazeDist) {
+      gazeLabel = v.label;
+      gazeDist  = dist;
+    }
+  });
+
+  if (gazeLabel && gazeLabel !== _gazeTarget) {
+    // Nuevo panel en el crosshair — iniciar temporizador
+    _gazeTarget = gazeLabel;
+    clearTimeout(_gazeTimer);
+    _gazeTimer = setTimeout(() => {
+      if (_gazeTarget === gazeLabel) _narrarPanel(gazeLabel);
+    }, GAZE_TIME);
+  } else if (!gazeLabel && _gazeTarget) {
+    // Dejó de mirar — cancelar temporizador
+    _gazeTarget = null;
+    clearTimeout(_gazeTimer);
+  }
+}
+
+let _narratorActive = true;
+let _lastNarratedZone = "";
+let _currentUtterance = null;
+
+function narrarZona(zonaId) {
+  if (!_narratorActive) return;
+  if (zonaId === _lastNarratedZone) return;
+  if (!NARRACIONES[zonaId]) return;
+
+  _lastNarratedZone = zonaId;
+  const texto = NARRACIONES[zonaId];
+
+  // Cancelar cualquier narración en curso
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  if(_currentUtterance) { try{_currentUtterance.onend=null;}catch(e){} }
+
+  setTimeout(() => {
+    // Método 1: ResponsiveVoice (CDN gratuito, voz de alta calidad)
+    if (window.responsiveVoice && window.responsiveVoice.isPlaying) {
+      window.responsiveVoice.cancel();
+    }
+    if (window.responsiveVoice) {
+      window.responsiveVoice.speak(texto, "Spanish Male", {
+        pitch: 0.8, rate: 0.85, volume: 0.85
+      });
+      return;
+    }
+
+    // Método 2: Web Speech API con carga robusta de voces
+    if (!window.speechSynthesis) return;
+
+    const _speak = () => {
+      const utt = new SpeechSynthesisUtterance(texto);
+      utt.lang   = "es-ES";
+      utt.rate   = 0.86;
+      utt.pitch  = 0.92;
+      utt.volume = 0.88;
+
+      const voices = window.speechSynthesis.getVoices();
+      // Prioridad: voz masculina española > cualquier español > cualquier voz
+      const esVoice =
+        voices.find(v => v.lang.startsWith("es") && /male|hombre|jorge|pablo|miguel/i.test(v.name)) ||
+        voices.find(v => v.lang === "es-ES") ||
+        voices.find(v => v.lang.startsWith("es")) ||
+        voices[0];
+      if (esVoice) utt.voice = esVoice;
+
+      _currentUtterance = utt;
+      window.speechSynthesis.speak(utt);
+    };
+
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      _speak();
+    } else {
+      // Las voces aún no cargaron — esperar el evento
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.onvoiceschanged = null;
+        _speak();
+      };
+      // Timeout de seguridad: hablar igual si las voces no llegan en 2s
+      setTimeout(() => { if(!_currentUtterance) _speak(); }, 2000);
+    }
+  }, 1200);
+}
+
+// Botón de toggle narrador (se añade al HUD del museo)
+function buildNarratorToggle() {
+  const btn = document.createElement("button");
+  btn.id = "narrator-btn";
+  btn.textContent = "NARRADOR: ON";
+  btn.style.cssText = [
+    "position:fixed","bottom:18px","right:18px",
+    "background:rgba(0,0,0,0.6)","border:1px solid rgba(255,255,255,0.2)",
+    "border-radius:8px","color:rgba(200,220,210,0.7)",
+    "font-family:Orbitron,sans-serif","font-size:9px",
+    "letter-spacing:.14em","padding:6px 12px",
+    "cursor:pointer","z-index:60",
+    "transition:all .2s","pointer-events:all"
+  ].join(";");
+  btn.onclick = () => {
+    _narratorActive = !_narratorActive;
+    if (!_narratorActive) {
+      window.speechSynthesis.cancel();
+      btn.textContent = "NARRADOR: OFF";
+      btn.style.opacity = "0.4";
+    } else {
+      btn.textContent = "NARRADOR: ON";
+      btn.style.opacity = "1";
+      _lastNarratedZone = ""; // reiniciar para que narre la zona actual
+    }
+  };
+  document.body.appendChild(btn);
+}
+
 export async function initMuseumWalk({canvas}){
   // Crear audioMgr ANTES de la intro para poder pasarlo como callback
   const audioMgr = new AudioManager();
@@ -1792,7 +2248,12 @@ export async function initMuseumWalk({canvas}){
   // Le pasamos la función que se llama cuando el usuario pulsa "Entrar"
   await showIntroScreen(() => {
     // Este callback se ejecuta DENTRO del handler del click → contexto de usuario válido
-    audioMgr.unlock(ZONAS[0].audio);
+    audioMgr.unlock(ZONAS[0].audio).then(() => {
+      // Reconectar videos activos que no tenían AudioContext todavía
+      videoElements.forEach(v => {
+        if (v.active && !v.gainNode && audioMgr.ctx) _conectarAudioVideo(v);
+      });
+    });
   });
 
   const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"});
@@ -1800,12 +2261,12 @@ export async function initMuseumWalk({canvas}){
   renderer.setSize(innerWidth,innerHeight,false);
   renderer.shadowMap.enabled=false;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.1;
-  renderer.outputColorSpace=THREE.LinearSRGBColorSpace;
+  renderer.toneMappingExposure=1.22;
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
 
   const scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x06070d);
-  scene.fog=new THREE.Fog(0x06070d,10,30);     // niebla MÁS agresiva → menos objetos dibujados
+  scene.background=new THREE.Color(0x030408);
+  scene.fog=new THREE.Fog(0x030408,9,28);       // niebla ligeramente más cercana — más profundidad cinematográfica
 
   const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,0.1,40); // far 52→40
   camera.position.set(0,1.72,1.6);
@@ -1814,7 +2275,7 @@ export async function initMuseumWalk({canvas}){
   const halfW=Math.round(innerWidth/4), halfH=Math.round(innerHeight/4);
   const composer=new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene,camera));
-  const bloom=new UnrealBloomPass(new THREE.Vector2(halfW,halfH),0.5,0.35,0.90);
+  const bloom=new UnrealBloomPass(new THREE.Vector2(halfW,halfH),0.62,0.40,0.86);
   composer.addPass(bloom);
 
   // Construir mundo
@@ -1831,6 +2292,7 @@ export async function initMuseumWalk({canvas}){
   buildEntrance(scene, welcomeImg);
   buildHoloPanels(scene);
   buildCoins(scene);           // Monedas coleccionables
+  buildNarratorToggle();        // Botón del narrador
   buildFloorArrows(scene);      // Flechas neon en el suelo
   setTimeout(_updateCoinHUD, 1200); // Mostrar contador inicial
 
@@ -1851,15 +2313,31 @@ export async function initMuseumWalk({canvas}){
         loadGLBModel(scene,"assets/modelados/nintendo_game_boy_original_1989.glb",{
           x:0, z:midZ, scale:1.6, rotY:-Math.PI*0.2, color:0x44ff88
         });
+      } else if(i===2){
+        // Transición Consolas → 3D: NES como puente hacia PlayStation
+        loadGLBModel(scene,"assets/modelados/nintendo_nes_original.glb",{
+          x:0, z:midZ, scale:2.0, rotY:Math.PI*0.75, color:0x4488ff
+        });
+      } else if(i===3){
+        // Transición 3D → Online: Darius con color online
+        loadGLBModel(scene,"assets/modelados/darius.glb",{
+          x:0, z:midZ, scale:2.2, rotY:Math.PI*0.5, color:0xcc44ff
+        });
+      } else if(i===4){
+        // Transición Online → Futuro: armadura con color futuro
+        loadGLBModel(scene,"assets/modelados/armadura.glb",{
+          x:0, z:midZ, scale:2.0, rotY:-Math.PI*0.3, color:0x00ffee
+        });
       } else {
         buildStatua(scene,0,midZ,zona.color);
       }
     }
   });
 
-  // Modelo Darius — en la posición del dato MMORPG (z=-186, zona 3D)
-  loadGLBModel(scene, "assets/modelados/darius.glb", {
-    x: 0, z: -186, scale: 2.0, rotY: Math.PI * 0.15, color: 0x4488ff
+  // Gaming Setup — en la posición del dato MMORPG (z=-186, zona 3D)
+  // Reemplaza el Darius duplicado — modelo de setup gamer moderno
+  loadGLBModel(scene, "assets/modelados/niknet_art-gamer-2746.glb", {
+    x: 1.2, z: -186, scale: 1.8, rotY: -Math.PI * 0.4, color: 0x4488ff
   });
 
   // Panel especial de Alan Turing — pared izquierda, al fondo de la zona Origen
@@ -1883,6 +2361,7 @@ export async function initMuseumWalk({canvas}){
   let lastZ=999;
 
   
+
 function detectZone(){
     const z=camera.position.z;
     if(Math.abs(z-lastZ)<0.08) return;
@@ -1893,6 +2372,7 @@ function detectZone(){
       fogTarget.set(zona.fogHex); bgTarget.set(zona.bgHex);
       audioMgr.play(zona);
       hideCard(card);
+      narrarZona(zona.id);  // Narrador inmersivo al entrar en zona
     }
     updateHUD(hud,fill,zonaActual,Math.abs(z)/(L-5));
 
@@ -1912,57 +2392,162 @@ function detectZone(){
   }
   let _lastCardKey="";
 
-  // ── SISTEMA DE VIDEO POR MIRADA ──────────────────────
-  // Un video se activa SOLO si el jugador:
-  //   1. Está cerca (< DIST_MAX unidades en Z)
-  //   2. Está mirando hacia la pared donde está ese video
-  //      (dot product entre dirección de cámara y normal de la pared > LOOK_DOT)
-  const VIDEO_DIST_MAX = 18;   // distancia máxima para activar
-  const VIDEO_DIST_OFF = 20;   // distancia para desactivar
-  const LOOK_DOT       = 0.12; // ~83° de arco — activa aunque el jugador no mire perfectamente
+  // ── SISTEMA DE VIDEO/AUDIO POR MIRADA DIRECTA ────────────────
+  // Solo hay audio o video reproduciéndose si el jugador está
+  // MIRANDO DIRECTAMENTE ese panel específico. Si no lo mira,
+  // ese panel queda completamente en silencio y pausado.
+  const VID_LOOK_DIST  = 6.5;   // distancia máxima para poder activar el panel
+  const VID_LOOK_DOT   = 0.66;  // qué tan directo debe apuntar la mirada (más alto = más estricto)
+  const AUD_FULL_DIST  = 2.8;   // distancia para volumen máximo del video
+  const AUD_START_DIST = 5.5;   // distancia donde empieza a subir el volumen
+  const AUD_MAX_VOL    = 0.55;  // volumen máximo del audio de video
 
-  const _camDir = new THREE.Vector3();
+  const _vDir = new THREE.Vector3();
+
+  // Función para conectar el GainNode de un video al AudioContext
+  function _conectarAudioVideo(v) {
+    const ctx = audioMgr?.ctx;
+    if (!ctx || !v.videoEl || v.gainNode) return; // ya conectado
+    if (v.noAudio) return; // panel sin audio (ej: Alan Turing — narrador lo cubre)
+    try {
+      v.sourceNode = ctx.createMediaElementSource(v.videoEl);
+      v.gainNode   = ctx.createGain();
+      v.gainNode.gain.setValueAtTime(0, ctx.currentTime);
+      v.sourceNode.connect(v.gainNode);
+      v.gainNode.connect(ctx.destination);
+      v.videoEl.muted = false;
+    } catch(e) {
+      console.warn('[VideoAudio] No se pudo conectar:', e.message);
+    }
+  }
+
+  // Retorna {looking:bool, dist:number} — ¿el jugador mira directamente este panel?
+  function _isLookingAt(v) {
+    camera.getWorldDirection(_vDir);
+    const dx   = (v.screenX ?? v.videoX) - camera.position.x;
+    const dz   = v.videoZ - camera.position.z;
+    const dist = Math.sqrt(dx*dx + dz*dz);
+    if (dist > VID_LOOK_DIST) return { looking: false, dist };
+    const len = dist || 1;
+    const dot = _vDir.x*(dx/len) + _vDir.z*(dz/len);
+    return { looking: dot > VID_LOOK_DOT, dist, dot };
+  }
+
+  let _wasVideoAudible = false; // para unduck cuando deja de haber video
 
   function updateVideos() {
-    camera.getWorldDirection(_camDir); // dirección normalizada de hacia donde mira
+    const ctx = audioMgr?.ctx;
 
-    const camZ = camera.position.z;
-    const camX = camera.position.x;
-
+    // PRE-BUFFER silencioso: preparar videos cercanos sin reproducirlos
     videoElements.forEach(v => {
-      const distZ = Math.abs(camZ - v.videoZ);
-      const distX = Math.abs(camX - (v.videoX > 0 ? W/2 : -W/2));
-
-      // Vector desde cámara hacia la pantalla (solo X porque las pantallas son laterales)
-      // Pared derecha (videoX > 0): normal apunta hacia -X (el jugador debe mirar +X)
-      // Pared izquierda (videoX < 0): normal apunta hacia +X (el jugador debe mirar -X)
-      const wallNormalX = v.videoX > 0 ? 1 : -1;
-
-      // Dot product: cuánto está mirando el jugador hacia esa pared
-      // _camDir.x > 0 = mira derecha, < 0 = mira izquierda
-      const lookDot = _camDir.x * wallNormalX;
-
-      // Muy cerca (< 9u): activar siempre aunque no mire exactamente
-      const isVeryClose = distZ < 9;
-      const isLooking = (distZ < VIDEO_DIST_MAX && lookDot > LOOK_DOT) || isVeryClose;
-
-      if (isLooking && !v.active) {
-        // Activar: cargar src y reproducir
-        v.active = true;
-        if (!v.videoEl.src || v.videoEl.src === window.location.href) {
-          v.videoEl.src = v.src;
-        }
-        v.videoEl.play().catch(() => {});
-
-      } else if (!isLooking && v.active && distZ > VIDEO_DIST_OFF) {
-        // Desactivar solo al alejarse — evita flicker si gira la cabeza brevemente
-        v.active = false;
-        v.videoEl.pause();
-        v.videoEl.src  = "";
-        v.videoEl.load(); // libera buffer de decodificación
+      const dz = Math.abs(camera.position.z - v.videoZ);
+      if (dz < 14 && !v.buffering && !v.videoEl.src) {
+        v.buffering = true;
+        v.videoEl.src     = v.src;
+        v.videoEl.preload = "auto";
+        v.videoEl.load();
       }
     });
+
+    // Si narrador habla → silenciar todo y salir
+    const narratorSpeaking =
+      (window.responsiveVoice?.isPlaying?.()) ||
+      (window.speechSynthesis?.speaking);
+    if (narratorSpeaking) {
+      videoElements.forEach(v => {
+        if (v.gainNode && ctx) {
+          v.gainNode.gain.cancelScheduledValues(ctx.currentTime);
+          v.gainNode.gain.setTargetAtTime(0, ctx.currentTime, 0.15);
+          v.volume = 0;
+        }
+      });
+      audioMgr?.duck?.(0.3); // música de zona baja pero no desaparece
+      _wasVideoAudible = false;
+      return;
+    }
+
+    // ── DETERMINAR CUÁL PANEL MIRA EL JUGADOR ──
+    let focusedVideo  = null;
+    let focusedDist   = Infinity;
+
+    videoElements.forEach(v => {
+      const { looking, dist } = _isLookingAt(v);
+
+      if (looking) {
+        // Activar video si no está activo
+        if (!v.active) {
+          v.active = true;
+          const doPlay = () => { if (v.active) v.videoEl.play().catch(()=>{}); };
+          if (v.videoEl.readyState >= 2) doPlay();
+          else v.videoEl.addEventListener('canplay', doPlay, { once: true });
+          if (ctx && ctx.state !== 'suspended') _conectarAudioVideo(v);
+        }
+        if (dist < focusedDist) { focusedDist = dist; focusedVideo = v; }
+      } else {
+        // NO está mirando → desactivar inmediatamente
+        if (v.active) {
+          v.active = false;
+          v.buffering = false;
+          // Silenciar el gain de este video
+          if (v.gainNode && ctx) {
+            v.gainNode.gain.cancelScheduledValues(ctx.currentTime);
+            v.gainNode.gain.setTargetAtTime(0, ctx.currentTime, 0.2);
+            v.volume = 0;
+          }
+          // Pausar y liberar en 500ms
+          setTimeout(() => {
+            if (!v.active) {
+              v.videoEl.pause();
+              v.videoEl.preload = "none";
+              v.videoEl.src = "";
+              v.videoEl.load();
+            }
+          }, 500);
+        }
+        // Silenciar gain aunque esté "activo" (por si no se desactivó a tiempo)
+        if (v.gainNode && ctx && (v.volume ?? 0) > 0.005) {
+          v.gainNode.gain.cancelScheduledValues(ctx.currentTime);
+          v.gainNode.gain.setTargetAtTime(0, ctx.currentTime, 0.1);
+          v.volume = 0;
+        }
+      }
+    });
+
+    // ── AUDIO DEL PANEL EN FOCO ──
+    if (focusedVideo && focusedVideo.gainNode && ctx) {
+      // Calcular volumen según distancia
+      let targetVol = 0;
+      if (focusedDist <= AUD_FULL_DIST) {
+        targetVol = AUD_MAX_VOL;
+      } else if (focusedDist < AUD_START_DIST) {
+        const t = (focusedDist - AUD_FULL_DIST) / (AUD_START_DIST - AUD_FULL_DIST);
+        targetVol = AUD_MAX_VOL * (1 - t*t*(3-2*t)); // smoothstep
+      }
+
+      if (Math.abs(targetVol - (focusedVideo.volume ?? 0)) > 0.01) {
+        focusedVideo.volume = targetVol;
+        focusedVideo.gainNode.gain.cancelScheduledValues(ctx.currentTime);
+        focusedVideo.gainNode.gain.setTargetAtTime(
+          targetVol, ctx.currentTime, targetVol > 0.01 ? 0.4 : 0.15
+        );
+      }
+
+      // Música de zona baja cuando hay video con audio
+      if (!_wasVideoAudible) {
+        audioMgr?.duck?.(0.15); // 15% del volumen normal
+        _wasVideoAudible = true;
+      }
+    } else {
+      // No hay video en foco → restaurar música de zona
+      if (_wasVideoAudible) {
+        audioMgr?.unduck?.();
+        _wasVideoAudible = false;
+      }
+    }
   }
+
+  // Pre-cargar voces TTS
+  if(window.speechSynthesis) window.speechSynthesis.getVoices();
 
   const clock=new THREE.Clock();
   const dum=new THREE.Object3D();
@@ -1978,6 +2563,13 @@ function detectZone(){
     detectZone();
     const camZ=camera.position.z;          // debe estar antes de updateArrows y floaters
     if(frameN%6===0) updateVideos();
+    if(frameN%8===0) updateGaze(videoElements, camera);
+    // Actualizar frames de canvas de video — cada 2 frames para suavidad
+    if(frameN%2===0){
+      videoElements.forEach(v=>{
+        if(v.active && v.videoEl?._updateFrame) v.videoEl._updateFrame();
+      });
+    }
     if(frameN%2===0) updateArrows(t, camZ, zonaActual?.color);
     if(frameN%3===0) updateCoins(camera, audioMgr?.ctx);  // colisión cada 3f = ~50ms a 60fps
     scene.fog.color.lerp(fogTarget,.02);

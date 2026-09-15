@@ -11,6 +11,11 @@
     {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.161/build/three.module.js","jsm/":"https://cdn.jsdelivr.net/npm/three@0.161/examples/jsm/"}}
   </script>
   <link rel="stylesheet" href="css/styles.css"/>
+<style>
+@keyframes fadeInExtra{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+  <!-- ResponsiveVoice TTS — narrador inmersivo -->
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE" defer></script>
 </head>
 <body>
 
@@ -47,7 +52,7 @@
         <div class="cv-info">
           <div class="cv-tag">AUTOR · INVESTIGADOR</div>
           <h2 class="cv-name">Jose Daniel Ortiz Quintero</h2>
-          <p class="cv-role">Ingeniería Multimedia · Universidad de San Buenaventura Cali</p>
+          <p class="cv-role">Ingeniería Multimedia · Universidad de San Buenaventura Cali · <a href="#" id="btnCredits" style="color:rgba(255,215,0,.7);text-decoration:none">Créditos</a></p>
         </div>
       </div>
 
@@ -69,9 +74,7 @@
       <div class="cv-section">
         <div class="cv-section-label">SOBRE MÍ</div>
         <p class="cv-text">
-          [Aquí va tu presentación personal. Quién eres, qué estudias, por qué
-          elegiste este tema para tu Trabajo de Grado, qué te apasiona de los videojuegos
-          y la tecnología interactiva.]
+          Soy una persona muy curiosa, me encanta la ciencia y la investigacion, elegi este tema como mi tesis para demostrar que los vidojuegos son muchisimo mas que una simple distraccion.
         </p>
       </div>
 
@@ -169,6 +172,485 @@
     <footer class="hint">← → Teclas de flecha para navegar entre épocas</footer>
   </div>
 
+
+  <!-- ══ PANEL ENCUESTA ══════════════════════════════ -->
+  <div id="encuestaPanel" class="side-panel">
+    <div class="side-panel-inner" style="max-width:560px">
+      <button class="panel-close" id="btnCloseEncuesta">← volver</button>
+
+      <div style="margin-bottom:24px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.3em;color:#4488ff;margin-bottom:10px">TRABAJO DE GRADO · USB CALI · 2025</div>
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px">
+          Participar en el<br/><span style="background:linear-gradient(90deg,#4488ff,#00ffcc);-webkit-background-clip:text;background-clip:text;color:transparent">Estudio</span>
+        </h2>
+        <p style="font-size:11px;color:rgba(150,200,180,0.7);line-height:1.7;border-left:2px solid rgba(68,136,255,0.4);padding-left:10px">
+          Tu opinión es fundamental para esta investigación. La encuesta tiene <strong style="color:#4488ff">10 preguntas</strong> y toma aproximadamente <strong style="color:#4488ff">5 minutos</strong>. Tus respuestas son anónimas y se usarán exclusivamente con fines académicos.
+        </p>
+      </div>
+
+      <!-- BARRA DE PROGRESO -->
+      <div id="enc-progress-bar" style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:24px;overflow:hidden">
+        <div id="enc-progress-fill" style="height:100%;width:10%;background:linear-gradient(90deg,#4488ff,#00ffcc);border-radius:2px;transition:width .4s ease"></div>
+      </div>
+      <div id="enc-progress-text" style="font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.15em;color:rgba(68,136,255,0.7);margin-top:-18px;margin-bottom:20px;text-align:right">DATOS PERSONALES</div>
+
+      <!-- FORMULARIO -->
+      <div id="enc-form">
+
+        <!-- P0 — Datos personales -->
+        <div class="enc-step" data-step="0">
+          <div class="enc-q">Antes de comenzar, cuéntanos un poco sobre ti</div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
+            <div>
+              <label style="font-size:10px;color:rgba(150,200,180,0.7);font-family:'Orbitron',sans-serif;letter-spacing:.12em;display:block;margin-bottom:6px">NOMBRE COMPLETO</label>
+              <input type="text" id="enc-nombre" placeholder="Tu nombre y apellido" style="width:100%;padding:11px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(68,136,255,0.25);border-radius:10px;color:#c8d4ce;font-family:'Space Mono',monospace;font-size:12px;outline:none;box-sizing:border-box;transition:border-color .2s" onfocus="this.style.borderColor='rgba(68,136,255,0.6)'" onblur="this.style.borderColor='rgba(68,136,255,0.25)'"/>
+            </div>
+            <div>
+              <label style="font-size:10px;color:rgba(150,200,180,0.7);font-family:'Orbitron',sans-serif;letter-spacing:.12em;display:block;margin-bottom:6px">EDAD</label>
+              <input type="number" id="enc-edad" placeholder="Ej: 22" min="10" max="99" style="width:140px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(68,136,255,0.25);border-radius:10px;color:#c8d4ce;font-family:'Space Mono',monospace;font-size:12px;outline:none;box-sizing:border-box;transition:border-color .2s" onfocus="this.style.borderColor='rgba(68,136,255,0.6)'" onblur="this.style.borderColor='rgba(68,136,255,0.25)'"/>
+            </div>
+            <div>
+              <label style="font-size:10px;color:rgba(150,200,180,0.7);font-family:'Orbitron',sans-serif;letter-spacing:.12em;display:block;margin-bottom:6px">GÉNERO (OPCIONAL)</label>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <label class="enc-opt" style="padding:7px 12px;font-size:10px"><input type="radio" name="genero" value="Masculino"/> Masculino</label><label class="enc-opt" style="padding:7px 12px;font-size:10px"><input type="radio" name="genero" value="Femenino"/> Femenino</label><label class="enc-opt" style="padding:7px 12px;font-size:10px"><input type="radio" name="genero" value="No binario"/> No binario</label><label class="enc-opt" style="padding:7px 12px;font-size:10px"><input type="radio" name="genero" value="Prefiero no decir"/> Prefiero no decir</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- P1 -->
+        <div class="enc-step" data-step="1" style="display:none">
+          <div class="enc-q">¿Con qué frecuencia juegas videojuegos?</div>
+          <div class="enc-options">
+            <label class="enc-opt"><input type="radio" name="p1" value="nunca"/> Nunca o casi nunca</label>
+            <label class="enc-opt"><input type="radio" name="p1" value="ocasional"/> Ocasionalmente (1-2 veces al mes)</label>
+            <label class="enc-opt"><input type="radio" name="p1" value="semanal"/> Semanalmente (1-3 veces por semana)</label>
+            <label class="enc-opt"><input type="radio" name="p1" value="diario"/> Diariamente o casi todos los días</label>
+          </div>
+        </div>
+
+        <!-- P2 -->
+        <div class="enc-step" data-step="2" style="display:none">
+          <div class="enc-q">¿Cuántos años llevas jugando videojuegos?</div>
+          <div class="enc-options">
+            <label class="enc-opt"><input type="radio" name="p2" value="nunca"/> No juego</label>
+            <label class="enc-opt"><input type="radio" name="p2" value="menos2"/> Menos de 2 años</label>
+            <label class="enc-opt"><input type="radio" name="p2" value="2a5"/> Entre 2 y 5 años</label>
+            <label class="enc-opt"><input type="radio" name="p2" value="mas5"/> Más de 5 años</label>
+          </div>
+        </div>
+
+        <!-- P3 LIKERT -->
+        <div class="enc-step" data-step="3" style="display:none">
+          <div class="enc-q">Antes de esta experiencia, ¿qué tan informado estabas sobre la historia de los videojuegos?</div>
+          <div class="enc-likert">
+            <div class="enc-likert-labels"><span>Nada informado</span><span>Muy informado</span></div>
+            <div class="enc-likert-opts">
+              <label class="enc-likert-btn"><input type="radio" name="p3" value="1"/><span>1</span></label><label class="enc-likert-btn"><input type="radio" name="p3" value="2"/><span>2</span></label><label class="enc-likert-btn"><input type="radio" name="p3" value="3"/><span>3</span></label><label class="enc-likert-btn"><input type="radio" name="p3" value="4"/><span>4</span></label><label class="enc-likert-btn"><input type="radio" name="p3" value="5"/><span>5</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- P4 LIKERT -->
+        <div class="enc-step" data-step="4" style="display:none">
+          <div class="enc-q">Antes de esta experiencia, ¿qué tan informado estabas sobre los beneficios cognitivos de los videojuegos?</div>
+          <div class="enc-likert">
+            <div class="enc-likert-labels"><span>Nada informado</span><span>Muy informado</span></div>
+            <div class="enc-likert-opts">
+              <label class="enc-likert-btn"><input type="radio" name="p4" value="1"/><span>1</span></label><label class="enc-likert-btn"><input type="radio" name="p4" value="2"/><span>2</span></label><label class="enc-likert-btn"><input type="radio" name="p4" value="3"/><span>3</span></label><label class="enc-likert-btn"><input type="radio" name="p4" value="4"/><span>4</span></label><label class="enc-likert-btn"><input type="radio" name="p4" value="5"/><span>5</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- P5 LIKERT — POST EXPERIENCIA -->
+        <div class="enc-step" data-step="5" style="display:none">
+          <div class="enc-q-label" style="font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:.2em;color:#00ffcc;margin-bottom:8px">DESPUÉS DE LA EXPERIENCIA</div>
+          <div class="enc-q">¿Qué tan útil fue el museo para aprender sobre la historia de los videojuegos?</div>
+          <div class="enc-likert">
+            <div class="enc-likert-labels"><span>Nada útil</span><span>Muy útil</span></div>
+            <div class="enc-likert-opts">
+              <label class="enc-likert-btn"><input type="radio" name="p5" value="1"/><span>1</span></label><label class="enc-likert-btn"><input type="radio" name="p5" value="2"/><span>2</span></label><label class="enc-likert-btn"><input type="radio" name="p5" value="3"/><span>3</span></label><label class="enc-likert-btn"><input type="radio" name="p5" value="4"/><span>4</span></label><label class="enc-likert-btn"><input type="radio" name="p5" value="5"/><span>5</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- P6 LIKERT -->
+        <div class="enc-step" data-step="6" style="display:none">
+          <div class="enc-q">¿Qué tan inmersiva fue la experiencia del museo 3D?</div>
+          <div class="enc-likert">
+            <div class="enc-likert-labels"><span>Nada inmersiva</span><span>Muy inmersiva</span></div>
+            <div class="enc-likert-opts">
+              <label class="enc-likert-btn"><input type="radio" name="p6" value="1"/><span>1</span></label><label class="enc-likert-btn"><input type="radio" name="p6" value="2"/><span>2</span></label><label class="enc-likert-btn"><input type="radio" name="p6" value="3"/><span>3</span></label><label class="enc-likert-btn"><input type="radio" name="p6" value="4"/><span>4</span></label><label class="enc-likert-btn"><input type="radio" name="p6" value="5"/><span>5</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- P7 LIKERT -->
+        <div class="enc-step" data-step="7" style="display:none">
+          <div class="enc-q">¿En qué medida la experiencia cambió tu percepción sobre los videojuegos como herramienta educativa?</div>
+          <div class="enc-likert">
+            <div class="enc-likert-labels"><span>No la cambió</span><span>La cambió mucho</span></div>
+            <div class="enc-likert-opts">
+              <label class="enc-likert-btn"><input type="radio" name="p7" value="1"/><span>1</span></label><label class="enc-likert-btn"><input type="radio" name="p7" value="2"/><span>2</span></label><label class="enc-likert-btn"><input type="radio" name="p7" value="3"/><span>3</span></label><label class="enc-likert-btn"><input type="radio" name="p7" value="4"/><span>4</span></label><label class="enc-likert-btn"><input type="radio" name="p7" value="5"/><span>5</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- P8 MULTISELECT -->
+        <div class="enc-step" data-step="8" style="display:none">
+          <div class="enc-q">¿Qué secciones del museo encontraste más interesantes? (puedes marcar varias)</div>
+          <div class="enc-options">
+            <label class="enc-opt"><input type="checkbox" name="p8" value="origen"/> El Origen (1950-1971)</label>
+            <label class="enc-opt"><input type="checkbox" name="p8" value="arcade"/> Era Arcade (1972-1983)</label>
+            <label class="enc-opt"><input type="checkbox" name="p8" value="consolas"/> Consolas y Crash (1983-1995)</label>
+            <label class="enc-opt"><input type="checkbox" name="p8" value="3d"/> Revolución 3D (1995-2005)</label>
+            <label class="enc-opt"><input type="checkbox" name="p8" value="online"/> Era Online y Móvil (2005-2015)</label>
+            <label class="enc-opt"><input type="checkbox" name="p8" value="futuro"/> El Futuro (2015+)</label>
+            <label class="enc-opt"><input type="checkbox" name="p8" value="cognitivos"/> Sala de Beneficios Cognitivos</label>
+          </div>
+        </div>
+
+        <!-- P9 RADIO -->
+        <div class="enc-step" data-step="9" style="display:none">
+          <div class="enc-q">¿Recomendarías esta experiencia a otras personas?</div>
+          <div class="enc-options">
+            <label class="enc-opt"><input type="radio" name="p9" value="si_definitivamente"/> Sí, definitivamente</label>
+            <label class="enc-opt"><input type="radio" name="p9" value="si_probablemente"/> Sí, probablemente</label>
+            <label class="enc-opt"><input type="radio" name="p9" value="tal_vez"/> Tal vez</label>
+            <label class="enc-opt"><input type="radio" name="p9" value="no"/> No lo creo</label>
+          </div>
+        </div>
+
+        <!-- P10 TEXTAREA -->
+        <div class="enc-step" data-step="10" style="display:none">
+          <div class="enc-q">¿Tienes algún comentario, sugerencia o algo que te gustaría destacar de la experiencia?</div>
+          <textarea name="p10" id="enc-comentario" placeholder="Escribe tu comentario aquí (opcional)..." style="width:100%;min-height:90px;background:rgba(255,255,255,0.04);border:1px solid rgba(68,136,255,0.25);border-radius:10px;color:#c8d4ce;font-family:'Space Mono',monospace;font-size:11px;padding:12px;resize:vertical;outline:none;margin-top:8px;box-sizing:border-box"></textarea>
+        </div>
+
+      </div><!-- /enc-form -->
+
+      <!-- NAVEGACIÓN -->
+      <div style="display:flex;gap:10px;margin-top:20px;align-items:center">
+        <button id="enc-prev" style="display:none;flex:1;padding:11px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:rgba(200,212,206,0.7);font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.12em;cursor:pointer">ANTERIOR</button>
+        <button id="enc-next" style="flex:2;padding:11px;background:linear-gradient(135deg,#1a3a7a,#0d5244);border:1px solid rgba(68,136,255,0.4);border-radius:10px;color:#fff;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;cursor:pointer;transition:all .2s">SIGUIENTE →</button>
+      </div>
+
+      <!-- RESULTADO (oculto hasta enviar) -->
+      <div id="enc-result" style="display:none;text-align:center;padding:30px 20px">
+        <div style="font-size:40px;margin-bottom:16px">✓</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;color:#00ffcc;margin-bottom:10px">¡Gracias por participar!</div>
+        <p style="font-size:11px;color:rgba(150,200,180,0.7);line-height:1.7">Tus respuestas han sido registradas. Tu aporte es fundamental para esta investigación sobre el impacto de las experiencias interactivas en la comprensión de los videojuegos.</p>
+        <div style="margin-top:16px;font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.2em;color:rgba(68,136,255,0.6)">TRABAJO DE GRADO · USB CALI · 2025</div>
+      </div>
+
+    </div>
+  </div>
+
+<style>
+.cred-section{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.22em;
+  color:rgba(255,215,0,.6);margin:16px 0 9px;display:flex;align-items:center;gap:8px;}
+.cred-section::after{content:'';flex:1;height:1px;background:rgba(255,215,0,.15);}
+.cred-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:12px 14px;margin-bottom:8px;position:relative;overflow:hidden;}
+.cred-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--cc,#ffd700);border-radius:3px 0 0 3px;}
+.cred-title{font-family:'Orbitron',sans-serif;font-size:10.5px;font-weight:700;
+  color:var(--cc,#ffd700);margin-bottom:5px;}
+.cred-desc{font-size:10.5px;color:rgba(190,185,175,.75);line-height:1.65;margin-bottom:5px;}
+.cred-tag{font-size:8.5px;color:rgba(150,145,135,.5);font-family:'Orbitron',sans-serif;letter-spacing:.08em;}
+.cred-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.cred-card-sm{background:rgba(68,136,255,.04);border:1px solid rgba(68,136,255,.12);
+  border-radius:10px;padding:10px 12px;}
+</style>
+
+  <!-- ══ PANEL CRÉDITOS ════════════════════════════════════ -->
+  <div id="creditsPanel" class="side-panel">
+    <div class="side-panel-inner" style="max-width:620px">
+      <button class="panel-close" id="btnCloseCredits">← volver</button>
+
+      <div style="margin-bottom:22px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.3em;color:#ffd700;margin-bottom:10px">
+          TRABAJO DE GRADO · USB CALI · 2025
+        </div>
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px">
+          Créditos y<br/><span style="background:linear-gradient(90deg,#ffd700,#ff8800);-webkit-background-clip:text;background-clip:text;color:transparent">Referencias</span>
+        </h2>
+        <p style="font-size:11px;color:rgba(200,180,130,0.7);line-height:1.7;border-left:2px solid rgba(255,215,0,0.35);padding-left:10px">
+          Este museo interactivo 3D fue desarrollado como componente digital de un Trabajo de Grado en Ingeniería Multimedia. A continuación se detallan todos los recursos utilizados y sus respectivos autores.
+        </p>
+      </div>
+
+      <!-- AUTOR -->
+      <div class="cred-section">AUTOR</div>
+      <div class="cred-card" style="--cc:#ffd700">
+        <div class="cred-title">Jose Daniel Ortiz Quintero</div>
+        <div class="cred-desc">Estudiante de Ingeniería Multimedia, Universidad de San Buenaventura Cali. Diseño, desarrollo e implementación completa del museo interactivo 3D.</div>
+        <div class="cred-tag">Asesora: Kelly Marín Montealegre, PhD · USB Cali 2025</div>
+      </div>
+
+      <!-- TECNOLOGÍAS -->
+      <div class="cred-section">TECNOLOGÍAS Y HERRAMIENTAS</div>
+      <div class="cred-grid">
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">Three.js r160</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Motor de renderizado 3D en WebGL</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">MIT License · three.js.org</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">Web Audio API</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Audio espacial y efectos de sonido</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">W3C Spec · MDN Web Docs</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">Web Speech API</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Narrador de texto a voz</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">W3C Spec · MDN Web Docs</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">EffectComposer / Bloom</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Efectos de postprocesado visual</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">MIT License · Three.js Addons</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">Orbitron Font</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Tipografía de interfaz</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">OFL License · Google Fonts</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">Space Mono Font</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Tipografía de contenido</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">OFL License · Google Fonts</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">ResponsiveVoice</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Motor TTS alternativo para narrador</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">Free tier · responsivevoice.org</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">VS Code + Live Server</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Entorno de desarrollo</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">MIT / Free · Microsoft</span>
+          </div>
+        
+          <div class="cred-card-sm" style="--cc:#4488ff">
+            <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#4488ff;margin-bottom:3px">Claude (Anthropic)</div>
+            <div style="font-size:9.5px;color:rgba(150,190,220,.7);margin-bottom:4px">Asistencia en desarrollo de código</div>
+            <span style="font-size:8px;color:rgba(68,136,255,.55);font-family:'Orbitron',sans-serif">Comercial · anthropic.com</span>
+          </div>
+        
+      </div>
+
+      <!-- MODELOS 3D -->
+      <div class="cred-section">MODELOS 3D</div>
+      
+        <div class="cred-card" style="--cc:#00ffcc">
+          <div class="cred-title">Parade Armour of King Erik XIV</div>
+          <div class="cred-desc">Armadura usada en la entrada del museo</div>
+          <div class="cred-tag">Sketchfab / Creative Commons · Descargado de Sketchfab.com bajo licencia CC Attribution</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#00ffcc">
+          <div class="cred-title">Nintendo NES Original</div>
+          <div class="cred-desc">Consola NES en transición Origen → Arcade</div>
+          <div class="cred-tag">Sketchfab / Creative Commons · Descargado de Sketchfab.com bajo licencia CC Attribution</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#00ffcc">
+          <div class="cred-title">Nintendo Game Boy 1989</div>
+          <div class="cred-desc">Game Boy en transición Arcade → Consolas</div>
+          <div class="cred-tag">Sketchfab / Creative Commons · Descargado de Sketchfab.com bajo licencia CC Attribution</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#00ffcc">
+          <div class="cred-title">Darius (personaje genérico)</div>
+          <div class="cred-desc">Modelo en zona 3D y transición MMORPG</div>
+          <div class="cred-tag">Sketchfab / Creative Commons · Descargado de Sketchfab.com bajo licencia CC Attribution</div>
+        </div>
+      
+
+      <!-- VIDEOS -->
+      <div class="cred-section">VIDEOS DE GAMEPLAY</div>
+      <div style="background:rgba(255,170,68,0.05);border:1px solid rgba(255,170,68,0.15);border-radius:13px;padding:14px 16px;margin-bottom:14px;font-size:10.5px;color:rgba(210,175,120,0.75);line-height:1.8;">
+        Los videos de gameplay utilizados en las vitrinas del museo son fragmentos de videos promocionales y de documentación histórica de dominio público o fair use educativo, obtenidos de plataformas como YouTube e Internet Archive. Este proyecto es estrictamente académico y sin fines comerciales.
+        <br/><br/>
+        <strong style="color:#ffd700;font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.1em">JUEGOS REFERENCIADOS:</strong>
+        Tennis for Two (W. Higinbotham, 1958) · Spacewar! (MIT, 1962) · Pong (Atari, 1972) · Space Invaders (Taito, 1978) · Pac-Man (Namco, 1980) · Super Mario Bros (Nintendo, 1985) · E.T. The Game (Atari, 1982) · PlayStation (Sony, 1994) · Super Mario 64 (Nintendo, 1996) · The Legend of Zelda: Ocarina of Time (Nintendo, 1998) · Metal Gear Solid (Konami, 1998) · GoldenEye 007 (Rare/Nintendo, 1997) · Halo (Bungie/Microsoft, 2001) · World of Warcraft (Blizzard, 2004) · Call of Duty 4 (Infinity Ward, 2007) · League of Legends (Riot Games, 2009) · Minecraft (Mojang, 2011) · PlayStation 5 (Sony, 2020) · Elden Ring (FromSoftware, 2022) · Meta Quest 3 (Meta, 2023)
+      </div>
+
+      <!-- AUDIOS -->
+      <div class="cred-section">AUDIO Y MÚSICA</div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Pong Theme</div>
+          <div class="cred-desc">Zona El Origen</div>
+          <div class="cred-tag">Atari (1972) · Dominio público / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Pac-Man Theme</div>
+          <div class="cred-desc">Zona Era Arcade</div>
+          <div class="cred-tag">Namco (1980) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Super Mario Bros Theme</div>
+          <div class="cred-desc">Zona Consolas</div>
+          <div class="cred-tag">Nintendo (1985) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Super Mario 64 Theme</div>
+          <div class="cred-desc">Zona Revolución 3D</div>
+          <div class="cred-tag">Nintendo (1996) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">WoW Theme / Soundtrack</div>
+          <div class="cred-desc">Zona Era Online</div>
+          <div class="cred-tag">Blizzard Entertainment (2004) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Elden Ring OST</div>
+          <div class="cred-desc">Zona El Futuro</div>
+          <div class="cred-tag">FromSoftware (2022) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Goldeneye 007 Theme</div>
+          <div class="cred-desc">Audio de ambiente</div>
+          <div class="cred-tag">Rare/Nintendo (1997) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Halo Theme</div>
+          <div class="cred-desc">Audio de ambiente</div>
+          <div class="cred-tag">Bungie/Microsoft (2001) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">League of Legends OST</div>
+          <div class="cred-desc">Audio de ambiente</div>
+          <div class="cred-tag">Riot Games (2009-2023) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Minecraft OST (C418)</div>
+          <div class="cred-desc">Audio de ambiente</div>
+          <div class="cred-tag">Mojang / C418 (2011) · Referencia histórica / Uso educativo</div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#cc44ff">
+          <div class="cred-title">Sonidos de monedas</div>
+          <div class="cred-desc">Sistema de gamificación</div>
+          <div class="cred-tag">Generados con Web Audio API · Sintetizados originalmente</div>
+        </div>
+      
+
+      <!-- USO DE IA -->
+      <div class="cred-section">USO DE INTELIGENCIA ARTIFICIAL</div>
+      <div class="cred-card" style="--cc:#ff6644;margin-bottom:8px">
+        <div class="cred-title">Claude (Anthropic) — Asistencia en desarrollo</div>
+        <div class="cred-desc">
+          El código de este museo interactivo fue desarrollado con asistencia del modelo Claude (Anthropic) para la generación, depuración y optimización del código JavaScript/Three.js, diseño de sistemas de audio espacial, arquitectura del sistema de narrador y gamificación. Toda la dirección creativa, contenido histórico, diseño de experiencia y decisiones de implementación son responsabilidad del autor.
+        </div>
+        <div class="cred-tag">claude.ai · Anthropic PBC · Uso académico 2025</div>
+      </div>
+      <div style="background:rgba(255,102,68,0.05);border:1px solid rgba(255,102,68,0.2);border-radius:12px;padding:12px 15px;font-size:10px;color:rgba(220,170,150,.7);line-height:1.7;margin-bottom:18px;">
+        <strong style="color:#ff8866;font-family:'Orbitron',sans-serif;font-size:8.5px;letter-spacing:.12em">DECLARACIÓN DE IA:</strong> Según las políticas académicas vigentes, se declara explícitamente el uso de herramientas de IA generativa (Claude) en el proceso de desarrollo técnico de este proyecto. El contenido histórico, científico y académico fue investigado y verificado por el autor con fuentes primarias y secundarias citadas en el documento del Trabajo de Grado.
+      </div>
+
+      <!-- REFERENCIAS ACADÉMICAS -->
+      <div class="cred-section">REFERENCIAS CIENTÍFICAS</div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">Green & Bavelier (2003)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"Action video game modifies visual selective attention"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">Nature, vol. 423</span>
+            <a href="https://doi.org/10.1038/nature01647" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">Kühn et al. (2014)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"Playing Super Mario induces structural brain plasticity"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">Molecular Psychiatry</span>
+            <a href="https://doi.org/10.1038/mp.2013.120" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">Pallavicini et al. (2018)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"Video Games for Well-Being: A Systematic Review"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">Frontiers in Psychology</span>
+            <a href="https://doi.org/10.3389/fpsyg.2018.02127" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">Granic et al. (2014)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"The Benefits of Playing Video Games"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">American Psychologist</span>
+            <a href="https://doi.org/10.1037/a0034857" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">Chaarani et al. (2022)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"Association of Video Gaming With Cognitive Performance"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">JAMA Network Open</span>
+            <a href="https://doi.org/10.1001/jamanetworkopen.2022.40834" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">Rosser et al. (2007)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"The Impact of Video Games on Training Surgeons"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">Archives of Surgery</span>
+            <a href="https://doi.org/10.1001/archsurg.142.2.181" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">Newzoo (2023)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"Global Games Market Report 2023"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">Newzoo Research</span>
+            <a href="https://newzoo.com/resources/trend-reports" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+        <div class="cred-card" style="--cc:#4488ff;padding:10px 14px">
+          <div style="font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;color:#4488ff;margin-bottom:3px">ESA (2023)</div>
+          <div style="font-size:10px;color:rgba(150,190,220,.8);margin-bottom:4px;font-style:italic">"Essential Facts About the U.S. Video Game Industry"</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px">
+            <span style="font-size:8px;color:rgba(100,150,200,.55);font-family:'Orbitron',sans-serif">Entertainment Software Association</span>
+            <a href="https://www.theesa.com/resources" target="_blank" rel="noopener" style="font-family:'Orbitron',sans-serif;font-size:8px;color:#4488ff;text-decoration:none;border:1px solid rgba(68,136,255,.35);border-radius:4px;padding:2px 7px;opacity:.8">DOI →</a>
+          </div>
+        </div>
+      
+
+      <!-- AVISO LEGAL -->
+      <div style="margin-top:20px;padding:14px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,.06);font-size:9.5px;color:rgba(150,160,170,.5);line-height:1.7;text-align:center;">
+        Este proyecto es de carácter estrictamente académico y sin fines comerciales. Todos los derechos de las marcas, personajes, música y videos referenciados pertenecen a sus respectivos propietarios. Desarrollado bajo el marco del Trabajo de Grado en Ingeniería Multimedia · Universidad de San Buenaventura Cali · 2025.
+      </div>
+
+    </div>
+  </div>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
