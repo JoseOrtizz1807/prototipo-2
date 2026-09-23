@@ -72,6 +72,7 @@ function exitMuseum() {
   document.exitPointerLock?.();
   if (museum) { museum.destroy(); museum = null; }
   showMenu();
+}
 
 // ── Créditos ──────────────────────────────────────────────
 const creditsPanel = document.getElementById("creditsPanel");
@@ -98,7 +99,7 @@ const progText      = document.getElementById("enc-progress-text");
 const TOTAL_STEPS   = 11;
 // URL de la aplicación web de Google Apps Script (ver INSTRUCCIONES_GOOGLE_SHEETS.md).
 // Déjala vacía ("") para guardar solo en el navegador.
-const SHEETS_URL = "https://script.google.com/macros/s/XXXXXXXX/exec";
+const SHEETS_URL = "";  // ← pega aquí la URL real /exec de tu Apps Script (o déjala vacía)
 let currentStep     = 0;
 const answers       = {};
 
@@ -188,7 +189,6 @@ btnEstudio?.addEventListener("click", e => {
 
 btnCloseEnc?.addEventListener("click", () => encuestaPanel.classList.remove("active"));
 
-}
 function exitTimeline() {
   if (timeline) { timeline.destroy(); timeline = null; }
   document.querySelectorAll(".sala-panel").forEach(p => p.style.display = "none");
