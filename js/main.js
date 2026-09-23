@@ -96,6 +96,9 @@ const encPrev       = document.getElementById("enc-prev");
 const progFill      = document.getElementById("enc-progress-fill");
 const progText      = document.getElementById("enc-progress-text");
 const TOTAL_STEPS   = 11;
+// URL de la aplicación web de Google Apps Script (ver INSTRUCCIONES_GOOGLE_SHEETS.md).
+// Déjala vacía ("") para guardar solo en el navegador.
+const SHEETS_URL    = "";  // ← pega aquí la URL /exec de tu Apps Script
 let currentStep     = 0;
 const answers       = {};
 
@@ -120,8 +123,8 @@ function encCollectCurrent() {
   if(currentStep === 0) {
     const nombre = document.getElementById('enc-nombre')?.value?.trim();
     const edad   = document.getElementById('enc-edad')?.value?.trim();
-    if(!nombre || !edad) { alert('Por favor completa tu nombre y edad para continuar.'); return false; }
-    answers.nombre = nombre; answers.edad = edad;
+    if(!edad) { alert('Por favor indica tu edad para continuar.'); return false; }
+    answers.nombre = nombre || ""; answers.edad = edad;
     const gen = document.querySelector('input[name="genero"]:checked');
     if(gen) answers.genero = gen.value;
     return true;
@@ -141,12 +144,22 @@ encNext.addEventListener("click", () => {
   if (currentStep < TOTAL_STEPS - 1) {
     encGoTo(currentStep + 1);
   } else {
-    // Enviar — guardar en localStorage como simulación
+    // Enviar — copia local de respaldo + envío a Google Sheets
     answers.timestamp = new Date().toISOString();
     answers.userAgent  = navigator.userAgent;
-    const saved = JSON.parse(localStorage.getItem("enc_responses") || "[]");
-    saved.push(answers);
-    localStorage.setItem("enc_responses", JSON.stringify(saved));
+    try {
+      const saved = JSON.parse(localStorage.getItem("enc_responses") || "[]");
+      saved.push(answers);
+      localStorage.setItem("enc_responses", JSON.stringify(saved));
+    } catch (e) {}
+    if (SHEETS_URL) {
+      fetch(SHEETS_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(answers)
+      }).catch(err => console.warn("No se pudo enviar la encuesta:", err));
+    }
     // Mostrar pantalla de gracias
     document.getElementById("enc-form").style.display = "none";
     encNext.style.display = "none";
