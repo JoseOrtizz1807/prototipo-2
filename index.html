@@ -35,6 +35,7 @@
         <a class="btn accent" href="#" id="btnTimeline">Línea de Tiempo</a>
         <a class="btn" href="#" id="btnAbout">Sobre el Autor</a>
         <a class="btn" href="#" id="btnEstudio">Participar en el Estudio</a>
+        <a class="btn" href="#" id="btnResenas">Reseñas de visitantes</a>
       </nav>
     </main>
     <footer class="hint">Arrastra para mirar · Scroll para acercar/alejar</footer>
@@ -327,6 +328,10 @@
         <div class="enc-step" data-step="10" style="display:none">
           <div class="enc-q">¿Tienes algún comentario, sugerencia o algo que te gustaría destacar de la experiencia?</div>
           <textarea name="p10" id="enc-comentario" placeholder="Escribe tu comentario aquí (opcional)..." style="width:100%;min-height:90px;background:rgba(255,255,255,0.04);border:1px solid rgba(68,136,255,0.25);border-radius:10px;color:#c8d4ce;font-family:'Space Mono',monospace;font-size:11px;padding:12px;resize:vertical;outline:none;margin-top:8px;box-sizing:border-box"></textarea>
+          <label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:10.5px;color:rgba(150,200,180,0.8);line-height:1.6;cursor:pointer">
+            <input type="checkbox" id="enc-publicar" style="margin-top:3px;accent-color:#00ffcc"/>
+            <span>Autorizo que mi comentario se muestre de forma anónima en la sección de <strong style="color:#00ffcc">Reseñas</strong> del museo.</span>
+          </label>
         </div>
 
       </div><!-- /enc-form -->
@@ -342,6 +347,8 @@
         <div style="font-size:40px;margin-bottom:16px">✓</div>
         <div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;color:#00ffcc;margin-bottom:10px">¡Gracias por participar!</div>
         <p style="font-size:11px;color:rgba(150,200,180,0.7);line-height:1.7">Tus respuestas han sido registradas. Tu aporte es fundamental para esta investigación sobre el impacto de las experiencias interactivas en la comprensión de los videojuegos.</p>
+        <div id="enc-envio-estado" style="margin-top:10px;font-size:10px;color:rgba(150,200,180,0.55)"></div>
+        <button id="btnVerResenas" style="margin-top:18px;padding:11px 26px;background:linear-gradient(135deg,#1a3a7a,#0d5244);border:1px solid rgba(0,255,204,0.35);border-radius:10px;color:#fff;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;cursor:pointer">VER RESEÑAS →</button>
         <div style="margin-top:16px;font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.2em;color:rgba(68,136,255,0.6)">TRABAJO DE GRADO · USB CALI · 2025</div>
       </div>
 
@@ -363,6 +370,54 @@
 .cred-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
 .cred-card-sm{background:rgba(68,136,255,.04);border:1px solid rgba(68,136,255,.12);
   border-radius:10px;padding:10px 12px;}
+</style>
+
+
+  <!-- ══ PANEL RESEÑAS (tiempo real) ══════════════════════ -->
+  <div id="resenasPanel" class="side-panel">
+    <div class="side-panel-inner" style="max-width:600px">
+      <button class="panel-close" id="btnCloseResenas">← volver</button>
+      <div style="margin-bottom:22px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:.3em;color:#00ffcc;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          <span id="res-live-dot" style="width:7px;height:7px;border-radius:50%;background:#555;display:inline-block"></span>
+          <span id="res-live-text">CONECTANDO…</span>
+        </div>
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px">
+          Reseñas de<br/><span style="background:linear-gradient(90deg,#00ffcc,#4488ff);-webkit-background-clip:text;background-clip:text;color:transparent">visitantes</span>
+        </h2>
+        <p style="font-size:11px;color:rgba(150,200,180,0.7);line-height:1.7;border-left:2px solid rgba(0,255,204,0.35);padding-left:10px">
+          Opiniones de quienes recorrieron el museo y participaron en el estudio. Se actualizan automáticamente cada vez que alguien termina la encuesta. Todas son anónimas.
+        </p>
+      </div>
+
+      <div class="res-stats">
+        <div class="res-stat"><div class="res-num" id="res-total">–</div><div class="res-lbl">Participantes</div></div>
+        <div class="res-stat"><div class="res-num" id="res-prom">–</div><div class="res-lbl">Valoración media</div></div>
+        <div class="res-stat"><div class="res-num" id="res-rec">–</div><div class="res-lbl">Lo recomiendan</div></div>
+      </div>
+      <p style="font-size:9.5px;color:rgba(150,160,170,0.55);margin:-6px 0 22px;line-height:1.6">La valoración es el promedio de utilidad, inmersión y cambio de percepción (escala de 1 a 5).</p>
+
+      <div class="cred-section" style="color:rgba(0,255,204,.6)">COMENTARIOS</div>
+      <div id="res-lista"><p class="res-vacio">Cargando reseñas…</p></div>
+    </div>
+  </div>
+<style>
+.res-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.res-stat{background:rgba(0,255,204,.04);border:1px solid rgba(0,255,204,.14);border-radius:12px;padding:14px 10px;text-align:center;}
+.res-num{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:#00ffcc;text-shadow:0 0 12px rgba(0,255,204,.35);}
+.res-lbl{font-size:9.5px;color:rgba(150,200,180,.65);margin-top:4px;letter-spacing:.04em;}
+.res-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 16px;margin-bottom:10px;animation:resIn .5s ease;}
+.res-card.nueva{border-color:rgba(0,255,204,.55);box-shadow:0 0 18px rgba(0,255,204,.18);}
+@keyframes resIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.res-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px;}
+.res-stars{color:#ffd24a;font-size:13px;letter-spacing:2px;}
+.res-stars .off{color:rgba(255,255,255,.15);}
+.res-meta{font-size:9px;color:rgba(150,160,170,.6);font-family:'Space Mono',monospace;text-align:right;}
+.res-txt{font-size:11.5px;color:#c8d4ce;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;}
+.res-badge{display:inline-block;margin-top:8px;font-size:8.5px;font-family:'Orbitron',sans-serif;letter-spacing:.08em;padding:3px 8px;border-radius:5px;background:rgba(68,136,255,.1);border:1px solid rgba(68,136,255,.25);color:#88aaff;}
+.res-vacio{font-size:11px;color:rgba(150,160,170,.6);line-height:1.7;}
+.res-live{background:#00ffcc!important;box-shadow:0 0 8px #00ffcc;animation:resPulse 1.6s infinite;}
+@keyframes resPulse{50%{opacity:.35}}
 </style>
 
   <!-- ══ PANEL CRÉDITOS ════════════════════════════════════ -->
@@ -655,4 +710,4 @@
   </div>
   <script type="module" src="js/main.js"></script>
 </body>
-</html>
+</html>

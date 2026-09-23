@@ -1,6 +1,7 @@
 import { initEarthBackdrop } from "./earthBackdrop.js";
 import { initMuseumWalk }   from "./museum_walk.js?v=3200";
 import { initMuseum }       from "./museum.js";
+import { guardarRespuesta, escucharResenas, firebaseConfigurado } from "./firebase.js";
 
 let earth    = null;
 let museum   = null;
@@ -97,9 +98,6 @@ const encPrev       = document.getElementById("enc-prev");
 const progFill      = document.getElementById("enc-progress-fill");
 const progText      = document.getElementById("enc-progress-text");
 const TOTAL_STEPS   = 11;
-// URL de la aplicación web de Google Apps Script (ver INSTRUCCIONES_GOOGLE_SHEETS.md).
-// Déjala vacía ("") para guardar solo en el navegador.
-const SHEETS_URL = "";  // ← pega aquí la URL real /exec de tu Apps Script (o déjala vacía)
 let currentStep     = 0;
 const answers       = {};
 
@@ -137,6 +135,7 @@ function encCollectCurrent() {
   if (radios.length)  answers[`p${currentStep}`] = radios[0].value;
   if (checks.length)  answers[`p${currentStep}`] = [...checks].map(c=>c.value).join(",");
   if (textarea)       answers[`p${currentStep}`] = textarea.value;
+  if (currentStep === TOTAL_STEPS - 1) answers.publicar = !!document.getElementById("enc-publicar")?.checked;
 }
 
 encNext.addEventListener("click", () => {
@@ -145,22 +144,21 @@ encNext.addEventListener("click", () => {
   if (currentStep < TOTAL_STEPS - 1) {
     encGoTo(currentStep + 1);
   } else {
-    // Enviar — copia local de respaldo + envío a Google Sheets
+    // Enviar — copia local de respaldo + base de datos (Firebase)
     answers.timestamp = new Date().toISOString();
-    answers.userAgent  = navigator.userAgent;
     try {
       const saved = JSON.parse(localStorage.getItem("enc_responses") || "[]");
       saved.push(answers);
       localStorage.setItem("enc_responses", JSON.stringify(saved));
     } catch (e) {}
-    if (SHEETS_URL) {
-      fetch(SHEETS_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(answers)
-      }).catch(err => console.warn("No se pudo enviar la encuesta:", err));
-    }
+    const estado = document.getElementById("enc-envio-estado");
+    if (estado) estado.textContent = firebaseConfigurado() ? "Enviando respuestas…" : "";
+    guardarRespuesta({ ...answers })
+      .then(r => { if (estado && r.ok) estado.textContent = "✓ Respuestas guardadas en la base de datos del estudio."; })
+      .catch(err => {
+        console.warn("No se pudo guardar la encuesta:", err);
+        if (estado) estado.textContent = "No se pudo conectar con el servidor; tus respuestas quedaron guardadas en este navegador.";
+      });
     // Mostrar pantalla de gracias
     document.getElementById("enc-form").style.display = "none";
     encNext.style.display = "none";
@@ -183,11 +181,90 @@ btnEstudio?.addEventListener("click", e => {
   document.getElementById("enc-form").style.display = "block";
   document.getElementById("enc-result").style.display = "none";
   encNext.style.display = "block";
+  const pub = document.getElementById("enc-publicar"); if (pub) pub.checked = false;
+  const est = document.getElementById("enc-envio-estado"); if (est) est.textContent = "";
+  Object.keys(answers).forEach(k => delete answers[k]);
   encUpdateProgress();
   encuestaPanel.classList.add("active");
 });
 
 btnCloseEnc?.addEventListener("click", () => encuestaPanel.classList.remove("active"));
+
+// ── Reseñas en tiempo real ────────────────────────────
+const resenasPanel = document.getElementById("resenasPanel");
+let _resUnsub = null, _resPrimera = true;
+const _resLlegada = new Map();   // id → momento en que apareció (0 = ya estaba al abrir)
+
+function _estrellas(v) {
+  const n = Math.round(v || 0);
+  let h = "";
+  for (let i = 1; i <= 5; i++) h += i <= n ? "★" : '<span class="off">★</span>';
+  return h;
+}
+function _hace(ts) {
+  const d = ts?.toDate ? ts.toDate() : (ts ? new Date(ts) : new Date());
+  const m = Math.floor((Date.now() - d.getTime()) / 60000);
+  if (m < 1) return "hace un momento";
+  if (m < 60) return `hace ${m} min`;
+  const h = Math.floor(m / 60); if (h < 24) return `hace ${h} h`;
+  const dd = Math.floor(h / 24); return dd === 1 ? "hace 1 día" : `hace ${dd} días`;
+}
+const _REC = { si_definitivamente: "Lo recomienda totalmente", si_probablemente: "Probablemente lo recomienda", tal_vez: "Tal vez lo recomiende", no: "No lo recomendaría" };
+
+function _pintarResenas(docs) {
+  const total = docs.length;
+  const vals = docs.map(d => d.valoracion).filter(v => v > 0);
+  const prom = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length) : 0;
+  const recs = docs.filter(d => d.recomienda).length;
+  const si = docs.filter(d => (d.recomienda || "").startsWith("si")).length;
+  document.getElementById("res-total").textContent = total;
+  document.getElementById("res-prom").textContent = vals.length ? prom.toFixed(1) + "★" : "–";
+  document.getElementById("res-rec").textContent = recs ? Math.round(si / recs * 100) + "%" : "–";
+
+  docs.forEach(d => { if (!_resLlegada.has(d.id)) _resLlegada.set(d.id, _resPrimera ? 0 : Date.now()); });
+  const lista = document.getElementById("res-lista");
+  const conTexto = docs.filter(d => (d.comentario || "").trim());
+  lista.innerHTML = "";
+  if (!conTexto.length) {
+    lista.innerHTML = '<p class="res-vacio">Todavía no hay comentarios publicados. ¡Recorre el museo y sé el primero en dejar tu reseña desde «Participar en el Estudio»!</p>';
+  }
+  conTexto.forEach(d => {
+    const card = document.createElement("div");
+    const t0 = _resLlegada.get(d.id);
+    card.className = "res-card" + (t0 && Date.now() - t0 < 10000 ? " nueva" : "");
+    const top = document.createElement("div"); top.className = "res-top";
+    const st = document.createElement("div"); st.className = "res-stars"; st.innerHTML = _estrellas(d.valoracion);
+    const meta = document.createElement("div"); meta.className = "res-meta";
+    meta.textContent = `Visitante${d.rangoEdad ? " · " + d.rangoEdad + " años" : ""} · ${_hace(d.fecha)}`;
+    top.append(st, meta);
+    const txt = document.createElement("div"); txt.className = "res-txt"; txt.textContent = d.comentario;
+    card.append(top, txt);
+    if (_REC[d.recomienda]) { const b = document.createElement("span"); b.className = "res-badge"; b.textContent = _REC[d.recomienda]; card.append(b); }
+    lista.append(card);
+  });
+  _resPrimera = false;
+}
+
+async function abrirResenas() {
+  resenasPanel.classList.add("active");
+  if (_resUnsub) return;
+  const dot = document.getElementById("res-live-dot"), txt = document.getElementById("res-live-text");
+  _resUnsub = await escucharResenas(docs => {
+    dot.classList.add("res-live"); txt.textContent = "EN VIVO · SE ACTUALIZA AUTOMÁTICAMENTE";
+    _pintarResenas(docs);
+  }, err => {
+    _resUnsub = null;
+    txt.textContent = err === "sin-config" ? "BASE DE DATOS NO CONFIGURADA" : "SIN CONEXIÓN";
+    document.getElementById("res-lista").innerHTML = err === "sin-config"
+      ? '<p class="res-vacio">Las reseñas estarán disponibles cuando se configure la base de datos del estudio (ver FIREBASE_SETUP.md).</p>'
+      : '<p class="res-vacio">No se pudieron cargar las reseñas. Revisa tu conexión e inténtalo de nuevo.</p>';
+  });
+}
+
+document.getElementById("btnResenas")?.addEventListener("click", e => { e.preventDefault(); abrirResenas(); });
+document.getElementById("btnVerResenas")?.addEventListener("click", () => { encuestaPanel.classList.remove("active"); abrirResenas(); });
+document.getElementById("btnCloseResenas")?.addEventListener("click", () => resenasPanel.classList.remove("active"));
+document.addEventListener("keydown", e => { if (e.key === "Escape") resenasPanel?.classList.remove("active"); });
 
 function exitTimeline() {
   if (timeline) { timeline.destroy(); timeline = null; }
