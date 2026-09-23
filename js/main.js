@@ -98,7 +98,7 @@ const progText      = document.getElementById("enc-progress-text");
 const TOTAL_STEPS   = 11;
 // URL de la aplicación web de Google Apps Script (ver INSTRUCCIONES_GOOGLE_SHEETS.md).
 // Déjala vacía ("") para guardar solo en el navegador.
-const SHEETS_URL    = "";  // ← pega aquí la URL /exec de tu Apps Script
+const SHEETS_URL = "https://script.google.com/macros/s/XXXXXXXX/exec";
 let currentStep     = 0;
 const answers       = {};
 
