@@ -181,6 +181,7 @@ const ZONAS = [
       { z:-262, t:"PlayStation 5 — La nueva generación (2020)", d:"825GB SSD con carga instantánea, Ray Tracing en tiempo real, haptic feedback. Sony vendió 50 millones de unidades. La brecha con el PC casi desapareció.", extra:"AppliedVR realizó el primer ensayo clínico randomizado de realidad virtual para dolor crónico (2021). 547 pacientes. Resultado: 65.7% reportaron reducción de dolor vs 40.7% en el grupo de control. La FDA aprobó el primer tratamiento de VR para dolor lumbar crónico en noviembre 2021." },
       { z:-275, t:"Elden Ring — GOTY 2022 (FromSoftware)", d:"George R.R. Martin coescribió el mundo. Fusionó mundo abierto con dificultad extrema. 20 millones de copias. Demostró que los jugadores quieren desafío real, no asistencia constante." },
       { z:-288, t:"El impacto total de los videojuegos", d:"$184B en 2023. Supera cine ($33B) y música ($26B) combinados. 3.2 mil millones de jugadores. El arte más influyente del siglo XXI.", extra:"En 2023, la industria del videojuego generó $184 mil millones — más que el cine ($33B) y la música ($26B) combinados. Hay 3.2 mil millones de jugadores activos. En Colombia, la industria creció 15% en 2023. Los videojuegos son el arte más influyente y rentable del siglo XXI." },
+      { z:-300, t:"Fin del recorrido — 70 años en tus manos", d:"Recorriste desde 1952 hasta hoy. Este museo demuestra que los videojuegos son historia, ciencia cognitiva y cultura — no solo entretenimiento. Tu opinión ahora es parte de esta investigación.", extra:"Este museo interactivo fue desarrollado como Trabajo de Grado en Ingeniería Multimedia, Universidad de San Buenaventura Cali, para estudiar cómo una experiencia inmersiva cambia la percepción social sobre los videojuegos. Si aún no lo has hecho, completa la encuesta 'Participar en el Estudio' desde el menú principal — tu respuesta es un dato real para esta investigación académica." },
     ],
     graffiti:{ z:-251, x:-3.85, text:"THE\nFUTURE", color:"#00ffee" },
   },
@@ -809,6 +810,104 @@ function buildEntrance(scene, welcomeImg) {
 // ═══════════════════════════════════════════════════════
 const _gltfLoader = new GLTFLoader();
 
+
+// ═══════════════════════════════════════════════════════
+//  MONUMENTO FINAL — cierre visual del recorrido
+// ═══════════════════════════════════════════════════════
+function buildMonumentoFinal(scene, z) {
+  const x = 0;
+  const color = 0xffffff;
+
+  // Base circular elevada
+  const base = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.6, 1.8, 0.14, 48),
+    new THREE.MeshStandardMaterial({color:0x05070e, roughness:0.05, metalness:0.95})
+  );
+  base.position.set(x, 0.07, z); scene.add(base);
+
+  // 5 anillos concéntricos crecientes — representan las 5 salas del recorrido
+  const ringColors = [0xf0a030, 0xff4400, 0x44ff88, 0x4488ff, 0xcc44ff, 0x00ffee];
+  const monRings = [];
+  ringColors.forEach((col, i) => {
+    const r = 0.9 + i * 0.42;
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(r, 0.028, 10, 72),
+      new THREE.MeshStandardMaterial({color:col, emissive:col, emissiveIntensity:1.6, roughness:0.05, metalness:0.9})
+    );
+    ring.rotation.x = Math.PI/2;
+    ring.position.set(x, 1.6, z);
+    scene.add(ring);
+    monRings.push({mesh:ring, phase:i*0.6, speed:0.15 + i*0.04, baseR:r});
+  });
+
+  // Esfera central brillante — el "núcleo" del museo
+  const core = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(0.5, 3),
+    new THREE.MeshStandardMaterial({color:0xffffff, emissive:0xffffff, emissiveIntensity:0.9, roughness:0.1, metalness:0.6})
+  );
+  core.position.set(x, 1.6, z); scene.add(core);
+
+  // Halo de luz
+  const coreLight = new THREE.PointLight(0xffffff, 10.0, 12.0);
+  coreLight.position.set(x, 1.6, z); scene.add(coreLight);
+
+  // Luces de acento de cada color rotando alrededor
+  const accentLights = ringColors.slice(0,4).map((col, i) => {
+    const pl = new THREE.PointLight(col, 3.5, 6.0);
+    scene.add(pl);
+    return {light:pl, phase:i*1.5, speed:0.3+i*0.1, r:2.2};
+  });
+
+  // Beam vertical hacia arriba — más alto que los del altar normal
+  const beamMat = new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.06, side:THREE.DoubleSide, depthWrite:false});
+  const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.5, 6.5, 10, 1, true), beamMat);
+  beam.position.set(x, 3.3, z); scene.add(beam);
+
+  // Texto "FIN DEL RECORRIDO" — placa neon
+  const plate = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.6, 0.85),
+    new THREE.MeshBasicMaterial({ map: makeNeonTitleTex("Gracias por explorar", "1952—2023", "#ffffff", null, null), transparent:true })
+  );
+  plate.position.set(x, 3.9, z - 0.02);
+  scene.add(plate);
+
+  // Partículas ascendentes alrededor del monumento
+  const pCount = 120;
+  const pGeo = new THREE.BufferGeometry();
+  const pPos = new Float32Array(pCount*3);
+  const pSpeed = new Float32Array(pCount);
+  for (let i=0;i<pCount;i++){
+    const ang = Math.random()*Math.PI*2, r = 1.0 + Math.random()*2.4;
+    pPos[i*3]   = x + Math.cos(ang)*r;
+    pPos[i*3+1] = Math.random()*4.5;
+    pPos[i*3+2] = z + Math.sin(ang)*r;
+    pSpeed[i]   = 0.004 + Math.random()*0.008;
+  }
+  pGeo.setAttribute("position", new THREE.BufferAttribute(pPos,3));
+  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({size:0.035, color:0xffffff, transparent:true, opacity:0.5}));
+  scene.add(particles);
+
+  floaters.push({
+    obj: { update(t){
+      monRings.forEach(r=>{
+        r.mesh.rotation.z += r.speed * 0.016;
+        r.mesh.material.emissiveIntensity = 1.2 + Math.sin(t*1.2+r.phase)*0.5;
+      });
+      core.rotation.y += 0.006; core.rotation.x += 0.003;
+      core.material.emissiveIntensity = 0.7 + Math.sin(t*1.5)*0.3;
+      coreLight.intensity = 8 + Math.sin(t*1.3)*3;
+      accentLights.forEach(a=>{
+        const ang = t*a.speed + a.phase;
+        a.light.position.set(x+Math.cos(ang)*a.r, 1.6+Math.sin(t*0.6+a.phase)*0.5, z+Math.sin(ang)*a.r);
+      });
+      const pos = pGeo.attributes.position.array;
+      for(let i=0;i<pCount;i++){ pos[i*3+1]+=pSpeed[i]; if(pos[i*3+1]>4.5) pos[i*3+1]=0; }
+      pGeo.attributes.position.needsUpdate = true;
+    }},
+    baseY:0, phase:0, speed:0, type:"monumento"
+  });
+}
+
 function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} = {}) {
 
   // ── ALTAR FUTURISTA 3 NIVELES ────────────────────────
@@ -874,22 +973,26 @@ function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} =
 
   // ── ILUMINACIÓN THREE-POINT CINEMATOGRÁFICA ──────────
   // KEY LIGHT: frontal-superior, blanca cálida, dominante
-  const keyLight = new THREE.PointLight(0xfff8f0, 11.0, 10.0);
+  const keyLight = new THREE.PointLight(0xfff8f0, 14.0, 12.0);
   keyLight.position.set(x + 1.2, 3.6, z + 2.2); scene.add(keyLight);
 
   // FILL LIGHT: lateral izquierda, más suave, rellena sombras
-  const fillLight = new THREE.PointLight(0xdde8ff, 5.0, 7.5);
+  const fillLight = new THREE.PointLight(0xdde8ff, 6.5, 8.5);
   fillLight.position.set(x - 2.2, 2.5, z + 1.0); scene.add(fillLight);
 
   // RIM LIGHT: desde atrás con color de zona — da silueta dramática
-  const rimLight = new THREE.PointLight(color, 6.0, 6.5);
+  const rimLight = new THREE.PointLight(color, 7.5, 7.5);
   rimLight.position.set(x, 2.8, z - 2.5); scene.add(rimLight);
   floaters.push({obj:rimLight, baseY:2.8, phase:Math.random()*Math.PI*2, speed:0.8, type:"light"});
 
   // GROUND LIGHT: desde abajo con color zona — efecto altar
-  const groundLight = new THREE.PointLight(color, 3.5, 4.0);
+  const groundLight = new THREE.PointLight(color, 4.5, 4.5);
   groundLight.position.set(x, 0.08, z); scene.add(groundLight);
   floaters.push({obj:groundLight, baseY:0.08, phase:Math.random()*Math.PI*2+1, speed:1.1, type:"light"});
+
+  // HERO LIGHT: cenital blanca, define mejor la silueta del modelo
+  const heroLight = new THREE.PointLight(0xffffff, 5.0, 6.0);
+  heroLight.position.set(x, 6.0, z + 0.3); scene.add(heroLight);
 
   // ── CARGA GLB ───────────────────────────────────────
   _gltfLoader.load(
@@ -929,15 +1032,15 @@ function loadGLBModel(scene, path, {x=0, z=0, scale=1, rotY=0, color=0xffffff} =
             child.material = new THREE.MeshStandardMaterial({
               map:               m.map,
               color:             m.color,
-              roughness:         0.30,
-              metalness:         0.26,
+              roughness:         0.26,
+              metalness:         0.24,
               emissive:          m.color,
-              emissiveIntensity: 0.30, // brillo propio moderado + luces externas
+              emissiveIntensity: 0.46, // brillo propio fuerte — visible aunque las luces no lleguen bien
             });
           } else if (m.isMeshStandardMaterial || m.isMeshPhysicalMaterial) {
-            m.roughness         = Math.min(m.roughness ?? 0.6, 0.34);
-            m.metalness         = Math.max(m.metalness ?? 0.0, 0.22);
-            m.emissiveIntensity = 0.28; // brillo propio visible, look cinematográfico
+            m.roughness         = Math.min(m.roughness ?? 0.6, 0.30);
+            m.metalness         = Math.max(m.metalness ?? 0.0, 0.20);
+            m.emissiveIntensity = 0.42; // brillo propio fuerte, estilo estatua futurista
             m.needsUpdate       = true;
           }
         });
@@ -1815,14 +1918,13 @@ function buildCoins(scene) {
     const col = new THREE.Color(cfg.color);
     const side = (i % 2 === 0) ? -1.8 : 1.8;
 
-    // Moneda dorada
+    // Mini-planeta esférico con anillo — el coleccionable del museo
     const coinMat = new THREE.MeshStandardMaterial({
-      color:0xffd700, emissive:col, emissiveIntensity:0.7,
-      metalness:0.95, roughness:0.10
+      color:cfg.color, emissive:cfg.color, emissiveIntensity:0.55,
+      metalness:0.4, roughness:0.25
     });
-    const coin = new THREE.Mesh(new THREE.CylinderGeometry(0.26,0.26,0.055,20), coinMat);
+    const coin = new THREE.Mesh(new THREE.SphereGeometry(0.22,16,16), coinMat);
     coin.position.set(side, 1.25, cfg.z);
-    coin.rotation.x = Math.PI/2;
     scene.add(coin);
 
     // Aro de zona
@@ -1830,9 +1932,9 @@ function buildCoins(scene) {
       color:cfg.color, emissive:cfg.color, emissiveIntensity:2.2,
       metalness:0.9, roughness:0.05
     });
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.28,0.022,8,32), ringMat);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34,0.02,8,32), ringMat);
     ring.position.copy(coin.position);
-    ring.rotation.x = Math.PI/2;
+    ring.rotation.x = Math.PI/2.6; // ligera inclinación tipo Saturno
     scene.add(ring);
 
     // Luz suave
@@ -1844,7 +1946,7 @@ function buildCoins(scene) {
   });
 }
 
-function _playCoinSound(ctx) {
+function _playCoinSound(ctx) {  // sonido de recolección de planeta
   if (!ctx) return;
   const t = ctx.currentTime;
   [0, 0.09].forEach((delay, i) => {
@@ -1878,10 +1980,10 @@ function _updateCoinHUD() {
   if (_coinsCollected >= total) {
     el.style.color = '#fff';
     el.style.textShadow = '0 0 14px #ffd700';
-    el.textContent = total + '/' + total + ' MONEDAS COMPLETADO!';
+    el.textContent = total + '/' + total + ' PLANETAS COMPLETADO!';
     _mostrarRetroalimentacion();
   } else {
-    el.textContent = _coinsCollected + '/' + total + ' MONEDAS';
+    el.textContent = _coinsCollected + '/' + total + ' PLANETAS';
   }
 
   // Toast de recogida individual
@@ -1903,7 +2005,7 @@ function _updateCoinHUD() {
     document.body.appendChild(toast);
   }
   if (_coinsCollected < total) {
-    toast.textContent = 'MONEDA ' + _coinsCollected + '/' + total + ' RECOGIDA';
+    toast.textContent = 'PLANETA ' + _coinsCollected + '/' + total + ' DESCUBIERTO';
     toast.style.opacity = '1';
     clearTimeout(toast._t);
     toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 1600);
@@ -1965,7 +2067,7 @@ function _mostrarRetroalimentacion() {
         justify-content:center;font-family:monospace;line-height:1;z-index:10">✕</button>
       <span class="crf-icon">★</span>
       <div class="crf-title">COLECCIÓN COMPLETA</div>
-      <div class="crf-sub">16 / 16 MONEDAS RECOLECTADAS</div>
+      <div class="crf-sub">16 / 16 PLANETAS DESCUBIERTOS</div>
       <p class="crf-msg">
         Exploraste 70 años de historia del videojuego de principio a fin. 
         Desde los osciloscopios de 1952 hasta la realidad virtual de 2023, 
@@ -1977,7 +2079,7 @@ function _mostrarRetroalimentacion() {
       <div class="crf-stats">
         <div class="crf-stat"><span class="crf-stat-num">6</span><div class="crf-stat-lbl">Zonas exploradas</div></div>
         <div class="crf-stat"><span class="crf-stat-num">70+</span><div class="crf-stat-lbl">Años de historia</div></div>
-        <div class="crf-stat"><span class="crf-stat-num">16</span><div class="crf-stat-lbl">Monedas · Hitos</div></div>
+        <div class="crf-stat"><span class="crf-stat-num">16</span><div class="crf-stat-lbl">Planetas · Hitos</div></div>
       </div>
       <button class="crf-btn" onclick="
         document.getElementById('coins-final-panel').style.display='none';
@@ -2036,6 +2138,7 @@ const NARRACIONES = {
 
 // ── NARRACIONES DE PANELES ─────────────────────────────────────────
 const PANEL_NARRACIONES = {
+  "__cierre_museo__": "Has llegado al final del recorrido. Setenta años de historia, desde un osciloscopio en mil novecientos cincuenta y dos hasta la realidad virtual de hoy. Los videojuegos no son solo entretenimiento: son ciencia, cultura y el arte más influyente del siglo veintiuno. Gracias por explorar. Si aún no lo has hecho, cuéntanos tu experiencia en la encuesta del estudio.",
   "Alan Turing": "Mil novecientos cincuenta. Alan Turing propuso que las máquinas podían aprender y jugar. Diseñó un algoritmo de ajedrez antes de que existieran computadoras capaces de ejecutarlo. Turing sentó las bases matemáticas de la inteligencia artificial y los mundos virtuales.",
 
   "Tennis for Two": "Mil novecientos cincuenta y ocho. William Higinbotham diseñó este juego de tenis en un osciloscopio para el Día Abierto del Laboratorio Brookhaven. Nadie imaginó que estaba inventando una industria.",
@@ -2147,6 +2250,7 @@ function updateGaze(videoEls, camera) {
 
 let _narratorActive = true;
 let _lastNarratedZone = "";
+let _finalNarrated = false;
 let _currentUtterance = null;
 
 function narrarZona(zonaId) {
@@ -2348,6 +2452,9 @@ export async function initMuseumWalk({canvas}){
     hex: "#f0a030"
   });
 
+  // Monumento final — cierre visual y narrativo del recorrido
+  buildMonumentoFinal(scene, -300);
+
   const particleSystems=ZONAS.map(z=>buildZoneParticles(scene,z));
   const {card,hud,fill}=createUI();
   const controls=createControls(camera,canvas);
@@ -2375,6 +2482,12 @@ function detectZone(){
       narrarZona(zona.id);  // Narrador inmersivo al entrar en zona
     }
     updateHUD(hud,fill,zonaActual,Math.abs(z)/(L-5));
+
+    // Narración de cierre — una sola vez al llegar al monumento final
+    if (!_finalNarrated && z < -296) {
+      _finalNarrated = true;
+      _narrarPanel("__cierre_museo__");
+    }
 
     // Buscar el dato más cercano en TODA la lista (radio 3.5 unidades)
     let bestDist=3.5, bestDato=null, bestZona=null;
@@ -2449,24 +2562,14 @@ function detectZone(){
       }
     });
 
-    // Si narrador habla → silenciar todo y salir
     const narratorSpeaking =
       (window.responsiveVoice?.isPlaying?.()) ||
       (window.speechSynthesis?.speaking);
-    if (narratorSpeaking) {
-      videoElements.forEach(v => {
-        if (v.gainNode && ctx) {
-          v.gainNode.gain.cancelScheduledValues(ctx.currentTime);
-          v.gainNode.gain.setTargetAtTime(0, ctx.currentTime, 0.15);
-          v.volume = 0;
-        }
-      });
-      audioMgr?.duck?.(0.3); // música de zona baja pero no desaparece
-      _wasVideoAudible = false;
-      return;
-    }
 
     // ── DETERMINAR CUÁL PANEL MIRA EL JUGADOR ──
+    // El video se activa VISUALMENTE siempre que se mire,
+    // sin importar si el narrador está hablando. Solo el AUDIO
+    // del video se silencia mientras el narrador tiene la palabra.
     let focusedVideo  = null;
     let focusedDist   = Infinity;
 
@@ -2474,27 +2577,23 @@ function detectZone(){
       const { looking, dist } = _isLookingAt(v);
 
       if (looking) {
-        // Activar video si no está activo
         if (!v.active) {
           v.active = true;
           const doPlay = () => { if (v.active) v.videoEl.play().catch(()=>{}); };
           if (v.videoEl.readyState >= 2) doPlay();
           else v.videoEl.addEventListener('canplay', doPlay, { once: true });
-          if (ctx && ctx.state !== 'suspended') _conectarAudioVideo(v);
+          if (ctx && ctx.state !== 'suspended' && !narratorSpeaking) _conectarAudioVideo(v);
         }
         if (dist < focusedDist) { focusedDist = dist; focusedVideo = v; }
       } else {
-        // NO está mirando → desactivar inmediatamente
         if (v.active) {
           v.active = false;
           v.buffering = false;
-          // Silenciar el gain de este video
           if (v.gainNode && ctx) {
             v.gainNode.gain.cancelScheduledValues(ctx.currentTime);
             v.gainNode.gain.setTargetAtTime(0, ctx.currentTime, 0.2);
             v.volume = 0;
           }
-          // Pausar y liberar en 500ms
           setTimeout(() => {
             if (!v.active) {
               v.videoEl.pause();
@@ -2504,7 +2603,6 @@ function detectZone(){
             }
           }, 500);
         }
-        // Silenciar gain aunque esté "activo" (por si no se desactivó a tiempo)
         if (v.gainNode && ctx && (v.volume ?? 0) > 0.005) {
           v.gainNode.gain.cancelScheduledValues(ctx.currentTime);
           v.gainNode.gain.setTargetAtTime(0, ctx.currentTime, 0.1);
@@ -2513,15 +2611,18 @@ function detectZone(){
       }
     });
 
-    // ── AUDIO DEL PANEL EN FOCO ──
+    // ── AUDIO DEL PANEL EN FOCO — silenciado solo si narra ──
     if (focusedVideo && focusedVideo.gainNode && ctx) {
-      // Calcular volumen según distancia
       let targetVol = 0;
-      if (focusedDist <= AUD_FULL_DIST) {
-        targetVol = AUD_MAX_VOL;
-      } else if (focusedDist < AUD_START_DIST) {
-        const t = (focusedDist - AUD_FULL_DIST) / (AUD_START_DIST - AUD_FULL_DIST);
-        targetVol = AUD_MAX_VOL * (1 - t*t*(3-2*t)); // smoothstep
+      if (!narratorSpeaking) {
+        if (focusedDist <= AUD_FULL_DIST) {
+          targetVol = AUD_MAX_VOL;
+        } else if (focusedDist < AUD_START_DIST) {
+          const t = (focusedDist - AUD_FULL_DIST) / (AUD_START_DIST - AUD_FULL_DIST);
+          targetVol = AUD_MAX_VOL * (1 - t*t*(3-2*t));
+        }
+        // Conectar audio si el jugador empezó a mirar mientras narraba
+        if (!focusedVideo.sourceNode && ctx.state !== 'suspended') _conectarAudioVideo(focusedVideo);
       }
 
       if (Math.abs(targetVol - (focusedVideo.volume ?? 0)) > 0.01) {
@@ -2532,14 +2633,17 @@ function detectZone(){
         );
       }
 
-      // Música de zona baja cuando hay video con audio
-      if (!_wasVideoAudible) {
-        audioMgr?.duck?.(0.15); // 15% del volumen normal
-        _wasVideoAudible = true;
+      if (!narratorSpeaking) {
+        if (!_wasVideoAudible) { audioMgr?.duck?.(0.15); _wasVideoAudible = true; }
+      } else {
+        audioMgr?.duck?.(0.3);
+        _wasVideoAudible = false;
       }
     } else {
-      // No hay video en foco → restaurar música de zona
-      if (_wasVideoAudible) {
+      if (narratorSpeaking) {
+        audioMgr?.duck?.(0.3);
+        _wasVideoAudible = false;
+      } else if (_wasVideoAudible) {
         audioMgr?.unduck?.();
         _wasVideoAudible = false;
       }
@@ -2579,6 +2683,7 @@ function detectZone(){
     if(frameN%3===0){
       floaters.forEach(f=>{
         if(!f.obj) return;
+        if(f.type==="monumento"){ f.obj.update(t); return; }
         if(f.obj.position && Math.abs(f.obj.position.z-camZ)>18) return;
         if(f.type==="model"||f.type==="ring"||f.type==="fog"){
           f.obj.position.y=f.baseY+Math.sin(t*f.speed+f.phase)*.085;

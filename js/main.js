@@ -1,5 +1,5 @@
 import { initEarthBackdrop } from "./earthBackdrop.js";
-import { initMuseumWalk }   from "./museum_walk.js?v=3001";
+import { initMuseumWalk }   from "./museum_walk.js?v=3200";
 import { initMuseum }       from "./museum.js";
 
 let earth    = null;
@@ -106,7 +106,7 @@ function encUpdateProgress() {
   progFill.style.width = pct + "%";
   progText.textContent = currentStep === 0 ? "DATOS PERSONALES" : `PREGUNTA ${currentStep} DE ${TOTAL_STEPS-1}`;
   encPrev.style.display = currentStep > 0 ? "block" : "none";
-  encNext.textContent   = currentStep === TOTAL_STEPS ? "ENVIAR ✓" : "SIGUIENTE →";
+  encNext.textContent   = currentStep === TOTAL_STEPS - 1 ? "ENVIAR ✓" : "SIGUIENTE →";
 }
 
 function encGoTo(n) {
@@ -138,7 +138,7 @@ function encCollectCurrent() {
 encNext.addEventListener("click", () => {
   const ok = encCollectCurrent();
   if(ok === false) return;
-  if (currentStep < TOTAL_STEPS) {
+  if (currentStep < TOTAL_STEPS - 1) {
     encGoTo(currentStep + 1);
   } else {
     // Enviar — guardar en localStorage como simulación
@@ -158,7 +158,7 @@ encNext.addEventListener("click", () => {
 });
 
 encPrev.addEventListener("click", () => {
-  if (currentStep > 1) if(currentStep > 0) encGoTo(currentStep - 1);
+  if (currentStep > 0) encGoTo(currentStep - 1);
 });
 
 btnEstudio?.addEventListener("click", e => {
