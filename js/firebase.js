@@ -39,6 +39,17 @@ export function comentarioLimpio(txt) {
   return !GROSERIAS.some(g => new RegExp(`\\b${g.normalize("NFD").replace(/[̀-ͯ]/g, "")}\\b`).test(t));
 }
 
+/** "jose daniel ortiz" → "Jose O." (nombre + inicial del último apellido) */
+export function nombreCorto(nombre) {
+  const partes = (nombre || "").trim().split(/\s+/).filter(Boolean)
+    .map(p => p.charAt(0).toLocaleUpperCase("es") + p.slice(1).toLocaleLowerCase("es"));
+  if (!partes.length) return "";
+  // Primer apellido: 4+ palabras → 3.ª palabra (Nombre Nombre Apellido Apellido); 2–3 palabras → 2.ª
+  const ap = partes.length >= 4 ? partes[2] : partes[1];
+  const ini = ap ? " " + ap.charAt(0) + "." : "";
+  return (partes[0] + ini).slice(0, 40);
+}
+
 function rangoEdad(edad) {
   const e = Number(edad);
   if (!e) return "";
@@ -63,13 +74,16 @@ export async function guardarRespuesta(ans) {
     p3: num("p3"), p4: num("p4"), p5: num("p5"), p6: num("p6"), p7: num("p7"),
     p8: ans.p8 || "", p9: ans.p9 || "", p10: ans.p10 || "",
     publicar: Boolean(ans.publicar),
+    mostrarNombre: Boolean(ans.mostrarNombre),
     fecha: serverTimestamp()
   });
 
   const vals = [num("p5"), num("p6"), num("p7")].filter(v => v);
   const valoracion = vals.length ? Math.round((vals.reduce((a, b) => a + b, 0) / vals.length) * 10) / 10 : 0;
   const comentario = (ans.publicar && comentarioLimpio(ans.p10)) ? (ans.p10 || "").trim().slice(0, 500) : "";
+  const autor = (comentario && ans.mostrarNombre && comentarioLimpio(ans.nombre)) ? nombreCorto(ans.nombre) : "";
   await addDoc(collection(db, "resenas"), {
+    autor,
     valoracion,
     recomienda: ans.p9 || "",
     comentario,

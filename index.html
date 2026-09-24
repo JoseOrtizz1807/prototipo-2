@@ -187,7 +187,7 @@
           Participar en el<br/><span style="background:linear-gradient(90deg,#4488ff,#00ffcc);-webkit-background-clip:text;background-clip:text;color:transparent">Estudio</span>
         </h2>
         <p style="font-size:11px;color:rgba(150,200,180,0.7);line-height:1.7;border-left:2px solid rgba(68,136,255,0.4);padding-left:10px">
-          Tu opinión es fundamental para esta investigación. La encuesta tiene <strong style="color:#4488ff">10 preguntas</strong> y toma aproximadamente <strong style="color:#4488ff">5 minutos</strong>. Tus respuestas son anónimas y se usarán exclusivamente con fines académicos.
+          Tu opinión es fundamental para esta investigación. La encuesta tiene <strong style="color:#4488ff">10 preguntas</strong> y toma aproximadamente <strong style="color:#4488ff">5 minutos</strong>. Tus respuestas son anónimas (salvo que decidas mostrar tu nombre en tu reseña) y se usarán exclusivamente con fines académicos.
         </p>
       </div>
 
@@ -330,8 +330,15 @@
           <textarea name="p10" id="enc-comentario" placeholder="Escribe tu comentario aquí (opcional)..." style="width:100%;min-height:90px;background:rgba(255,255,255,0.04);border:1px solid rgba(68,136,255,0.25);border-radius:10px;color:#c8d4ce;font-family:'Space Mono',monospace;font-size:11px;padding:12px;resize:vertical;outline:none;margin-top:8px;box-sizing:border-box"></textarea>
           <label style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:10.5px;color:rgba(150,200,180,0.8);line-height:1.6;cursor:pointer">
             <input type="checkbox" id="enc-publicar" style="margin-top:3px;accent-color:#00ffcc"/>
-            <span>Autorizo que mi comentario se muestre de forma anónima en la sección de <strong style="color:#00ffcc">Reseñas</strong> del museo.</span>
+            <span>Autorizo que mi comentario se muestre en la sección de <strong style="color:#00ffcc">Reseñas</strong> del museo.</span>
           </label>
+          <label id="enc-nombre-wrap" style="display:none;gap:10px;align-items:flex-start;margin-top:10px;font-size:10.5px;color:rgba(150,200,180,0.8);line-height:1.6;cursor:pointer">
+            <input type="checkbox" id="enc-mostrar-nombre" style="margin-top:3px;accent-color:#00ffcc"/>
+            <span>Mostrar mi nombre en la reseña (solo el nombre y la inicial del apellido, por ejemplo «<span id="enc-nombre-preview">Ana G.</span>»).</span>
+          </label>
+          <div id="enc-aviso" style="display:none;margin-top:12px;padding:10px 12px;border-radius:8px;background:rgba(255,200,60,.08);border:1px solid rgba(255,200,60,.35);font-size:10.5px;color:#ffd87a;line-height:1.6">
+            Tu comentario no aparecerá en <strong>Reseñas</strong> porque no marcaste la casilla de autorización. Márcala si quieres publicarlo, o pulsa <strong>ENVIAR</strong> de nuevo para enviarlo solo al estudio.
+          </div>
         </div>
 
       </div><!-- /enc-form -->
@@ -386,7 +393,7 @@
           Reseñas de<br/><span style="background:linear-gradient(90deg,#00ffcc,#4488ff);-webkit-background-clip:text;background-clip:text;color:transparent">visitantes</span>
         </h2>
         <p style="font-size:11px;color:rgba(150,200,180,0.7);line-height:1.7;border-left:2px solid rgba(0,255,204,0.35);padding-left:10px">
-          Opiniones de quienes recorrieron el museo y participaron en el estudio. Se actualizan automáticamente cada vez que alguien termina la encuesta. Todas son anónimas.
+          Opiniones de quienes recorrieron el museo y participaron en el estudio. Se actualizan automáticamente cada vez que alguien termina la encuesta. Solo se muestra el nombre de quienes lo autorizaron.
         </p>
       </div>
 

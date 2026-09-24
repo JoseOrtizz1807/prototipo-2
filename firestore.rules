@@ -6,12 +6,12 @@ service cloud.firestore {
     // ni borrarlas, y solo el administrador puede LEERLAS (desde admin.html).
     match /respuestas/{id} {
       allow create: if request.resource.data.keys().hasOnly(
-                         ['nombre','edad','genero','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','publicar','fecha'])
+                         ['nombre','edad','genero','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','publicar','mostrarNombre','fecha'])
                     && request.resource.data.fecha == request.time
                     && request.resource.data.p10 is string
                     && request.resource.data.p10.size() <= 2000
                     && request.resource.data.nombre.size() <= 120;
-      // ▼ Cambia por el correo de Google con el que vas a administrar
+      // Administrador: único correo que puede leer las respuestas completas
       allow read: if request.auth != null
                   && request.auth.token.email == "lunatica2019@gmail.com";
       allow update, delete: if false;
@@ -21,13 +21,16 @@ service cloud.firestore {
     // y solo se pueden crear con el formato esperado.
     match /resenas/{id} {
       allow read: if true;
-      allow create: if request.resource.data.keys().hasOnly(['valoracion','recomienda','comentario','rangoEdad','fecha'])
+      allow create: if request.resource.data.keys().hasOnly(['autor','valoracion','recomienda','comentario','rangoEdad','fecha'])
                     && request.resource.data.fecha == request.time
                     && request.resource.data.valoracion is number
                     && request.resource.data.valoracion >= 0
                     && request.resource.data.valoracion <= 5
                     && request.resource.data.comentario is string
-                    && request.resource.data.comentario.size() <= 500;
+                    && request.resource.data.comentario.size() <= 500
+                    && (!('autor' in request.resource.data)
+                        || (request.resource.data.autor is string
+                            && request.resource.data.autor.size() <= 40));
       allow update, delete: if false;
     }
   }

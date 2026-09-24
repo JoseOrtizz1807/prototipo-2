@@ -111,10 +111,22 @@ function encUpdateProgress() {
   encNext.textContent   = currentStep === TOTAL_STEPS - 1 ? "ENVIAR ✓" : "SIGUIENTE →";
 }
 
+function encPrepararPasoFinal() {
+  const wrap = document.getElementById("enc-nombre-wrap");
+  if (!wrap) return;
+  const tieneNombre = !!(answers.nombre || "").trim();
+  wrap.style.display = tieneNombre ? "flex" : "none";
+  if (tieneNombre) {
+    const partes = answers.nombre.trim().split(/\s+/).map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase());
+    document.getElementById("enc-nombre-preview").textContent = partes[0] + (partes.length > 1 ? " " + (partes.length >= 4 ? partes[2] : partes[1]).charAt(0) + "." : "");
+  }
+}
+
 function encGoTo(n) {
   encGetStep(currentStep).style.display = "none";
   currentStep = n;
   encGetStep(currentStep).style.display = "block";
+  if (currentStep === TOTAL_STEPS - 1) encPrepararPasoFinal();
   encUpdateProgress();
 }
 
@@ -135,7 +147,16 @@ function encCollectCurrent() {
   if (radios.length)  answers[`p${currentStep}`] = radios[0].value;
   if (checks.length)  answers[`p${currentStep}`] = [...checks].map(c=>c.value).join(",");
   if (textarea)       answers[`p${currentStep}`] = textarea.value;
-  if (currentStep === TOTAL_STEPS - 1) answers.publicar = !!document.getElementById("enc-publicar")?.checked;
+  if (currentStep === TOTAL_STEPS - 1) {
+    answers.publicar = !!document.getElementById("enc-publicar")?.checked;
+    answers.mostrarNombre = answers.publicar && !!answers.nombre && !!document.getElementById("enc-mostrar-nombre")?.checked;
+    // Aviso: escribió un comentario pero no autorizó publicarlo (solo la primera vez)
+    const aviso = document.getElementById("enc-aviso");
+    if ((answers[`p${currentStep}`] || "").trim() && !answers.publicar && aviso && aviso.style.display !== "block") {
+      aviso.style.display = "block";
+      return false;
+    }
+  }
 }
 
 encNext.addEventListener("click", () => {
@@ -182,6 +203,8 @@ btnEstudio?.addEventListener("click", e => {
   document.getElementById("enc-result").style.display = "none";
   encNext.style.display = "block";
   const pub = document.getElementById("enc-publicar"); if (pub) pub.checked = false;
+  const mn = document.getElementById("enc-mostrar-nombre"); if (mn) mn.checked = false;
+  const av = document.getElementById("enc-aviso"); if (av) av.style.display = "none";
   const est = document.getElementById("enc-envio-estado"); if (est) est.textContent = "";
   Object.keys(answers).forEach(k => delete answers[k]);
   encUpdateProgress();
@@ -235,7 +258,7 @@ function _pintarResenas(docs) {
     const top = document.createElement("div"); top.className = "res-top";
     const st = document.createElement("div"); st.className = "res-stars"; st.innerHTML = _estrellas(d.valoracion);
     const meta = document.createElement("div"); meta.className = "res-meta";
-    meta.textContent = `Visitante${d.rangoEdad ? " · " + d.rangoEdad + " años" : ""} · ${_hace(d.fecha)}`;
+    meta.textContent = `${d.autor || "Visitante"}${d.rangoEdad ? " · " + d.rangoEdad + " años" : ""} · ${_hace(d.fecha)}`;
     top.append(st, meta);
     const txt = document.createElement("div"); txt.className = "res-txt"; txt.textContent = d.comentario;
     card.append(top, txt);
