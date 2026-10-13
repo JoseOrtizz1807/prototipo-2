@@ -2914,7 +2914,7 @@ function detectZone(){
       controls.destroy(); audioMgr.destroy(); document.exitPointerLock?.();
       document.body.classList.remove("museo-activo");
       document.getElementById("museum-intro")?.remove();
-      ["museum-card","museum-hud"].forEach(id=>document.getElementById(id)?.remove());
+      ["museum-card","museum-hud","coin-counter","narrator-btn"].forEach(id=>document.getElementById(id)?.remove());
       document.getElementById("hud-fill")?.parentElement?.remove();
       floaters.length=0; holoFloaters.length=0;
       videoElements.forEach(({videoEl,texture})=>{
