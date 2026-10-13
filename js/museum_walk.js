@@ -18,6 +18,13 @@ import { EffectComposer }  from "jsm/postprocessing/EffectComposer.js";
 import { RenderPass }      from "jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "jsm/postprocessing/UnrealBloomPass.js";
 import { GLTFLoader }      from "jsm/loaders/GLTFLoader.js";
+import { DRACOLoader }     from "jsm/loaders/DRACOLoader.js";
+import { createGuia }      from "./guia.js?v=4";
+import { buildVestibulo, buildPortalesRegreso, HUB, HUB_SPAWN } from "./vestibulo.js?v=2";
+import { buildSalas, buildParedIzquierda, regionesTransitables, PUERTAS } from "./salas_juego.js?v=1";
+import { abrirJuego, leerRecords } from "./minijuegos.js?v=1";
+import * as VOZ from "./voz.js?v=1";
+import { crearControlesTactiles, ES_TACTIL } from "./tactil.js?v=1";
 
 const IS_MAC   = /Mac/i.test(navigator.platform ?? "");
 const DPR      = Math.min(window.devicePixelRatio, 1.0); // cap duro en 1x
@@ -571,10 +578,10 @@ function buildCorridor(scene) {
 
   // Paredes mármol (material compartido)
   const pMat = new THREE.MeshStandardMaterial({color:0x060810,map:mblTex,roughness:0.14,metalness:0.08});
-  [[Math.PI/2,-W/2],[-Math.PI/2,W/2]].forEach(([ry,px])=>{
-    const w = new THREE.Mesh(new THREE.PlaneGeometry(L,H),pMat);
-    w.rotation.y=ry; w.position.set(px,H/2,zC); scene.add(w);
-  });
+  // Pared derecha entera; la izquierda tiene puertas hacia las salas de juego
+  const wDer = new THREE.Mesh(new THREE.PlaneGeometry(L,H),pMat);
+  wDer.rotation.y=-Math.PI/2; wDer.position.set(W/2,H/2,zC); scene.add(wDer);
+  buildParedIzquierda(scene, pMat, W, H, L, zC);
   const wf = new THREE.Mesh(new THREE.PlaneGeometry(W,H),pMat);
   wf.position.set(0,H/2,-L+2); scene.add(wf);
 
@@ -592,7 +599,7 @@ function buildCorridor(scene) {
   // Columnas instanciadas — filtradas para no tapar vitrinas
   // Posiciones de vitrinas a evitar (±3u)
   const _vitrinaZ = [-11,-24,-29,-42,-55,-62,-74,-87,-108,-122,-136,-150,-164,-178,
-                     -205,-218,-232,-246,-262,-275,-288];
+                     -205,-218,-232,-246,-262,-275,-288, ...PUERTAS.map(p=>p.z)];
   const _colPositions = [];
   for(let z=-1;z>-L;z-=13){
     const tooClose = _vitrinaZ.some(vz => Math.abs(z-vz) < 4);
@@ -613,6 +620,7 @@ function buildCorridor(scene) {
   const franjaMat2 = new THREE.MeshStandardMaterial({color:0x00ffcc, emissive:0x00ffcc, emissiveIntensity:0.6, roughness:0.05});
   [-W/2+0.06,W/2-0.06].forEach(x=>{
     [[H-0.28, franjaMat],[0.28, franjaMat2]].forEach(([y,mat])=>{
+      if(x<0 && y<1) return;                  // la franja inferior izquierda se parte en las puertas
       const f=new THREE.Mesh(new THREE.BoxGeometry(0.03,0.03,L),mat);
       f.position.set(x,y,zC); scene.add(f);
     });
@@ -809,6 +817,10 @@ function buildEntrance(scene, welcomeImg) {
 //  CARGA DE MODELOS GLB — Altar futurista
 // ═══════════════════════════════════════════════════════
 const _gltfLoader = new GLTFLoader();
+// Decodificador Draco local: permite usar modelos comprimidos (armadura: 38,6 MB → 3,3 MB)
+const _dracoLoader = new DRACOLoader();
+_dracoLoader.setDecoderPath(new URL("./libs/draco/", import.meta.url).href);
+_gltfLoader.setDRACOLoader(_dracoLoader);
 
 
 // ═══════════════════════════════════════════════════════
@@ -1496,14 +1508,59 @@ function buildZoneParticles(scene, zona) {
 //  ILUMINACIÓN BASE (reducida — 5 luces en vez de 10)
 // ═══════════════════════════════════════════════════════
 function buildLighting(scene) {
-  scene.add(new THREE.AmbientLight(0x0a1428,2.2));       // ambient reducido — más contraste dramático
-  scene.add(new THREE.HemisphereLight(0x1a2a50,0x030509,0.75));
+  scene.add(new THREE.AmbientLight(0x22304a,2.6));       // más luz ambiental (retroalimentación: entorno muy oscuro)
+  scene.add(new THREE.HemisphereLight(0x3a4a78,0x0a0c14,1.1));
   for(let z=-10;z>-L;z-=55){
     // Alternar entre azul y cyan para dar variedad atmosférica
     const col = Math.abs(z/55)%2===0 ? 0x4466ff : 0x00aacc;
-    const pl=new THREE.PointLight(col,1.0,26);
+    const pl=new THREE.PointLight(col,1.6,30);
     pl.position.set(0,H-0.3,z); scene.add(pl);
   }
+}
+
+// ═══════════════════════════════════════════════════════
+//  POOL DE LUCES — rendimiento
+//  Three.js calcula TODAS las luces puntuales en cada píxel de cada
+//  material. El museo tenía 106 luces → muy costoso en la GPU.
+//  Se reemplazan por un grupo fijo de luces reales que se reasignan a
+//  las fuentes de luz más cercanas a la cámara (el número de luces no
+//  cambia, así que no se recompilan los shaders).
+// ═══════════════════════════════════════════════════════
+function createLightPool(scene, size){
+  const virt=[], pool=[];
+  for(let i=0;i<size;i++){
+    const l=new THREE.PointLight(0xffffff,0,1); l.userData.pool=true; scene.add(l); pool.push(l);
+  }
+  function capture(){
+    const found=[];
+    scene.traverse(o=>{ if(o.isPointLight && !o.userData.pool) found.push(o); });
+    found.forEach(l=>{
+      l.updateMatrixWorld(true);
+      const wp=new THREE.Vector3().setFromMatrixPosition(l.matrixWorld);
+      const dynamic=l.parent===scene;          // luces sueltas (p. ej., planetas) pueden moverse
+      l.parent.remove(l);
+      virt.push({l,wp,dynamic});
+    });
+    return found.length;
+  }
+  const scored=[];
+  function update(cam){
+    scored.length=0;
+    for(const v of virt){
+      if(v.l.intensity<=0.01) continue;
+      const pos=v.dynamic?v.l.position:v.wp;
+      const range=v.l.distance||20, d=pos.distanceTo(cam);
+      if(d>range+6) continue;
+      scored.push([d-range*0.35, v, pos]);
+    }
+    scored.sort((a,b)=>a[0]-b[0]);
+    for(let i=0;i<pool.length;i++){
+      const p=pool[i], sc=scored[i];
+      if(sc){ const l=sc[1].l; p.position.copy(sc[2]); p.color.copy(l.color); p.intensity=l.intensity; p.distance=l.distance; p.decay=l.decay; }
+      else p.intensity=0;
+    }
+  }
+  return{capture,update,get total(){return virt.length;}};
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1516,41 +1573,42 @@ function showIntroScreen(onEnterClick) {
     ov.style.cssText=`position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;
       align-items:center;justify-content:center;
       font-family:'Orbitron',sans-serif;color:#fff;transition:opacity .8s;
-      overflow:hidden;`;
+      overflow-x:hidden;overflow-y:auto;justify-content:flex-start;`;
 
     // Imagen de fondo con overlay oscuro
     ov.innerHTML=`
-      <div id="intro-bg" style="position:absolute;inset:0;z-index:0;
+      <div id="intro-bg" style="position:fixed;inset:0;z-index:0;
         background:url('assets/imagenes/imagen1.png') center/cover no-repeat;
         filter:brightness(0.38) saturate(1.1);"></div>
-      <div style="position:absolute;inset:0;z-index:1;
+      <div style="position:fixed;inset:0;z-index:1;
         background:linear-gradient(to bottom, rgba(4,6,12,0.55) 0%, rgba(4,6,12,0.82) 60%, rgba(4,6,12,0.97) 100%);"></div>
 
-      <div style="position:relative;z-index:2;text-align:center;max-width:660px;padding:32px 28px">
+      <div style="position:relative;z-index:2;text-align:center;max-width:660px;padding:clamp(14px,4vh,32px) 28px;margin:auto 0">
 
         <div style="font-size:10px;letter-spacing:.35em;color:#58f0c4;margin-bottom:14px;opacity:.8;
           text-shadow:0 0 12px #58f0c4aa">MUSEO INTERACTIVO · HISTORIA DE LOS VIDEOJUEGOS</div>
 
-        <h1 style="font-size:clamp(26px,5vw,52px);font-weight:900;margin-bottom:10px;
+        <h1 style="font-size:clamp(22px,min(5vw,8vh),52px);font-weight:900;margin-bottom:10px;
           background:linear-gradient(90deg,#58f0c4,#ffffff,#58f0c4);
           -webkit-background-clip:text;background-clip:text;color:transparent;
           line-height:1.1;text-shadow:none;filter:drop-shadow(0 0 18px #58f0c466)">
           Bienvenido al<br/>Museo del Gaming</h1>
 
         <p style="font-size:13px;color:#c8d8d2;font-family:'Space Mono',monospace;
-          line-height:1.8;margin-bottom:26px;text-shadow:0 1px 8px rgba(0,0,0,0.9)">
+          line-height:1.7;margin-bottom:clamp(12px,3vh,26px);text-shadow:0 1px 8px rgba(0,0,0,0.9)">
           Recorre <strong style="color:#58f0c4;text-shadow:0 0 8px #58f0c488">6 épocas</strong>
-          de la historia de los videojuegos.<br/>
-          Acércate a las vitrinas para descubrir datos históricos.<br/>
+          de la historia de los videojuegos <strong style="color:#58f0c4">en el orden que quieras</strong>.<br/>
+          Cada época tiene una <strong style="color:#58f0c4">sala de juego</strong> con un minijuego clásico.<br/>
           <strong style="color:#f5c518;text-shadow:0 0 8px #f5c51877">
             🔊 El audio se activa al hacer clic en "Entrar".</strong>
         </p>
 
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
-          margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto">
-          ${[["W / ↑","Avanzar",0],["S / ↓","Retroceder",60],
-             ["A / ←","Izquierda",120],["D / →","Derecha",180],
-             ["🖱️ Ratón","Mirar",240],["ESC","Cursor",300]].map(([k,d,dl])=>`
+          margin-bottom:clamp(14px,3vh,28px);max-width:480px;margin-left:auto;margin-right:auto">
+          ${(ES_TACTIL
+            ? [["◐ Izquierda","Caminar",0],["◑ Derecha","Mirar",60],["🗺️","Mapa",120],["❓","Retos",180],["💬","Hablar con BIT",240],["🎮","Jugar",300]]
+            : [["W / ↑","Avanzar",0],["S / ↓","Retroceder",60],["A / ←","Izquierda",120],["D / →","Derecha",180],
+               ["🖱️ Ratón","Mirar",240],["E","Jugar en las salas",300]]).map(([k,d,dl])=>`
             <div style="display:flex;flex-direction:column;align-items:center;gap:5px;
               background:rgba(88,240,196,.07);border:1px solid rgba(88,240,196,.18);
               border-radius:10px;padding:9px 10px;
@@ -1599,7 +1657,7 @@ function createUI() {
     width:min(600px,92vw);background:rgba(4,6,12,.96);border:1px solid rgba(255,255,255,.09);
     border-radius:20px;padding:20px 24px;backdrop-filter:blur(22px);
     box-shadow:0 20px 70px rgba(0,0,0,.92);opacity:0;
-    transition:opacity .45s,transform .45s;pointer-events:all;z-index:50;font-family:'Space Mono',monospace;`;
+    transition:opacity .45s,transform .45s;pointer-events:none;z-index:50;font-family:'Space Mono',monospace;`;
   document.body.appendChild(card);
 
   const hud=document.createElement("div"); hud.id="museum-hud";
@@ -1634,6 +1692,7 @@ function showCard(card, titulo, texto, hex, extra){
 
   card.style.borderColor = hex+"55";
   card.style.opacity     = "1";
+  card.style.pointerEvents = "auto";   // invisible no debe bloquear clics ni toques
   card.style.transform   = "translateX(-50%) translateY(0)";
   _cardVisible = true;
 
@@ -1762,7 +1821,7 @@ function hideCard(card){
   if(!_cardVisible)return;
   _cardVisible=false;
   if(_cardAnimFrame){ cancelAnimationFrame(_cardAnimFrame); _cardAnimFrame=null; }
-  card.style.opacity="0";
+  card.style.opacity="0"; card.style.pointerEvents="none";
   card.style.transform="translateX(-50%) translateY(22px)";
 }
 
@@ -1772,6 +1831,7 @@ function updateHUD(hud,fill,zona,prog){
     <div style="font-size:13px;font-weight:900;color:#fff;margin-bottom:2px">${zona.titulo}</div>
     <div style="font-size:10px;color:#a6b6b0">${zona.subtitulo}</div>`;
   hud.style.borderColor=zona.hex+"44";
+  const sn=document.getElementById("salaNombre"); if(sn && sn.textContent!==zona.titulo) sn.textContent=zona.titulo;
   fill.style.width=Math.min(100,prog*100)+"%";
   fill.style.background=`linear-gradient(90deg,${zona.hex},#fff)`;
 }
@@ -1783,35 +1843,56 @@ function createControls(camera,canvas){
   const keys={};
   let yaw=0,pitch=0,locked=false;
   const fwd=new THREE.Vector3(), rt=new THREE.Vector3();
-  canvas.addEventListener("click",()=>canvas.requestPointerLock());
+  canvas.addEventListener("click",()=>{ if(!ES_TACTIL) canvas.requestPointerLock?.(); });
+  const regiones=regionesTransitables(W,L);
+  const dentro=(x,z)=>regiones.some(r=>x>=r.x1&&x<=r.x2&&z>=r.z1&&z<=r.z2);
+  let joyX=0, joyY=0;
   document.addEventListener("pointerlockchange",()=>{
     locked=document.pointerLockElement===canvas;
     document.body.classList.toggle("museo-activo",locked);
   });
   document.addEventListener("mousemove",e=>{
     if(!locked)return;
-    yaw-=e.movementX*.0016; pitch-=e.movementY*.0016;
+    mirar(e.movementX,e.movementY,.0016);
+  });
+  function mirar(dx,dy,k){
+    yaw-=dx*k; pitch-=dy*k;
     pitch=Math.max(-.55,Math.min(.45,pitch));
     camera.rotation.order="YXZ"; camera.rotation.y=yaw; camera.rotation.x=pitch;
-  });
+  }
   const kd=e=>{keys[e.code]=true;}; const ku=e=>{keys[e.code]=false;};
   window.addEventListener("keydown",kd); window.addEventListener("keyup",ku);
   function update(dt){
+    if(window.__guiaBlocking){ for(const k in keys) keys[k]=false; return; }
     fwd.set(-Math.sin(yaw),0,-Math.cos(yaw)); rt.set(Math.cos(yaw),0,-Math.sin(yaw));
     const dir=new THREE.Vector3();
     if(keys["KeyW"]||keys["ArrowUp"])   dir.add(fwd);
     if(keys["KeyS"]||keys["ArrowDown"]) dir.sub(fwd);
     if(keys["KeyA"]||keys["ArrowLeft"]) dir.sub(rt);
     if(keys["KeyD"]||keys["ArrowRight"])dir.add(rt);
-    if(dir.lengthSq()>0){
-      dir.normalize().multiplyScalar(5.5*dt);
-      camera.position.add(dir);
-      camera.position.x=Math.max(-2.8,Math.min(2.8,camera.position.x));
-      camera.position.z=Math.max(-L+3,Math.min(1.8,camera.position.z));
-      camera.position.y=1.72;
+    let vel=1;
+    if(joyX||joyY){ dir.addScaledVector(fwd,joyY).addScaledVector(rt,joyX); vel=Math.min(1,Math.hypot(joyX,joyY)); }
+    if(dir.lengthSq()>0.0004){
+      dir.normalize().multiplyScalar(5.5*dt*vel);
+      const p=camera.position;
+      if(p.z>30){
+        p.add(dir);
+        // Vestíbulo circular
+        const dx=p.x-HUB.x, dz=p.z-HUB.z, d=Math.hypot(dx,dz), m=HUB.r-0.8;
+        if(d>m){ p.x=HUB.x+dx/d*m; p.z=HUB.z+dz/d*m; }
+      } else {
+        // Pasillo + puertas + salas de juego: se desliza a lo largo de las paredes
+        const nx=p.x+dir.x, nz=p.z+dir.z;
+        if(dentro(nx,nz)){ p.x=nx; p.z=nz; }
+        else if(dentro(nx,p.z)) p.x=nx;
+        else if(dentro(p.x,nz)) p.z=nz;
+      }
+      p.y=1.72;
     }
   }
-  return{update,destroy(){window.removeEventListener("keydown",kd);window.removeEventListener("keyup",ku);}};
+  function setYaw(y){ yaw=y; pitch=0; camera.rotation.order="YXZ"; camera.rotation.y=yaw; camera.rotation.x=0; }
+  function setMover(x,y){ joyX=x; joyY=y; }
+  return{update,setYaw,setMover,mirar,destroy(){window.removeEventListener("keydown",kd);window.removeEventListener("keyup",ku);}};
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1830,13 +1911,13 @@ function buildFloorArrows(scene) {
   // Materiales compartidos para las 3 flechas de cada set
   // Color neutro blanco — se tiñe con emissive
   const arrowShape = new THREE.Shape();
-  // rotation.x=-PI/2 mapea Y_local → +Z_mundo, Y-_local → -Z_mundo (adelante)
-  // Por eso la punta va en Y- y la cola en Y+
-  arrowShape.moveTo( 0,    -0.35); // PUNTA → apunta hacia -Z (adelante)
+  // rotation.x=-PI/2 mapea +Y_local → -Z_mundo (adelante en el recorrido).
+  // Por eso la punta va en Y+ y la cola en Y-.
+  arrowShape.moveTo( 0,     0.35); // PUNTA → apunta hacia -Z (adelante)
   arrowShape.lineTo( 0.22,  0);
   arrowShape.lineTo( 0.10,  0);
-  arrowShape.lineTo( 0.10,  0.30); // cola
-  arrowShape.lineTo(-0.10,  0.30);
+  arrowShape.lineTo( 0.10, -0.30); // cola
+  arrowShape.lineTo(-0.10, -0.30);
   arrowShape.lineTo(-0.10,  0);
   arrowShape.lineTo(-0.22,  0);
   arrowShape.closePath();
@@ -2163,6 +2244,13 @@ const PANEL_NARRACIONES = {
   "Meta Quest 3": "Dos mil veintitrés. Meta. La realidad mixta permite superponer mundos virtuales sobre el real. El gaming ya no está en una pantalla. Está en todas partes. El futuro comenzó."
 };
 
+// Voz de BIT (narrador). Respeta el botón NARRADOR ON/OFF. La voz la elige voz.js.
+function _hablarBIT(texto) {
+  if (!_narratorActive) return;
+  VOZ.hablar(texto);
+}
+const _vozActiva = () => VOZ.hablando();
+
 // Sistema de detección de mirada fija a un panel
 let _gazeTimer    = null;   // setTimeout de 2.5s
 let _gazeTarget   = null;   // label del panel que se está mirando
@@ -2178,33 +2266,9 @@ function _narrarPanel(label) {
   if (!texto) return;
 
   _lastNarrPanel = label;
-
-  // Cancelar narración de zona en curso para dar paso al panel
-  if (window.responsiveVoice) window.responsiveVoice.cancel();
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
-  if (_currentUtterance) { try { _currentUtterance.onend = null; } catch(e){} }
-
-  setTimeout(() => {
-    if (window.responsiveVoice) {
-      window.responsiveVoice.speak(texto, "Spanish Male", {
-        pitch: 0.82, rate: 0.83, volume: 0.88
-      });
-      return;
-    }
-    if (!window.speechSynthesis) return;
-    const _sp = () => {
-      const utt = new SpeechSynthesisUtterance(texto);
-      utt.lang = "es-ES"; utt.rate = 0.84; utt.pitch = 0.90; utt.volume = 0.90;
-      const voices = window.speechSynthesis.getVoices();
-      const esV = voices.find(v => v.lang.startsWith("es") && /male|jorge|pablo/i.test(v.name))
-               || voices.find(v => v.lang === "es-ES") || voices[0];
-      if (esV) utt.voice = esV;
-      _currentUtterance = utt;
-      window.speechSynthesis.speak(utt);
-    };
-    window.speechSynthesis.getVoices().length > 0 ? _sp()
-      : (window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged=null; _sp(); });
-  }, 300);
+  window.__guiaSay?.(texto);
+  VOZ.callar();
+  setTimeout(() => { if (_narratorActive) VOZ.hablar(texto); }, 300);
 }
 
 // _camDir ya declarado arriba en el módulo (para updateVideos)
@@ -2260,59 +2324,9 @@ function narrarZona(zonaId) {
 
   _lastNarratedZone = zonaId;
   const texto = NARRACIONES[zonaId];
-
-  // Cancelar cualquier narración en curso
-  if(window.speechSynthesis) window.speechSynthesis.cancel();
-  if(_currentUtterance) { try{_currentUtterance.onend=null;}catch(e){} }
-
-  setTimeout(() => {
-    // Método 1: ResponsiveVoice (CDN gratuito, voz de alta calidad)
-    if (window.responsiveVoice && window.responsiveVoice.isPlaying) {
-      window.responsiveVoice.cancel();
-    }
-    if (window.responsiveVoice) {
-      window.responsiveVoice.speak(texto, "Spanish Male", {
-        pitch: 0.8, rate: 0.85, volume: 0.85
-      });
-      return;
-    }
-
-    // Método 2: Web Speech API con carga robusta de voces
-    if (!window.speechSynthesis) return;
-
-    const _speak = () => {
-      const utt = new SpeechSynthesisUtterance(texto);
-      utt.lang   = "es-ES";
-      utt.rate   = 0.86;
-      utt.pitch  = 0.92;
-      utt.volume = 0.88;
-
-      const voices = window.speechSynthesis.getVoices();
-      // Prioridad: voz masculina española > cualquier español > cualquier voz
-      const esVoice =
-        voices.find(v => v.lang.startsWith("es") && /male|hombre|jorge|pablo|miguel/i.test(v.name)) ||
-        voices.find(v => v.lang === "es-ES") ||
-        voices.find(v => v.lang.startsWith("es")) ||
-        voices[0];
-      if (esVoice) utt.voice = esVoice;
-
-      _currentUtterance = utt;
-      window.speechSynthesis.speak(utt);
-    };
-
-    const voices = window.speechSynthesis.getVoices();
-    if (voices.length > 0) {
-      _speak();
-    } else {
-      // Las voces aún no cargaron — esperar el evento
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.onvoiceschanged = null;
-        _speak();
-      };
-      // Timeout de seguridad: hablar igual si las voces no llegan en 2s
-      setTimeout(() => { if(!_currentUtterance) _speak(); }, 2000);
-    }
-  }, 1200);
+  setTimeout(() => window.__guiaSay?.(texto), 1200);
+  VOZ.callar();
+  setTimeout(() => { if (_narratorActive && !window.__juegoActivo) VOZ.hablar(texto); }, 1200);
 }
 
 // Botón de toggle narrador (se añade al HUD del museo)
@@ -2332,7 +2346,7 @@ function buildNarratorToggle() {
   btn.onclick = () => {
     _narratorActive = !_narratorActive;
     if (!_narratorActive) {
-      window.speechSynthesis.cancel();
+      VOZ.callar();
       btn.textContent = "NARRADOR: OFF";
       btn.style.opacity = "0.4";
     } else {
@@ -2365,12 +2379,12 @@ export async function initMuseumWalk({canvas}){
   renderer.setSize(innerWidth,innerHeight,false);
   renderer.shadowMap.enabled=false;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.22;
+  renderer.toneMappingExposure=1.35;
   renderer.outputColorSpace=THREE.SRGBColorSpace;
 
   const scene=new THREE.Scene();
   scene.background=new THREE.Color(0x030408);
-  scene.fog=new THREE.Fog(0x030408,9,28);       // niebla ligeramente más cercana — más profundidad cinematográfica
+  scene.fog=new THREE.Fog(0x030408,11,34);       // niebla ligeramente más cercana — más profundidad cinematográfica
 
   const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,0.1,40); // far 52→40
   camera.position.set(0,1.72,1.6);
@@ -2455,14 +2469,67 @@ export async function initMuseumWalk({canvas}){
   // Monumento final — cierre visual y narrativo del recorrido
   buildMonumentoFinal(scene, -300);
 
+  // Vestíbulo (inicio no lineal) y portales de regreso en cada época
+  const vestibulo=buildVestibulo(scene, ZONAS, H);
+  const portalesRegreso=buildPortalesRegreso(scene, ZONAS, W);
+  // Salas de juego laterales (una por época) con minijuegos
+  const salasJuego=buildSalas(scene, ZONAS, W, H, leerRecords());
+
+  // Pool de luces: 12 luces reales en lugar de ~100
+  const lightPool=createLightPool(scene, 12);
+  lightPool.capture();
+  const _poolTimer=setInterval(()=>lightPool.capture(), 2000); // luces añadidas al cargar modelos
+
   const particleSystems=ZONAS.map(z=>buildZoneParticles(scene,z));
   const {card,hud,fill}=createUI();
   const controls=createControls(camera,canvas);
 
-  let zonaActual=ZONAS[0];
-  const fogTarget=new THREE.Color(ZONAS[0].fogHex);
-  const bgTarget =new THREE.Color(ZONAS[0].bgHex);
-  updateHUD(hud,fill,ZONAS[0],0);
+  // Robot guía BIT: mapa (recorrido no lineal), retos, subtítulos y brillo
+  const guia=createGuia({
+    scene, camera, renderer, zonas:ZONAS,
+    onTeleport:(z)=>colocar(z),
+    getZona:()=>zonaActual,
+    getCoinsByZone:()=>{
+      const ids={Origen:"origen",Arcade:"arcade",Consolas:"consolas","3D":"3d",Online:"online",Futuro:"futuro"};
+      const r={}; ZONAS.forEach(z=>r[z.id]={got:0,total:0});
+      _coinMeshes.forEach(c=>{ const id=ids[c.cfg.label]; if(!r[id]) return; r[id].total++; if(c.collected) r[id].got++; });
+      return r;
+    },
+    speak:_hablarBIT, isSpeaking:_vozActiva,
+    salas:salasJuego.salas.map(sl=>({nombre:sl.info.titulo, juego:sl.juego, zona:sl.zona, destino:sl.spawn})),
+    tactil:ES_TACTIL,
+  });
+  const tactil=crearControlesTactiles({controls});
+  window.__guiaSay=(txt)=>guia.say(txt);
+
+  const HUBZONA={id:"hub",titulo:"Vestíbulo",subtitulo:"Elige tu época",hex:"#00ffee",color:0x00ffee,
+    fogHex:0x00080c,bgHex:0x000608,datos:[],vitrinas:[]};
+  camera.position.set(HUB_SPAWN.x,1.72,HUB_SPAWN.z);   // se empieza en el vestíbulo
+  let zonaActual=HUBZONA;
+
+  // Viajes entre el vestíbulo y las épocas (con fundido)
+  let _tpHasta=0;
+  function irA(destino){
+    if(performance.now()<_tpHasta) return;
+    _tpHasta=performance.now()+1800;
+    const fade=document.createElement("div");
+    fade.style.cssText="position:fixed;inset:0;background:#000;z-index:80;opacity:0;transition:opacity .3s;pointer-events:none";
+    document.body.appendChild(fade);
+    requestAnimationFrame(()=>fade.style.opacity="1");
+    setTimeout(()=>{
+      colocar(destino);
+      fade.style.opacity="0"; setTimeout(()=>fade.remove(),350);
+    },320);
+  }
+  function colocar(destino){
+    if(destino==="hub"){ camera.position.set(HUB_SPAWN.x,1.72,HUB_SPAWN.z); controls.setYaw(0); }
+    else if(typeof destino==="object"){ camera.position.set(destino.x,1.72,destino.z); controls.setYaw(destino.yaw||0); }
+    else { camera.position.set(0,1.72,destino); controls.setYaw(0); }
+    lastZ=999; guia.snap();
+  }
+  const fogTarget=new THREE.Color(HUBZONA.fogHex);
+  const bgTarget =new THREE.Color(HUBZONA.bgHex);
+  updateHUD(hud,fill,HUBZONA,0);
 
   // Última posición Z para no re-calcular si no se movió
   let lastZ=999;
@@ -2470,9 +2537,18 @@ export async function initMuseumWalk({canvas}){
   
 
 function detectZone(){
+    const enSala=camera.position.x<-W/2;
+    if(enSala!==_enSalaPrev){ _enSalaPrev=enSala; if(enSala){ hideCard(card); _lastCardKey=""; } }
     const z=camera.position.z;
     if(Math.abs(z-lastZ)<0.08) return;
     lastZ=z;
+    if(z>30){                                   // en el vestíbulo
+      if(zonaActual!==HUBZONA){
+        zonaActual=HUBZONA; fogTarget.set(HUBZONA.fogHex); bgTarget.set(HUBZONA.bgHex); hideCard(card); _lastCardKey="";
+      }
+      updateHUD(hud,fill,HUBZONA,0);
+      return;
+    }
     const zona=ZONAS.find(z0=>z<=z0.zStart&&z>=z0.zEnd);
     if(zona&&zona!==zonaActual){
       zonaActual=zona;
@@ -2489,6 +2565,7 @@ function detectZone(){
       _narrarPanel("__cierre_museo__");
     }
 
+    if(camera.position.x<-W/2) return;          // dentro de una sala de juego
     // Buscar el dato más cercano en TODA la lista (radio 3.5 unidades)
     let bestDist=3.5, bestDato=null, bestZona=null;
     ZONAS.forEach(z0=>z0.datos.forEach(d=>{
@@ -2503,7 +2580,52 @@ function detectZone(){
       }
     }
   }
-  let _lastCardKey="";
+  let _lastCardKey="", _enSalaPrev=false;
+
+  // ── SALAS DE JUEGO: aviso "Pulsa E", apertura del minijuego y pistas de BIT ──
+  const promptJuego=document.createElement("button");
+  promptJuego.style.cssText=`position:fixed;left:50%;bottom:${ES_TACTIL?"34px":"110px"};transform:translateX(-50%);z-index:48;display:none;
+    background:rgba(4,8,16,.9);border:1px solid #00ffee;border-radius:14px;padding:12px 22px;color:#e6f2ef;
+    font:700 13px Orbitron,sans-serif;letter-spacing:.06em;cursor:pointer;box-shadow:0 0 30px rgba(0,255,238,.35)`;
+  document.body.appendChild(promptJuego);
+  let salaCerca=null;
+  const _avisadas=new Set();
+  function jugar(){
+    if(!salaCerca||window.__guiaBlocking) return;
+    const sl=salaCerca;
+    VOZ.callar();
+    abrirJuego(sl.juego,{titulo:sl.info.titulo, hex:sl.zona.hex, onFin:(res,record)=>{
+      if(record!=null) sl.setRecord(record);
+      guia.registrarJuego?.(sl.juego);
+      if(res){ const t=`${res.titulo}. ${res.texto}`; guia.say(t); _hablarBIT(t); }
+      else guia.say("¡Vuelve cuando quieras! Las otras épocas también tienen su sala de juego.");
+    }});
+  }
+  promptJuego.addEventListener("click",jugar);
+  const _teclaJugar=e=>{ if(e.code==="KeyE"&&!e.repeat) jugar(); };
+  window.addEventListener("keydown",_teclaJugar);
+  function updateSalas(t){
+    const cp=camera.position;
+    salasJuego.update(t,cp);
+    let cerca=null;
+    for(const sl of salasJuego.salas){
+      if(cp.x<-W/2 && Math.abs(cp.z-sl.z)<4.6) cerca=sl;
+      // BIT avisa la primera vez que pasas junto a una puerta
+      if(cp.x>-W/2 && cp.z<30 && Math.abs(cp.z-sl.z)<5 && !_avisadas.has(sl.juego)){
+        _avisadas.add(sl.juego);
+        guia.say(`A tu izquierda hay una sala de juego: ${sl.info.titulo}. Entra y juega una partida.`);
+      }
+    }
+    if(cerca!==salaCerca){
+      salaCerca=cerca;
+      if(cerca){
+        promptJuego.innerHTML=ES_TACTIL?`🎮 Toca para jugar ${cerca.info.titulo}`:`<kbd style="border:1px solid #00ffee;border-radius:4px;padding:0 6px;margin-right:6px">E</kbd> Jugar ${cerca.info.titulo}`;
+        promptJuego.style.borderColor=cerca.zona.hex; promptJuego.style.display="block";
+      } else promptJuego.style.display="none";
+    }
+    if(window.__juegoActivo) promptJuego.style.display="none";
+    else if(salaCerca) promptJuego.style.display="block";
+  }
 
   // ── SISTEMA DE VIDEO/AUDIO POR MIRADA DIRECTA ────────────────
   // Solo hay audio o video reproduciéndose si el jugador está
@@ -2536,6 +2658,7 @@ function detectZone(){
 
   // Retorna {looking:bool, dist:number} — ¿el jugador mira directamente este panel?
   function _isLookingAt(v) {
+    if (camera.position.x < -W/2) return { looking: false, dist: 99 };   // dentro de una sala de juego
     camera.getWorldDirection(_vDir);
     const dx   = (v.screenX ?? v.videoX) - camera.position.x;
     const dz   = v.videoZ - camera.position.z;
@@ -2562,9 +2685,7 @@ function detectZone(){
       }
     });
 
-    const narratorSpeaking =
-      (window.responsiveVoice?.isPlaying?.()) ||
-      (window.speechSynthesis?.speaking);
+    const narratorSpeaking = VOZ.hablando();
 
     // ── DETERMINAR CUÁL PANEL MIRA EL JUGADOR ──
     // El video se activa VISUALMENTE siempre que se mire,
@@ -2653,6 +2774,14 @@ function detectZone(){
   // Pre-cargar voces TTS
   if(window.speechSynthesis) window.speechSynthesis.getVoices();
 
+  let _calidad=ES_TACTIL?1:2, _calidadManual=false, _fpsN=0, _fpsT=performance.now(), _fpsBajos=0;
+  const _inicioT=performance.now();
+  const _teclaCalidad=e=>{
+    if(e.code!=="KeyG"||e.repeat) return;
+    _calidadManual=true;
+    aplicarCalidad((_calidad+2)%3, `Calidad gráfica: ${["baja","media","alta"][(_calidad+2)%3]}.`);
+  };
+  window.addEventListener("keydown",_teclaCalidad);
   const clock=new THREE.Clock();
   const dum=new THREE.Object3D();
   let raf,frameN=0;
@@ -2661,13 +2790,29 @@ function detectZone(){
     raf=requestAnimationFrame(animate);
     const dt=Math.min(clock.getDelta(),0.05);
     const t=clock.elapsedTime;
+    if(window.__juegoActivo) return;          // el minijuego ocupa la pantalla: no renderizar el museo
     frameN++;
 
     controls.update(dt);
     detectZone();
+    guia.update(dt,t);
+    if(frameN%5===0) updateSalas(t);
+    if(frameN%4===0) lightPool.update(camera.position);
+    if(frameN%3===0){
+      const cp=camera.position;
+      if(cp.z>30){
+        vestibulo.update(t);
+        for(const p of vestibulo.portales){
+          if(Math.hypot(cp.x-p.x,cp.z-p.z)<1.1){ irA(p.i<ZONAS.length?ZONAS[p.i].zStart-3.5:-294); break; }
+        }
+      } else {
+        if(cp.z>2.0) irA("hub");                              // salida al vestíbulo detrás del inicio
+        else for(const r of portalesRegreso){ if(cp.x>2.45 && Math.abs(cp.z-r.z)<1.0){ irA("hub"); break; } }
+      }
+    }
     const camZ=camera.position.z;          // debe estar antes de updateArrows y floaters
     if(frameN%6===0) updateVideos();
-    if(frameN%8===0) updateGaze(videoElements, camera);
+    if(frameN%8===0 && camera.position.x>-W/2) updateGaze(videoElements, camera);
     // Actualizar frames de canvas de video — cada 2 frames para suavidad
     if(frameN%2===0){
       videoElements.forEach(v=>{
@@ -2729,7 +2874,28 @@ function detectZone(){
       }
     }
 
-    composer.render();
+    renderFrame(); medirFPS();
+  }
+
+  // ── CALIDAD ADAPTATIVA ───────────────────────────────────────
+  // Alta: con bloom · Media: sin bloom · Baja: sin bloom y resolución al 70 %.
+  // Si el equipo no sostiene ~30 FPS, baja la calidad sola. Tecla G: cambiar a mano.
+  function renderFrame(){ if(_calidad===2) composer.render(); else renderer.render(scene,camera); }
+  function aplicarCalidad(q, aviso){
+    _calidad=q;
+    const pr=q===0?Math.min(DPR,0.7):DPR;
+    renderer.setPixelRatio(pr); renderer.setSize(innerWidth,innerHeight,false); composer.setSize(innerWidth,innerHeight);
+    if(aviso) guia.say(aviso);
+  }
+  function medirFPS(){
+    _fpsN++;
+    const ahora=performance.now();
+    if(ahora-_fpsT<2000) return;
+    const fps=_fpsN*1000/(ahora-_fpsT); _fpsN=0; _fpsT=ahora;
+    if(_calidadManual || ahora-_inicioT<6000 || document.hidden) return;
+    if(fps<30 && _calidad>0){
+      if(++_fpsBajos>=2){ _fpsBajos=0; aplicarCalidad(_calidad-1, `Ajusté la calidad gráfica a «${["baja","media","alta"][_calidad-1]}» para que el recorrido sea más fluido (tecla G para cambiarla).`); }
+    } else _fpsBajos=0;
   }
 
   function onResize(){
@@ -2742,6 +2908,9 @@ function detectZone(){
   return{
     destroy(){
       cancelAnimationFrame(raf); window.removeEventListener("resize",onResize);
+      guia.destroy(); delete window.__guiaSay; clearInterval(_poolTimer);
+      window.removeEventListener("keydown",_teclaCalidad);
+      VOZ.callar(); tactil.destroy(); promptJuego.remove(); window.removeEventListener("keydown",_teclaJugar);
       controls.destroy(); audioMgr.destroy(); document.exitPointerLock?.();
       document.body.classList.remove("museo-activo");
       document.getElementById("museum-intro")?.remove();
@@ -2759,4 +2928,4 @@ function detectZone(){
       composer.dispose(); renderer.dispose();
     }
   };
-}
+}

@@ -304,3 +304,15 @@ body.museo-activo::after{
 }
 
 #enc-next:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(68,136,255,0.25); }
+/* Cursor siempre visible en los paneles de formulario (retroalimentación de usuarios) */
+#encuestaPanel, #encuestaPanel *{cursor:auto;}
+#encuestaPanel button, #encuestaPanel label, #encuestaPanel input[type=radio], #encuestaPanel input[type=checkbox]{cursor:pointer;}
+#encuestaPanel input[type=text], #encuestaPanel input[type=number], #encuestaPanel textarea{cursor:text;}
+
+/* Celular / tableta: controles táctiles */
+@media (pointer: coarse){
+  #museum-hud{display:none!important}
+  .sala-counter{display:none}
+  #museum-card{pointer-events:none!important}
+  #museum-card #card-extra-btn{pointer-events:auto}
+}

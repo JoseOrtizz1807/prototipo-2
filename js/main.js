@@ -1,5 +1,5 @@
 import { initEarthBackdrop } from "./earthBackdrop.js";
-import { initMuseumWalk }   from "./museum_walk.js?v=3200";
+import { initMuseumWalk }   from "./museum_walk.js?v=3500";
 import { initMuseum }       from "./museum.js";
 import { guardarRespuesta, escucharResenas, firebaseConfigurado } from "./firebase.js";
 
@@ -135,6 +135,7 @@ function encCollectCurrent() {
     const nombre = document.getElementById('enc-nombre')?.value?.trim();
     const edad   = document.getElementById('enc-edad')?.value?.trim();
     if(!edad) { alert('Por favor indica tu edad para continuar.'); return false; }
+    if(Number(edad) < 18) { alert('Este estudio está dirigido a personas mayores de 18 años. ¡Gracias por tu interés en el museo!'); return false; }
     answers.nombre = nombre || ""; answers.edad = edad;
     const gen = document.querySelector('input[name="genero"]:checked');
     if(gen) answers.genero = gen.value;
@@ -208,6 +209,8 @@ btnEstudio?.addEventListener("click", e => {
   const est = document.getElementById("enc-envio-estado"); if (est) est.textContent = "";
   Object.keys(answers).forEach(k => delete answers[k]);
   encUpdateProgress();
+  document.exitPointerLock?.();
+  document.body.classList.remove("museo-activo");
   encuestaPanel.classList.add("active");
 });
 
