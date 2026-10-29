@@ -111,17 +111,18 @@ export function createGuia({ scene, camera, renderer, zonas, onTeleport, getZona
   let subtTimer = null;
 
   // ── Interfaz ─────────────────────────────────────────────────
-  const subt = div(`position:fixed;left:50%;top:64px;transform:translateX(-50%);max-width:min(760px,90vw);
+  const subt = div(`position:fixed;left:50%;top:64px;transform:translateX(-50%);width:max-content;max-width:min(760px,92vw);box-sizing:border-box;
     background:rgba(4,8,16,.82);border:1px solid rgba(0,255,238,.25);border-radius:14px;padding:10px 16px 10px 14px;
     color:#e6f2ef;font:13px/1.55 'Space Mono',monospace;z-index:55;display:none;gap:10px;align-items:flex-start;pointer-events:none;
     backdrop-filter:blur(10px);box-shadow:0 10px 40px rgba(0,0,0,.6)`);
+  subt.classList.add("guia-subt");
   document.body.appendChild(subt);
 
   const ayuda = div(`position:fixed;left:18px;bottom:18px;z-index:55;font:10px/1.9 'Space Mono',monospace;color:rgba(200,225,220,.75);
     background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;pointer-events:none`,
     `<b style="font-family:Orbitron,sans-serif;letter-spacing:.14em;color:#00ffee">BIT</b> · tu guía<br>
      <kbd>M</kbd> Mapa y pasaporte &nbsp; <kbd>R</kbd> Hablar con BIT<br>
-     <kbd>Q</kbd> Reto de la zona &nbsp; <kbd>B</kbd> Brillo &nbsp; <kbd>G</kbd> Calidad`);
+     <kbd>Q</kbd> Reto de la zona &nbsp; <kbd>B</kbd> Brillo &nbsp; <kbd>G</kbd> Calidad &nbsp; <kbd>F</kbd> FPS`);
   if (tactil) ayuda.style.display = "none";
   ayuda.innerHTML += `<br><kbd>E</kbd> Jugar en las salas de juego`;
   document.body.appendChild(ayuda);

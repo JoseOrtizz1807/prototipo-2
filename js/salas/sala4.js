@@ -240,84 +240,81 @@ export function sala4Estadisticas(scene, camera, renderer) {
 
       <div class="s4-title">Los videojuegos<br/><em>entrenan el cerebro</em></div>
       <p class="s4-subtitle">
-        La ciencia demuestra que jugar activa regiones clave del cerebro vinculadas
-        a la atención, memoria espacial y toma de decisiones bajo presión.
-        Más de 50 estudios independientes lo confirman.
+        Los estudios de laboratorio muestran que algunos videojuegos, en especial los de acción,
+        se asocian con mejoras en la atención visual, la velocidad de procesamiento y otras funciones.
+        Los efectos dependen del tipo de juego y no se trasladan a todas las habilidades.
       </p>
 
       <!-- MÉTRICAS HERO -->
       <div class="s4-metrics">
         <div class="s4-metric" style="--mc:#00ffcc">
           <span class="s4-metric-ico">👁️</span>
-          <span class="s4-metric-val">+58%</span>
-          <div class="s4-metric-lbl">Resolución visual</div>
+          <span class="s4-metric-val">10 h</span>
+          <div class="s4-metric-lbl">Entrenamiento con juego de acción (Green y Bavelier, 2003)</div>
         </div>
         <div class="s4-metric" style="--mc:#4488ff">
           <span class="s4-metric-ico">⚡</span>
-          <span class="s4-metric-val">+25%</span>
-          <div class="s4-metric-lbl">Velocidad cognitiva</div>
+          <span class="s4-metric-val">37%</span>
+          <div class="s4-metric-lbl">Menos errores en cirujanos jugadores (Rosser, 2007)</div>
         </div>
         <div class="s4-metric" style="--mc:#cc44ff">
           <span class="s4-metric-ico">🌍</span>
-          <span class="s4-metric-val">12+</span>
-          <div class="s4-metric-lbl">Países replicado</div>
+          <span class="s4-metric-val">35</span>
+          <div class="s4-metric-lbl">Estudios revisados (Pallavicini, 2018)</div>
         </div>
       </div>
 
       <!-- BENEFICIOS COGNITIVOS -->
-      <div class="s4-section-title">Beneficios comprobados en laboratorio</div>
+      <div class="s4-section-title">Beneficios estudiados</div>
       <div class="s4-cognitives">
         <div class="s4-cog" style="--bc:#00ffcc">
           <span class="s4-cog-ico">🧠</span>
           <div class="s4-cog-body">
             <div class="s4-cog-title">Atención y Concentración</div>
-            <div class="s4-cog-desc">Los juegos de acción entrenan la atención selectiva y la capacidad de ignorar distractores. Bavelier (U. Rochester, 2012): jugadores tienen 58% más resolución visual periférica.</div>
-            <span class="s4-cog-stat">Bavelier Lab · 2012 · 12 países</span>
+            <div class="s4-cog-desc">Los jugadores habituales de juegos de acción mostraron mejor atención visual selectiva que los no jugadores, y quienes no jugaban mejoraron tras 10 horas con un juego de acción, frente a un grupo que jugó Tetris.</div>
+            <span class="s4-cog-stat">Nature · 2003 · Green y Bavelier</span>
           </div>
         </div>
         <div class="s4-cog" style="--bc:#4488ff">
           <span class="s4-cog-ico">🗺️</span>
           <div class="s4-cog-body">
             <div class="s4-cog-title">Memoria Espacial 3D</div>
-            <div class="s4-cog-desc">Navegar mundos 3D activa y fortalece el hipocampo — la región responsable de memoria y orientación. Efecto medido tras solo 2 semanas de juego regular.</div>
-            <span class="s4-cog-stat">Nature · 2013 · U. Düsseldorf</span>
+            <div class="s4-cog-desc">Jugar Super Mario 64 al menos 30 minutos diarios durante dos meses se asoció con más materia gris en el hipocampo derecho, región clave para la orientación y la memoria espacial.</div>
+            <span class="s4-cog-stat">Molecular Psychiatry · 2014 · Kühn et al.</span>
           </div>
         </div>
         <div class="s4-cog" style="--bc:#ff6644">
           <span class="s4-cog-ico">🤝</span>
           <div class="s4-cog-body">
             <div class="s4-cog-title">Coordinación Ojo-Mano</div>
-            <div class="s4-cog-desc">Cirujanos jugadores cometieron 37% menos errores en operaciones laparoscópicas vs. no-jugadores. La precisión motora fina mejora con juegos de acción en semanas.</div>
-            <span class="s4-cog-stat">Arch. Surgery · 2007 · +37% precisión</span>
+            <div class="s4-cog-desc">En 33 cirujanos, quienes habían jugado más de 3 horas por semana cometieron 37 % menos errores y fueron 27 % más rápidos en un curso de cirugía laparoscópica simulada. Es una asociación, no una causa demostrada.</div>
+            <span class="s4-cog-stat">Archives of Surgery · 2007 · Rosser et al.</span>
           </div>
         </div>
         <div class="s4-cog" style="--bc:#cc44ff">
           <span class="s4-cog-ico">⚡</span>
           <div class="s4-cog-body">
-            <div class="s4-cog-title">Toma de Decisiones Rápidas</div>
-            <div class="s4-cog-desc">Jugadores procesan información visual 25% más rápido y toman decisiones bajo presión con mayor precisión. Los juegos estratégicos desarrollan pensamiento sistémico.</div>
-            <span class="s4-cog-stat">+25% velocidad · Green & Bavelier</span>
+            <div class="s4-cog-title">Aprender a aprender</div>
+            <div class="s4-cog-desc">Bavelier y colaboradores proponen que los juegos de acción mejoran la capacidad de aprender nuevas tareas, con efectos sobre la atención y la velocidad de procesamiento, y revisan cómo estudiar esos efectos con rigor.</div>
+            <span class="s4-cog-stat">Annu. Rev. Neurosci. · 2012 · Bavelier et al.</span>
           </div>
         </div>
         <div class="s4-cog" style="--bc:#f5c518">
           <span class="s4-cog-ico">💊</span>
           <div class="s4-cog-body">
             <div class="s4-cog-title">Terapia y Rehabilitación</div>
-            <div class="s4-cog-desc">VR y videojuegos se usan en fisioterapia, PTSD, ansiedad y fobias. La FDA aprobó el primer tratamiento VR para dolor crónico en 2021. AppliedVR: −24% ansiedad hospitalaria.</div>
-            <span class="s4-cog-stat">AppliedVR · 2021 · FDA aprobado</span>
+            <div class="s4-cog-desc">La realidad virtual se estudia como apoyo terapéutico: en un ensayo con 179 pacientes, un programa de RV en casa redujo el dolor lumbar crónico más que una RV simulada.</div>
+            <span class="s4-cog-stat">JMIR · 2021 · Garcia et al.</span>
           </div>
         </div>
       </div>
 
       <!-- BARRAS DE PROGRESO -->
-      <div class="s4-section-title">Mejoras medidas vs. no-jugadores</div>
+      <div class="s4-section-title">Resultados de un estudio con cirujanos (Rosser et al., 2007)</div>
       <div class="s4-progress-section" style="margin-bottom:18px">
         ${[
-          ["Resolución visual periférica",   58, "#00ffcc"],
-          ["Velocidad de procesamiento",     25, "#4488ff"],
-          ["Precisión motora fina",          37, "#cc44ff"],
-          ["Memoria espacial largo plazo",   28, "#ff6644"],
-          ["Control de atención selectiva",  45, "#f5c518"],
+          ["Menos errores (más de 3 h de juego por semana)", 37, "#00ffcc"],
+          ["Mayor rapidez en la tarea",                     27, "#4488ff"],
         ].map(([lbl,pct,col]) => `
           <div class="s4-progress-item">
             <div class="s4-progress-header">
@@ -332,39 +329,38 @@ export function sala4Estadisticas(scene, camera, renderer) {
       </div>
 
       <!-- CONTEXTO SOCIAL -->
-      <div class="s4-section-title">Contexto social global</div>
+      <div class="s4-section-title">Lo que piensa la gente (adultos de EE. UU., Pew 2015)</div>
       <div class="s4-social-grid">
         <div class="s4-social-card">
-          <div class="s4-social-num">3.2B</div>
-          <div class="s4-social-lbl">Jugadores activos en el mundo (2023)</div>
+          <div class="s4-social-num">49%</div>
+          <div class="s4-social-lbl">Ha jugado videojuegos alguna vez</div>
         </div>
         <div class="s4-social-card">
-          <div class="s4-social-num">48%</div>
-          <div class="s4-social-lbl">Son mujeres según ESA 2023</div>
+          <div class="s4-social-num">26%</div>
+          <div class="s4-social-lbl">Cree que la mayoría son una pérdida de tiempo</div>
         </div>
         <div class="s4-social-card">
-          <div class="s4-social-num">34</div>
-          <div class="s4-social-lbl">Edad promedio del jugador adulto</div>
+          <div class="s4-social-num">40%</div>
+          <div class="s4-social-lbl">Los relaciona con conductas violentas</div>
         </div>
         <div class="s4-social-card">
-          <div class="s4-social-num">65%</div>
-          <div class="s4-social-lbl">Juegan con familiares o amigos</div>
+          <div class="s4-social-num">17%</div>
+          <div class="s4-social-lbl">Cree que la mayoría ayuda a resolver problemas</div>
         </div>
       </div>
 
       <!-- IMPACTO INDUSTRIA -->
       <div class="s4-section-title">Impacto económico</div>
       <div class="s4-industry">
-        <div class="s4-industry-title">Ingresos globales de la industria</div>
-        <div class="s4-industry-row"><span class="s4-industry-label">Videojuegos (2023)</span><span class="s4-industry-val">$184 mil millones</span></div>
-        <div class="s4-industry-row"><span class="s4-industry-label">Cine (taquilla global)</span><span class="s4-industry-val">$33 mil millones</span></div>
-        <div class="s4-industry-row"><span class="s4-industry-label">Música (streaming)</span><span class="s4-industry-val">$26 mil millones</span></div>
-        <div class="s4-industry-row"><span class="s4-industry-label">Proyección 2025</span><span class="s4-industry-val">$211 mil millones</span></div>
+        <div class="s4-industry-title">Mercado global (Newzoo)</div>
+        <div class="s4-industry-row"><span class="s4-industry-label">Ingresos 2023</span><span class="s4-industry-val">$184.000 millones</span></div>
+        <div class="s4-industry-row"><span class="s4-industry-label">Ingresos 2024</span><span class="s4-industry-val">$182.700 millones</span></div>
+        <div class="s4-industry-row"><span class="s4-industry-label">Jugadores 2023</span><span class="s4-industry-val">3.380 millones</span></div>
       </div>
 
       <div class="s4-source">
-        Fuentes: Bavelier Lab (U. Rochester) · Nature 2013 · Archives of Surgery 2007<br/>
-        AppliedVR 2021 · ESA Essential Facts 2023 · Newzoo Global Games Market Report
+        Fuentes: Green y Bavelier 2003 · Kühn et al. 2014 · Rosser et al. 2007 · Bavelier et al. 2012<br/>
+        Garcia et al. 2021 · Pallavicini et al. 2018 · Pew Research Center 2015 · Newzoo 2023 y 2025
       </div>
 
     </div>

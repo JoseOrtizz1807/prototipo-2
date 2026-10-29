@@ -19,7 +19,7 @@ import { RenderPass }      from "jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "jsm/postprocessing/UnrealBloomPass.js";
 import { GLTFLoader }      from "jsm/loaders/GLTFLoader.js";
 import { DRACOLoader }     from "jsm/loaders/DRACOLoader.js";
-import { createGuia }      from "./guia.js?v=4";
+import { createGuia }      from "./guia.js?v=6";
 import { buildVestibulo, buildPortalesRegreso, HUB, HUB_SPAWN } from "./vestibulo.js?v=2";
 import { buildSalas, buildParedIzquierda, regionesTransitables, PUERTAS } from "./salas_juego.js?v=1";
 import { abrirJuego, leerRecords } from "./minijuegos.js?v=1";
@@ -2386,7 +2386,9 @@ export async function initMuseumWalk({canvas}){
   scene.background=new THREE.Color(0x030408);
   scene.fog=new THREE.Fog(0x030408,11,34);       // niebla ligeramente más cercana — más profundidad cinematográfica
 
-  const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,0.1,40); // far 52→40
+  // En pantallas verticales (celular) se abre el campo de visión para no ver un "túnel" estrecho
+  const fovPara=a=>a<1?Math.min(95,68+(1-a)*40):68;
+  const camera=new THREE.PerspectiveCamera(fovPara(innerWidth/innerHeight),innerWidth/innerHeight,0.1,40); // far 52→40
   camera.position.set(0,1.72,1.6);
 
   // Bloom a CUARTO de resolución → ~8× más rápido que full-res
@@ -2584,9 +2586,10 @@ function detectZone(){
 
   // ── SALAS DE JUEGO: aviso "Pulsa E", apertura del minijuego y pistas de BIT ──
   const promptJuego=document.createElement("button");
-  promptJuego.style.cssText=`position:fixed;left:50%;bottom:${ES_TACTIL?"34px":"110px"};transform:translateX(-50%);z-index:48;display:none;
+  promptJuego.style.cssText=`position:fixed;left:50%;bottom:${ES_TACTIL?"64px":"110px"};transform:translateX(-50%);z-index:48;display:none;
     background:rgba(4,8,16,.9);border:1px solid #00ffee;border-radius:14px;padding:12px 22px;color:#e6f2ef;
-    font:700 13px Orbitron,sans-serif;letter-spacing:.06em;cursor:pointer;box-shadow:0 0 30px rgba(0,255,238,.35)`;
+    font:700 13px Orbitron,sans-serif;letter-spacing:.06em;cursor:pointer;box-shadow:0 0 30px rgba(0,255,238,.35);
+    width:max-content;max-width:92vw;white-space:normal;text-align:center`;
   document.body.appendChild(promptJuego);
   let salaCerca=null;
   const _avisadas=new Set();
@@ -2874,7 +2877,7 @@ function detectZone(){
       }
     }
 
-    renderFrame(); medirFPS();
+    renderFrame(); medirFPS(); registrarCuadro();
   }
 
   // ── CALIDAD ADAPTATIVA ───────────────────────────────────────
@@ -2887,6 +2890,30 @@ function detectZone(){
     renderer.setPixelRatio(pr); renderer.setSize(innerWidth,innerHeight,false); composer.setSize(innerWidth,innerHeight);
     if(aviso) guia.say(aviso);
   }
+  // ── MEDIDOR DE FPS EN TIEMPO REAL (tecla F o ?fps en la URL) ──
+  const _fpsBox=document.createElement("div");
+  _fpsBox.style.cssText="position:fixed;left:18px;top:64px;z-index:56;display:none;font:11px/1.55 'Space Mono',monospace;color:#c8ffe9;background:rgba(0,0,0,.62);border:1px solid rgba(0,255,238,.35);border-radius:8px;padding:6px 10px;pointer-events:none;white-space:pre";
+  document.body.appendChild(_fpsBox);
+  const _cuadros=[]; let _ultimoCuadro=performance.now(), _fpsPintado=0;
+  const _teclaFPS=e=>{ if(e.code==="KeyF"&&!e.repeat) _fpsBox.style.display=_fpsBox.style.display==="none"?"block":"none"; };
+  window.addEventListener("keydown",_teclaFPS);
+  if(new URLSearchParams(location.search).has("fps")) _fpsBox.style.display="block";
+  function _resumenFPS(){
+    const n=_cuadros.length; if(!n) return null;
+    const suma=_cuadros.reduce((a,b)=>a+b,0), ord=[..._cuadros].sort((a,b)=>a-b);
+    const ult=_cuadros.slice(-30), sumaUlt=ult.reduce((a,b)=>a+b,0);
+    return { fps:+(1000*ult.length/sumaUlt).toFixed(1), promedio:+(1000*n/suma).toFixed(1),
+      bajo1:+(1000/ord[Math.min(n-1,Math.floor(n*0.99))]).toFixed(1), cuadros:n, calidad:["baja","media","alta"][_calidad] };
+  }
+  window.__fps=_resumenFPS;            // para mediciones de rendimiento
+  function registrarCuadro(){
+    const ahora=performance.now(); _cuadros.push(ahora-_ultimoCuadro); _ultimoCuadro=ahora;
+    if(_cuadros.length>600) _cuadros.shift();          // ventana de ~10 s a 60 FPS
+    if(_fpsBox.style.display==="none" || ahora-_fpsPintado<500) return;
+    _fpsPintado=ahora; const r=_resumenFPS();
+    _fpsBox.textContent=`FPS ${r.fps.toFixed(0)}\nPromedio ${r.promedio.toFixed(0)} (últimos ${r.cuadros} cuadros)\n1 % más lento ${r.bajo1.toFixed(0)}\nCalidad ${r.calidad} · F para ocultar`;
+  }
+
   function medirFPS(){
     _fpsN++;
     const ahora=performance.now();
@@ -2899,7 +2926,7 @@ function detectZone(){
   }
 
   function onResize(){
-    camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+    camera.aspect=innerWidth/innerHeight; camera.fov=fovPara(camera.aspect); camera.updateProjectionMatrix();
     renderer.setSize(innerWidth,innerHeight,false); composer.setSize(innerWidth,innerHeight);
   }
   window.addEventListener("resize",onResize);
@@ -2909,7 +2936,7 @@ function detectZone(){
     destroy(){
       cancelAnimationFrame(raf); window.removeEventListener("resize",onResize);
       guia.destroy(); delete window.__guiaSay; clearInterval(_poolTimer);
-      window.removeEventListener("keydown",_teclaCalidad);
+      window.removeEventListener("keydown",_teclaCalidad); window.removeEventListener("keydown",_teclaFPS); _fpsBox.remove(); delete window.__fps;
       VOZ.callar(); tactil.destroy(); promptJuego.remove(); window.removeEventListener("keydown",_teclaJugar);
       controls.destroy(); audioMgr.destroy(); document.exitPointerLock?.();
       document.body.classList.remove("museo-activo");

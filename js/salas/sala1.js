@@ -211,7 +211,7 @@ export function sala1Historia(scene, camera, renderer) {
   //  PANEL HTML
   // ═══════════════════════════════════════════════════════
   const hitosHTML = [
-    ["1952","#88aaff","OXO — Primer juego visual","Alexander Douglas crea el primer videojuego con salida gráfica en un tubo catódico. Cambridge, Reino Unido.","CAMBRIDGE 1952"],
+    ["1952","#88aaff","OXO — Tres en raya en la EDSAC","Alexander S. Douglas crea uno de los primeros videojuegos con salida gráfica, en la pantalla de la computadora EDSAC. Cambridge, Reino Unido.","CAMBRIDGE 1952"],
     ["1958","#44ffcc","Tennis for Two","William Higinbotham diseña un juego de tenis en un osciloscopio para el Día Abierto del Laboratorio Brookhaven.","BROOKHAVEN LAB"],
     ["1962","#ffdd44","Spacewar! — MIT","El primer juego distribuido digitalmente entre universidades. La PDP-1 costaba $120,000 USD.","MIT · PDP-1"],
     ["1972","#ff4444","Pong — Nace Atari","Nolan Bushnell funda Atari con $500. La primera máquina en un bar: atascada de monedas en 2 semanas. Nació una industria.","$500 → $1B"],
@@ -224,9 +224,9 @@ export function sala1Historia(scene, camera, renderer) {
     ["1998","#00ffee","The Legend of Zelda: OoT","Metacritic 99/100. El mejor juego evaluado de la historia. Inventó el lock-on y la narrativa épica en 3D.","METACRITIC 99"],
     ["2004","#cc44ff","World of Warcraft","12M suscriptores en pico. $10B en ingresos. Inventó la economía de suscripción digital.","12M JUGADORES"],
     ["2007","#ff4488","Call of Duty 4: MW","Inventó el sistema XP, rangos y killstreaks. 16M copias. Toda la industria lo copió.","16M COPIAS"],
-    ["2011","#44dd88","Minecraft — Mojang","238M copias. El juego más vendido de la historia humana. 35M estudiantes lo usan en 115 países.","238M COPIAS"],
+    ["2011","#44dd88","Minecraft — Mojang","Uno de los juegos más vendidos de la historia. Su edición educativa, Minecraft Education, se usa en escuelas de muchos países.","238M COPIAS"],
     ["2022","#ffaa44","Elden Ring — FromSoftware","GOTY 2022. Fusionó mundo abierto con dificultad extrema. 20M copias. La nueva era del RPG.","20M COPIAS"],
-    ["2023","#00ffcc","IA & VR — El Futuro","$184B de ingresos. 3.2B jugadores. El arte más grande del siglo XXI apenas comienza.","$184B GLOBAL"],
+    ["2023","#00ffcc","IA & VR — El Futuro","Según Newzoo, 184.000 millones de dólares de ingresos y 3.380 millones de jugadores en 2023.","$184B GLOBAL"],
   ].map(([year,col,title,desc,tag])=>`
     <div class="s1-event">
       <div class="s1-event-year" style="--ec:${col}">${year}</div>
@@ -266,7 +266,7 @@ export function sala1Historia(scene, camera, renderer) {
 
       <div class="s1-source">
         Historia de los Videojuegos 1952–2023 · 70+ años de innovación<br/>
-        Fuentes: IGN History · Newzoo 2023 · ESA · Museum of Art & Digital Entertainment
+        Fuentes: Wolf (2012) · Newzoo (2023)
       </div>
     </div>
   `);
@@ -420,4 +420,4 @@ export function sala1Historia(scene, camera, renderer) {
     if(el) el.style.display="none";
   }
   return { update, dispose };
-}
+}

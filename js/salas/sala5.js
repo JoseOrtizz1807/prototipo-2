@@ -155,44 +155,44 @@ export function sala5Galeria(scene, camera, renderer) {
     <div class="s5-wrap">
       <div class="s5-badge"><div class="s5-badge-dot"></div><span>SALA 05 · INDUSTRIA Y FUTURO</span></div>
       <div class="s5-title">El arte más grande<br/><em>del siglo XXI</em></div>
-      <p class="s5-intro">Los videojuegos son la industria del entretenimiento más grande de la historia humana — superando al cine y la música combinados. Y apenas están comenzando.</p>
+      <p class="s5-intro">Los videojuegos son una de las industrias culturales más grandes del mundo: según Newzoo, generaron 184.000 millones de dólares en 2023 y reunieron a 3.380 millones de jugadores.</p>
 
       <div class="s5-hero">
         <div class="s5-hero-card"><span class="s5-hero-num" style="--hc:#ffaa44">$184B</span><div class="s5-hero-lbl">Ingresos globales 2023</div></div>
-        <div class="s5-hero-card"><span class="s5-hero-num" style="--hc:#ff6600">3.2B</span><div class="s5-hero-lbl">Jugadores activos mundiales</div></div>
-        <div class="s5-hero-card"><span class="s5-hero-num" style="--hc:#ffdd00">#1</span><div class="s5-hero-lbl">Industria del entretenimiento</div></div>
-        <div class="s5-hero-card"><span class="s5-hero-num" style="--hc:#ffcc88">$211B</span><div class="s5-hero-lbl">Proyección para 2025</div></div>
+        <div class="s5-hero-card"><span class="s5-hero-num" style="--hc:#ff6600">3,38B</span><div class="s5-hero-lbl">Jugadores en 2023</div></div>
+        <div class="s5-hero-card"><span class="s5-hero-num" style="--hc:#ffdd00">49%</span><div class="s5-hero-lbl">Adultos de EE. UU. que han jugado (Pew)</div></div>
+        <div class="s5-hero-card"><span class="s5-hero-num" style="--hc:#ffcc88">$182,7B</span><div class="s5-hero-lbl">Ingresos globales 2024</div></div>
       </div>
 
       <div class="s5-section">Informes de industria y estudios</div>
       <div class="s5-study">
         <div class="s5-card" style="--sc:#ffaa44">
-          <div class="s5-card-title">Newzoo Global Games Market Report 2023</div>
-          <div class="s5-card-desc">La industria del videojuego generó $184 mil millones en 2023, superando a cine ($33B) y música ($26B) combinados. Proyección a $211B para 2025. Mobile gaming representa el 50% ($92B). E-Sports: $1.8B en premios acumulados desde 2010.</div>
+          <div class="s5-card-title">Newzoo — Global Games Market 2023 y 2025</div>
+          <div class="s5-card-desc">Newzoo estimó ingresos de 184.000 millones de dólares y 3.380 millones de jugadores en 2023; en su actualización de 2025 reportó 182.700 millones de dólares para 2024. Los juegos para móviles representan cerca de la mitad del mercado.</div>
           <div class="s5-card-footer">
             <span class="s5-ref">Newzoo Global Games Market Report 2023</span>
             <a class="s5-link" href="https://newzoo.com/resources/trend-reports/newzoo-global-games-market-report-2023-free-version" target="_blank" rel="noopener">VER REPORTE →</a>
           </div>
         </div>
         <div class="s5-card" style="--sc:#ff6600">
-          <div class="s5-card-title">ESA Essential Facts — Entertainment Software Association 2023</div>
-          <div class="s5-card-desc">El jugador promedio tiene 34 años. El 48% son mujeres. El 65% juega en grupo con amigos o familia. 7 de cada 10 padres juegan con sus hijos. El gaming es la actividad social digital más popular, superando redes sociales y streaming.</div>
+          <div class="s5-card-title">Duggan — Pew Research Center 2015</div>
+          <div class="s5-card-desc">En una encuesta a adultos de EE. UU., el 49 % había jugado videojuegos, pero el 26 % cree que la mayoría son una pérdida de tiempo y el 40 % los relaciona con conductas violentas. Divulgar la evidencia científica busca cerrar esa brecha.</div>
           <div class="s5-card-footer">
-            <span class="s5-ref">ESA Essential Facts 2023 · theesa.com</span>
-            <a class="s5-link" href="https://www.theesa.com/resources/essential-facts-about-the-us-video-game-industry/" target="_blank" rel="noopener">VER DATOS →</a>
+            <span class="s5-ref">Pew Research Center · 2015 · Gaming and Gamers</span>
+            <a class="s5-link" href="https://www.pewresearch.org/internet/2015/12/15/gaming-and-gamers/" target="_blank" rel="noopener">VER DATOS →</a>
           </div>
         </div>
         <div class="s5-card" style="--sc:#ffdd00">
-          <div class="s5-card-title">Deterding et al. — CHI Conference 2021</div>
-          <div class="s5-card-desc">La gamificación (aplicación de principios de videojuegos a contextos no-lúdicos) aumenta la motivación intrínseca, el engagement y la retención de conocimiento. Duolingo: 95% de retención vs 5% de la educación tradicional. Aplicaciones en salud, educación y trabajo.</div>
+          <div class="s5-card-title">Deterding et al. — MindTrek 2011</div>
+          <div class="s5-card-desc">Definen la gamificación como el uso de elementos de diseño de juegos, como puntos, niveles o colecciones, en contextos que no son juegos. Este museo aplica esa idea con los planetas coleccionables y los retos de BIT.</div>
           <div class="s5-card-footer">
-            <span class="s5-ref">Human-Computer Interaction 2021 · DOI: 10.1080/07370024.2020.1841281</span>
-            <a class="s5-link" href="https://doi.org/10.1080/07370024.2020.1841281" target="_blank" rel="noopener">LEER ESTUDIO →</a>
+            <span class="s5-ref">MindTrek 2011 · DOI: 10.1145/2181037.2181040</span>
+            <a class="s5-link" href="https://doi.org/10.1145/2181037.2181040" target="_blank" rel="noopener">LEER ESTUDIO →</a>
           </div>
         </div>
         <div class="s5-card" style="--sc:#ff4400">
           <div class="s5-card-title">Rosser et al. — Archives of Surgery 2007</div>
-          <div class="s5-card-desc">Cirujanos laparoscópicos que jugaban videojuegos cometieron 37% menos errores y operaron 27% más rápido. Hoy hospitales como Beth Israel (NY) usan simuladores de videojuegos para entrenar cirujanos. El gaming salva vidas literalmente.</div>
+          <div class="s5-card-desc">En 33 cirujanos, quienes habían jugado más de 3 horas por semana cometieron 37 % menos errores y fueron 27 % más rápidos en un curso de cirugía laparoscópica simulada. El estudio muestra una asociación y no permite afirmar que jugar cause la mejora.</div>
           <div class="s5-card-footer">
             <span class="s5-ref">Archives of Surgery 2007 · DOI: 10.1001/archsurg.142.2.181</span>
             <a class="s5-link" href="https://doi.org/10.1001/archsurg.142.2.181" target="_blank" rel="noopener">LEER ESTUDIO →</a>
@@ -200,16 +200,16 @@ export function sala5Galeria(scene, camera, renderer) {
         </div>
       </div>
 
-      <div class="s5-section">La industria vs. otras</div>
+      <div class="s5-section">Cifras de la industria (Newzoo)</div>
       <div style="background:rgba(255,170,68,0.04);border:1px solid rgba(255,170,68,0.14);border-radius:13px;padding:13px 15px;margin-bottom:16px;">
-        ${[["Videojuegos 2023","$184B","#ffaa44"],["Cine (taquilla global)","$33B","#ff6600"],["Música (streaming)","$26B","#ffdd00"],["E-Sports","$1.8B","#ff4400"]].map(([label,val,col])=>`
+        ${[["Ingresos 2023","$184B","#ffaa44"],["Ingresos 2024","$182,7B","#ff6600"],["Jugadores 2023","3,38B","#ffdd00"]].map(([label,val,col])=>`
         <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,170,68,0.08);">
           <span style="font-size:10.5px;color:rgba(225,180,120,0.75)">${label}</span>
           <span style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:900;color:${col};text-shadow:0 0 8px ${col}88">${val}</span>
         </div>`).join('')}
       </div>
 
-      <div class="s5-source">Sala 05 — Industria y Futuro · Newzoo 2023 · ESA 2023 · Deterding 2021 · Rosser 2007</div>
+      <div class="s5-source">Sala 05 — Industria y Futuro · Newzoo 2023 y 2025 · Pew 2015 · Deterding 2011 · Rosser 2007</div>
     </div>
   `);
 

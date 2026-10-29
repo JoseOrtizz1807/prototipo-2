@@ -127,19 +127,19 @@ export function sala2Cognitivos(scene, camera, renderer) {
     <div class="s2-wrap">
       <div class="s2-badge"><div class="s2-badge-dot"></div><span>SALA 02 · MEMORIA Y CEREBRO</span></div>
       <div class="s2-title">Los videojuegos<br/><em>expanden tu hipocampo</em></div>
-      <p class="s2-intro">La Universidad de Berlín descubrió en 2013 que jugar videojuegos 3D aumenta físicamente el volumen del hipocampo — la región del cerebro responsable de la memoria espacial y episódica. El efecto es visible en resonancia magnética.</p>
+      <p class="s2-intro">Un estudio del Instituto Max Planck y la Charité de Berlín encontró que jugar Super Mario 64 durante dos meses se asoció con más materia gris en el hipocampo derecho, una región clave para la memoria espacial. El cambio se midió con resonancia magnética.</p>
 
       <div class="s2-hero">
-        <div class="s2-hero-card"><span class="s2-hero-num" style="--hc:#00ff88">+12%</span><div class="s2-hero-lbl">Volumen hipocampo 2 meses</div></div>
-        <div class="s2-hero-card"><span class="s2-hero-num" style="--hc:#44ffaa">+28%</span><div class="s2-hero-lbl">Memoria espacial largo plazo</div></div>
-        <div class="s2-hero-card"><span class="s2-hero-num" style="--hc:#00ccff">3x</span><div class="s2-hero-lbl">Más conexiones sinápticas</div></div>
+        <div class="s2-hero-card"><span class="s2-hero-num" style="--hc:#00ff88">2 meses</span><div class="s2-hero-lbl">Entrenamiento con Super Mario 64</div></div>
+        <div class="s2-hero-card"><span class="s2-hero-num" style="--hc:#44ffaa">30 min</span><div class="s2-hero-lbl">Mínimo de juego al día</div></div>
+        <div class="s2-hero-card"><span class="s2-hero-num" style="--hc:#00ccff">35</span><div class="s2-hero-lbl">Estudios en la revisión de Pallavicini</div></div>
       </div>
 
       <div class="s2-section">Estudios científicos publicados</div>
       <div class="s2-study">
         <div class="s2-card" style="--sc:#00ff88">
-          <div class="s2-card-title">Kühn et al. — Nature 2014</div>
-          <div class="s2-card-desc">Super Mario 64 jugado 2 meses (30 min/día) aumentó el volumen del hipocampo derecho, la corteza prefrontal y el cerebelo. Cambios detectables por RMf. Los efectos se mantuvieron 3 meses después de dejar de jugar. Control activo vs. grupo de juego.</div>
+          <div class="s2-card-title">Kühn et al. — Molecular Psychiatry 2014</div>
+          <div class="s2-card-desc">23 adultos jugaron Super Mario 64 al menos 30 minutos al día durante 2 meses. Frente a un grupo control de 25 personas que no jugó, aumentó la materia gris en el hipocampo derecho, la corteza prefrontal dorsolateral derecha y el cerebelo.</div>
           <div class="s2-card-footer">
             <span class="s2-ref">Molecular Psychiatry 2014 · DOI: 10.1038/mp.2013.120</span>
             <a class="s2-link" href="https://doi.org/10.1038/mp.2013.120" target="_blank" rel="noopener">LEER ESTUDIO →</a>
@@ -147,7 +147,7 @@ export function sala2Cognitivos(scene, camera, renderer) {
         </div>
         <div class="s2-card" style="--sc:#44ffaa">
           <div class="s2-card-title">Maguire et al. — PNAS 2000</div>
-          <div class="s2-card-desc">Los taxistas de Londres, que memorizan miles de rutas, tienen hipocampos significativamente más grandes que la media. El mismo principio aplica a jugadores de videojuegos de mundo abierto: navegar entornos 3D entrena directamente la memoria espacial.</div>
+          <div class="s2-card-desc">Los taxistas de Londres, que memorizan miles de rutas, tenían un hipocampo posterior más grande que el de un grupo control, y su volumen aumentaba con los años de oficio. Muestra que la navegación espacial intensiva se asocia con cambios cerebrales, una idea que estudios como el de Kühn exploran en mundos 3D.</div>
           <div class="s2-card-footer">
             <span class="s2-ref">PNAS 2000 · DOI: 10.1073/pnas.070039597</span>
             <a class="s2-link" href="https://doi.org/10.1073/pnas.070039597" target="_blank" rel="noopener">LEER ESTUDIO →</a>
@@ -155,28 +155,28 @@ export function sala2Cognitivos(scene, camera, renderer) {
         </div>
         <div class="s2-card" style="--sc:#00ccff">
           <div class="s2-card-title">Pallavicini et al. — Frontiers 2018</div>
-          <div class="s2-card-desc">Revisión sistemática de 22 estudios: los videojuegos de estrategia y acción potencian la memoria de trabajo, la flexibilidad cognitiva y la inhibición. El efecto es mayor en adultos mayores — el gaming puede retrasar el deterioro cognitivo asociado a la edad.</div>
+          <div class="s2-card-desc">Revisión sistemática de 35 estudios en adultos: el entrenamiento con videojuegos se asoció con mejoras en tiempos de reacción, memoria, cambio entre tareas y rotación mental, y también en habilidades emocionales. Los beneficios fueron más claros en adultos jóvenes.</div>
           <div class="s2-card-footer">
             <span class="s2-ref">Frontiers in Psychology 2018 · DOI: 10.3389/fpsyg.2018.02127</span>
             <a class="s2-link" href="https://doi.org/10.3389/fpsyg.2018.02127" target="_blank" rel="noopener">LEER ESTUDIO →</a>
           </div>
         </div>
         <div class="s2-card" style="--sc:#88ff44">
-          <div class="s2-card-title">Belchior et al. — Psychology & Aging 2013</div>
-          <div class="s2-card-desc">Adultos mayores (60-80 años) que jugaron videojuegos durante 6 semanas mejoraron su memoria de trabajo en 30% y su velocidad de procesamiento en 25%, comparados con el grupo de control. El gaming como intervención anti-envejecimiento cognitivo.</div>
+          <div class="s2-card-title">Chaarani et al. — JAMA Network Open 2022</div>
+          <div class="s2-card-desc">En unos 2.000 niños de 9 y 10 años, quienes jugaban 3 horas o más al día respondieron mejor en tareas de control inhibitorio y memoria de trabajo que quienes no jugaban. Es un estudio de asociación: no prueba causa y también encontró más problemas de atención en los jugadores intensivos.</div>
           <div class="s2-card-footer">
-            <span class="s2-ref">Psychology & Aging 2013 · DOI: 10.1037/a0034857</span>
-            <a class="s2-link" href="https://doi.org/10.1037/a0034857" target="_blank" rel="noopener">LEER ESTUDIO →</a>
+            <span class="s2-ref">JAMA Netw. Open 2022 · DOI: 10.1001/jamanetworkopen.2022.35721</span>
+            <a class="s2-link" href="https://doi.org/10.1001/jamanetworkopen.2022.35721" target="_blank" rel="noopener">LEER ESTUDIO →</a>
           </div>
         </div>
       </div>
 
-      <div class="s2-section">Aplicación clínica</div>
+      <div class="s2-section">Para tener en cuenta</div>
       <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.14);border-radius:13px;padding:13px 15px;margin-bottom:16px;font-size:10.5px;color:rgba(140,210,175,0.75);line-height:1.7;">
-        El Hospital Charité (Berlín) usa videojuegos 3D como parte de protocolos para pacientes con Alzheimer temprano. La NASA utiliza entornos 3D interactivos para mantener la memoria espacial de astronautas en misiones prolongadas.
+        Estos estudios muestran efectos y asociaciones en grupos concretos; no significan que cualquier videojuego, en cualquier cantidad, mejore la memoria. El tipo de juego, el tiempo de uso y la edad influyen en los resultados.
       </div>
 
-      <div class="s2-source">Sala 02 — Memoria y Neuroplasticidad · Kühn 2014 · Maguire 2000 · Pallavicini 2018 · Belchior 2013</div>
+      <div class="s2-source">Sala 02 — Memoria y Neuroplasticidad · Kühn 2014 · Maguire 2000 · Pallavicini 2018 · Chaarani 2022</div>
     </div>
   `);
 

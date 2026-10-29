@@ -1,6 +1,6 @@
 import { initEarthBackdrop } from "./earthBackdrop.js";
-import { initMuseumWalk }   from "./museum_walk.js?v=3500";
-import { initMuseum }       from "./museum.js";
+import { initMuseumWalk }   from "./museum_walk.js?v=3600";
+import { initMuseum }       from "./museum.js?v=2";
 import { guardarRespuesta, escucharResenas, firebaseConfigurado } from "./firebase.js";
 
 let earth    = null;

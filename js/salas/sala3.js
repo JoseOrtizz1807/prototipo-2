@@ -138,51 +138,43 @@ export function sala3Sociales(scene, camera, renderer) {
     <div class="s3-wrap">
       <div class="s3-badge"><div class="s3-badge-dot"></div><span>SALA 03 · BIENESTAR SOCIAL</span></div>
       <div class="s3-title">Los videojuegos<br/><em>construyen personas</em></div>
-      <p class="s3-intro">Contrario al estereotipo del jugador solitario, la investigación científica demuestra que los videojuegos son potentes catalizadores de habilidades sociales, empatía y bienestar emocional.</p>
+      <p class="s3-intro">Contrario al estereotipo del jugador solitario, la investigación describe beneficios sociales y emocionales del juego, sobre todo cuando es moderado y compartido; también muestra que el exceso puede asociarse con efectos negativos.</p>
 
       <div class="s3-hero">
-        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#cc44ff">65%</span><div class="s3-hero-lbl">Jugadores activos online en comunidad</div></div>
-        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#ff44aa">−24%</span><div class="s3-hero-lbl">Reducción ansiedad hospitalaria (VR)</div></div>
-        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#44aaff">+40%</span><div class="s3-hero-lbl">Empatía en juegos cooperativos</div></div>
-        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#44ffaa">35M</span><div class="s3-hero-lbl">Estudiantes Minecraft Education</div></div>
+        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#cc44ff">4.899</span><div class="s3-hero-lbl">Jóvenes en el estudio de Przybylski</div></div>
+        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#ff44aa">179</span><div class="s3-hero-lbl">Pacientes en el ensayo de RV EaseVRx</div></div>
+        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#44aaff">2021</span><div class="s3-hero-lbl">La FDA autoriza una terapia de RV para dolor lumbar</div></div>
+        <div class="s3-hero-card"><span class="s3-hero-num" style="--hc:#44ffaa">4</span><div class="s3-hero-lbl">Áreas de beneficio revisadas por Granic</div></div>
       </div>
 
       <div class="s3-section">Estudios científicos publicados</div>
       <div class="s3-study">
         <div class="s3-card" style="--sc:#cc44ff">
           <div class="s3-card-title">Granic et al. — American Psychologist 2014</div>
-          <div class="s3-card-desc">Revisión de 30 años de investigación: los videojuegos cooperativos aumentan la conducta prosocial, la empatía y la disposición a ayudar a otros. Los juegos colaborativos son más efectivos para desarrollar habilidades sociales que muchas intervenciones tradicionales.</div>
+          <div class="s3-card-desc">Revisión de la investigación sobre los beneficios cognitivos, motivacionales, emocionales y sociales de los videojuegos. Los autores señalan que los juegos cooperativos y en línea pueden favorecer habilidades sociales y conducta prosocial, y piden seguir estudiando estos efectos.</div>
           <div class="s3-card-footer">
             <span class="s3-ref">American Psychologist 2014 · DOI: 10.1037/a0034857</span>
             <a class="s3-link" href="https://doi.org/10.1037/a0034857" target="_blank" rel="noopener">LEER ESTUDIO →</a>
           </div>
         </div>
         <div class="s3-card" style="--sc:#ff44aa">
-          <div class="s3-card-title">AppliedVR — JMIR Serious Games 2021</div>
-          <div class="s3-card-desc">EaseVRx: primer tratamiento de realidad virtual aprobado por la FDA para dolor crónico. 547 pacientes, 65.7% reportaron reducción significativa del dolor vs 40.7% del grupo control. La VR también redujo la ansiedad hospitalaria en 24% en ensayo aleatorizado.</div>
+          <div class="s3-card-title">Garcia et al. — J. Med. Internet Res. 2021</div>
+          <div class="s3-card-desc">Ensayo aleatorizado, doble ciego y con placebo en 179 adultos con dolor lumbar crónico: un programa de realidad virtual en casa durante 8 semanas (EaseVRx) redujo la intensidad del dolor y su interferencia más que una RV simulada. En 2021 la FDA autorizó EaseVRx.</div>
           <div class="s3-card-footer">
-            <span class="s3-ref">FDA Breakthrough Device 2021 · ClinicalTrials NCT04109625</span>
-            <a class="s3-link" href="https://pubmed.ncbi.nlm.nih.gov/34406959/" target="_blank" rel="noopener">LEER ESTUDIO →</a>
+            <span class="s3-ref">JMIR 2021 · DOI: 10.2196/26292</span>
+            <a class="s3-link" href="https://doi.org/10.2196/26292" target="_blank" rel="noopener">LEER ESTUDIO →</a>
           </div>
         </div>
         <div class="s3-card" style="--sc:#44aaff">
-          <div class="s3-card-title">Przybylski & Weinstein — Pediatrics 2019</div>
-          <div class="s3-card-desc">Estudio con 1,000 adolescentes: el gaming moderado (1-3h/día) se asoció con mayor bienestar, mejor desempeño social y menos síntomas de depresión que no jugar. La clave es la moderación y el tipo de juego — los cooperativos son los más beneficiosos.</div>
+          <div class="s3-card-title">Przybylski — Pediatrics 2014</div>
+          <div class="s3-card-desc">En 4.899 jóvenes británicos de 10 a 15 años, jugar menos de una hora al día se asoció con más conducta prosocial y satisfacción con la vida, y jugar más de tres horas, con un ajuste algo peor. Los efectos fueron pequeños frente a la familia o la escuela.</div>
           <div class="s3-card-footer">
-            <span class="s3-ref">Pediatrics 2019 · DOI: 10.1542/peds.2018-2351</span>
-            <a class="s3-link" href="https://doi.org/10.1542/peds.2018-2351" target="_blank" rel="noopener">LEER ESTUDIO →</a>
-          </div>
-        </div>
-        <div class="s3-card" style="--sc:#44ffaa">
-          <div class="s3-card-title">Microsoft Education — UNESCO 2023</div>
-          <div class="s3-card-desc">Minecraft Education Edition en 115 países con 35 millones de estudiantes mejora significativamente habilidades de colaboración, pensamiento computacional y creatividad. La UNESCO lo reconoce como herramienta de alfabetización digital de referencia global.</div>
-          <div class="s3-card-footer">
-            <span class="s3-ref">UNESCO Digital Skills Report 2023 · education.minecraft.net</span>
-            <a class="s3-link" href="https://education.minecraft.net/en-us/resources/research" target="_blank" rel="noopener">LEER EVIDENCIA →</a>
+            <span class="s3-ref">Pediatrics 2014 · DOI: 10.1542/peds.2013-4021</span>
+            <a class="s3-link" href="https://doi.org/10.1542/peds.2013-4021" target="_blank" rel="noopener">LEER ESTUDIO →</a>
           </div>
         </div>
       </div>
-      <div class="s3-source">Sala 03 — Bienestar Social · Granic 2014 · AppliedVR 2021 · Przybylski 2019 · UNESCO 2023</div>
+      <div class="s3-source">Sala 03 — Bienestar Social · Granic 2014 · Garcia 2021 · Przybylski 2014</div>
     </div>
   `);
 

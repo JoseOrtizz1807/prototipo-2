@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import { sala1Historia } from "./salas/sala1.js";
-import { sala2Cognitivos } from "./salas/sala2.js";
-import { sala3Sociales } from "./salas/sala3.js";
-import { sala4Estadisticas } from "./salas/sala4.js";
-import { sala5Galeria } from "./salas/sala5.js";
+import { sala1Historia } from "./salas/sala1.js?v=2";
+import { sala2Cognitivos } from "./salas/sala2.js?v=2";
+import { sala3Sociales } from "./salas/sala3.js?v=2";
+import { sala4Estadisticas } from "./salas/sala4.js?v=2";
+import { sala5Galeria } from "./salas/sala5.js?v=2";
 
 export function initMuseum({ canvas }) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
