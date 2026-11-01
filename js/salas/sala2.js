@@ -126,7 +126,7 @@ export function sala2Cognitivos(scene, camera, renderer) {
   crearPanel("panel-sala2",`
     <div class="s2-wrap">
       <div class="s2-badge"><div class="s2-badge-dot"></div><span>SALA 02 · MEMORIA Y CEREBRO</span></div>
-      <div class="s2-title">Los videojuegos<br/><em>expanden tu hipocampo</em></div>
+      <div class="s2-title">Los videojuegos<br/><em>y la memoria espacial</em></div>
       <p class="s2-intro">Un estudio del Instituto Max Planck y la Charité de Berlín encontró que jugar Super Mario 64 durante dos meses se asoció con más materia gris en el hipocampo derecho, una región clave para la memoria espacial. El cambio se midió con resonancia magnética.</p>
 
       <div class="s2-hero">

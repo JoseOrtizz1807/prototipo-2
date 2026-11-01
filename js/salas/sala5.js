@@ -154,7 +154,7 @@ export function sala5Galeria(scene, camera, renderer) {
   crearPanel("panel-sala5",`
     <div class="s5-wrap">
       <div class="s5-badge"><div class="s5-badge-dot"></div><span>SALA 05 · INDUSTRIA Y FUTURO</span></div>
-      <div class="s5-title">El arte más grande<br/><em>del siglo XXI</em></div>
+      <div class="s5-title">Una industria<br/><em>en crecimiento</em></div>
       <p class="s5-intro">Los videojuegos son una de las industrias culturales más grandes del mundo: según Newzoo, generaron 184.000 millones de dólares en 2023 y reunieron a 3.380 millones de jugadores.</p>
 
       <div class="s5-hero">

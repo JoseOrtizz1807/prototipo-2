@@ -19,7 +19,7 @@ import { RenderPass }      from "jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "jsm/postprocessing/UnrealBloomPass.js";
 import { GLTFLoader }      from "jsm/loaders/GLTFLoader.js";
 import { DRACOLoader }     from "jsm/loaders/DRACOLoader.js";
-import { createGuia }      from "./guia.js?v=6";
+import { createGuia }      from "./guia.js?v=7";
 import { buildVestibulo, buildPortalesRegreso, HUB, HUB_SPAWN } from "./vestibulo.js?v=2";
 import { buildSalas, buildParedIzquierda, regionesTransitables, PUERTAS } from "./salas_juego.js?v=1";
 import { abrirJuego, leerRecords } from "./minijuegos.js?v=1";
@@ -169,7 +169,7 @@ const ZONAS = [
     graffiti:{ z:-222, x:3.85, text:"GG\nWP", color:"#cc44ff" },
   },
   {
-    id:"futuro", titulo:"El Futuro", subtitulo:"2015 – Hoy",
+    id:"futuro", titulo:"El Futuro", subtitulo:"2015 – 2026",
     color:0x00ffee, hex:"#00ffee", fogHex:0x001518, bgHex:0x000d10,
     audio:"assets/audio/eldenringaudio.mp3", audioId:"track_futuro",
     zStart:-252, zEnd:-305,
@@ -183,12 +183,24 @@ const ZONAS = [
       { z:-288, x:-3.4, label:"Meta Quest 3",  year:"2023",
         sub:"Realidad mixta · Pasthrough 4K · Gaming espacial",
         type:"orb", video:"assets/audio/Videos/metavideo.mp4", imdb:"8.9" },
+      { z:-264, x:3.4,  label:"Nintendo Switch 2", year:"2025",
+        sub:"Nintendo · La consola de Nintendo de venta más rápida",
+        type:"orb", video:"assets/audio/Videos/switch2.mp4" },
+      { z:-288, x:3.4,  label:"Clair Obscur: Expedition 33", year:"2025",
+        sub:"Sandfall Interactive · Juego del Año 2025",
+        type:"orb", video:"assets/audio/Videos/clairobscur.mp4" },
+      { z:-297, x:-3.4, label:"Grand Theft Auto VI", year:"2026",
+        sub:"Rockstar Games · Lanzamiento: 19 de noviembre de 2026",
+        type:"orb", video:"assets/audio/Videos/gta6.mp4" },
     ],
     datos:[
-      { z:-262, t:"PlayStation 5 — La nueva generación (2020)", d:"825GB SSD con carga instantánea, Ray Tracing en tiempo real, haptic feedback. Sony vendió 50 millones de unidades. La brecha con el PC casi desapareció.", extra:"AppliedVR realizó el primer ensayo clínico randomizado de realidad virtual para dolor crónico (2021). 547 pacientes. Resultado: 65.7% reportaron reducción de dolor vs 40.7% en el grupo de control. La FDA aprobó el primer tratamiento de VR para dolor lumbar crónico en noviembre 2021." },
+      { z:-262, t:"PlayStation 5 — La nueva generación (2020)", d:"825GB SSD con carga instantánea, Ray Tracing en tiempo real, haptic feedback. Sony vendió 50 millones de unidades. La brecha con el PC casi desapareció.", extra:"La realidad virtual también llegó a la salud: en 2021 la FDA autorizó EaseVRx, un programa de RV para el dolor lumbar crónico que, en un ensayo aleatorizado con 179 pacientes, redujo el dolor más que una RV simulada (Garcia et al., 2021)." },
+      { z:-268, t:"Nintendo Switch 2 (2025)", d:"Lanzada en junio de 2025, se convirtió en la consola de Nintendo que más rápido se ha vendido: 23,68 millones de unidades a junio de 2026. Una consola híbrida: se juega en el televisor o en la mano." },
       { z:-275, t:"Elden Ring — GOTY 2022 (FromSoftware)", d:"George R.R. Martin coescribió el mundo. Fusionó mundo abierto con dificultad extrema. 20 millones de copias. Demostró que los jugadores quieren desafío real, no asistencia constante." },
-      { z:-288, t:"El impacto total de los videojuegos", d:"$184B en 2023. Supera cine ($33B) y música ($26B) combinados. 3.2 mil millones de jugadores. El arte más influyente del siglo XXI.", extra:"En 2023, la industria del videojuego generó $184 mil millones — más que el cine ($33B) y la música ($26B) combinados. Hay 3.2 mil millones de jugadores activos. En Colombia, la industria creció 15% en 2023. Los videojuegos son el arte más influyente y rentable del siglo XXI." },
-      { z:-300, t:"Fin del recorrido — 70 años en tus manos", d:"Recorriste desde 1952 hasta hoy. Este museo demuestra que los videojuegos son historia, ciencia cognitiva y cultura — no solo entretenimiento. Tu opinión ahora es parte de esta investigación.", extra:"Este museo interactivo fue desarrollado como Trabajo de Grado en Ingeniería Multimedia, Universidad de San Buenaventura Cali, para estudiar cómo una experiencia inmersiva cambia la percepción social sobre los videojuegos. Si aún no lo has hecho, completa la encuesta 'Participar en el Estudio' desde el menú principal — tu respuesta es un dato real para esta investigación académica." },
+      { z:-281, t:"Clair Obscur: Expedition 33 — GOTY 2025", d:"Creado por el estudio francés Sandfall Interactive, ganó el premio al Juego del Año y nueve galardones en The Game Awards 2025, la mayor cantidad de la ceremonia. Un estudio pequeño compitiendo con las grandes compañías." },
+      { z:-288, t:"El impacto de los videojuegos", d:"Según Newzoo, el mercado global generó 184.000 millones de dólares y reunió a 3.380 millones de jugadores en 2023; en 2024 alcanzó 182.700 millones de dólares.", extra:"Colombia cuenta con cerca de 80 empresas desarrolladoras de videojuegos, concentradas en Bogotá, Medellín y Cali. Cali reúne alrededor del 12 % de los estudios del país." },
+      { z:-294, t:"Grand Theft Auto VI (2026)", d:"Rockstar Games fijó su lanzamiento para el 19 de noviembre de 2026 en PlayStation 5 y Xbox Series X|S. Es uno de los lanzamientos más esperados de la historia del videojuego." },
+      { z:-300, t:"Fin del recorrido — 70 años en tus manos", d:"Recorriste desde 1952 hasta 2026. Este museo demuestra que los videojuegos son historia, ciencia cognitiva y cultura — no solo entretenimiento. Tu opinión ahora es parte de esta investigación.", extra:"Este museo interactivo fue desarrollado como Trabajo de Grado en Ingeniería Multimedia, Universidad de San Buenaventura Cali, para estudiar cómo una experiencia inmersiva cambia la percepción social sobre los videojuegos. Si aún no lo has hecho, completa la encuesta 'Participar en el Estudio' desde el menú principal — tu respuesta es un dato real para esta investigación académica." },
     ],
     graffiti:{ z:-251, x:-3.85, text:"THE\nFUTURE", color:"#00ffee" },
   },
@@ -599,7 +611,7 @@ function buildCorridor(scene) {
   // Columnas instanciadas — filtradas para no tapar vitrinas
   // Posiciones de vitrinas a evitar (±3u)
   const _vitrinaZ = [-11,-24,-29,-42,-55,-62,-74,-87,-108,-122,-136,-150,-164,-178,
-                     -205,-218,-232,-246,-262,-275,-288, ...PUERTAS.map(p=>p.z)];
+                     -205,-218,-232,-246,-262,-264,-275,-288,-297, ...PUERTAS.map(p=>p.z)];
   const _colPositions = [];
   for(let z=-1;z>-L;z-=13){
     const tooClose = _vitrinaZ.some(vz => Math.abs(z-vz) < 4);
@@ -1226,6 +1238,21 @@ function buildVitrina(scene, zona, cfg) {
     const vCanvas = document.createElement("canvas");
     vCanvas.width = 640; vCanvas.height = 360;
     const vCtx2d = vCanvas.getContext("2d");
+    const _poster = (msg) => {
+      const g = vCtx2d.createLinearGradient(0, 0, 640, 360);
+      g.addColorStop(0, "#03050b"); g.addColorStop(1, zona.hex + "33");
+      vCtx2d.fillStyle = g; vCtx2d.fillRect(0, 0, 640, 360);
+      vCtx2d.strokeStyle = zona.hex; vCtx2d.lineWidth = 6; vCtx2d.strokeRect(10, 10, 620, 340);
+      vCtx2d.textAlign = "center"; vCtx2d.fillStyle = "#ffffff";
+      vCtx2d.font = `700 ${label.length > 18 ? 34 : 46}px Orbitron, Arial`; vCtx2d.fillText(label, 320, 165);
+      vCtx2d.fillStyle = zona.hex; vCtx2d.font = "700 40px Orbitron, Arial"; vCtx2d.fillText(year, 320, 220);
+      if (msg) { vCtx2d.fillStyle = "#9fb3ad"; vCtx2d.font = "22px 'Space Mono', monospace"; vCtx2d.fillText(msg, 320, 285); }
+    };
+    _poster("");
+    videoEl.addEventListener("error", () => {
+      if (!/\.mp4/i.test(videoEl.getAttribute("src") || "")) return;   // src vacío al desactivar la vitrina
+      _poster("Video no disponible"); vTex.needsUpdate = true;
+    });
 
     // VideoTexture sobre el canvas (no el video directo)
     const vTex = new THREE.CanvasTexture(vCanvas);
@@ -2213,7 +2240,7 @@ const NARRACIONES = {
   consolas: "1983. El gran crash casi destruyó todo. Pero Nintendo lo resucitó con un italiano que saltaba sobre hongos. La consola doméstica llegó para quedarse. El gaming entró al hogar para siempre.",
   "3d": "1994. PlayStation. El CD-ROM. La tercera dimensión. Por primera vez, los mundos virtuales tenían profundidad real. Mario corrió libre en el espacio. Zelda redefinió la aventura. Fue una revolución total.",
   online: "2004. World of Warcraft conectó millones de jugadores en un mundo compartido. El gaming dejó de ser solitario para siempre. Nació el e-sport. Nació la comunidad global. Nació una nueva forma de existir.",
-  futuro: "Hoy. La realidad se mezcla con lo virtual. La inteligencia artificial genera mundos infinitos. Ciento ochenta y cuatro mil millones de dólares. Tres mil millones de jugadores. El arte más importante del siglo veintiuno.",
+  futuro: "Hoy. La realidad se mezcla con lo virtual. Nuevas consolas como Nintendo Switch dos, juegos premiados como Clair Obscur y lanzamientos esperados como GTA seis. Ciento ochenta y cuatro mil millones de dólares en dos mil veintitrés y más de tres mil millones de jugadores.",
 };
 
 
@@ -2241,7 +2268,10 @@ const PANEL_NARRACIONES = {
   "Minecraft": "Dos mil once. Mojang. Un solo programador, en Java, en su tiempo libre. Doscientos treinta y ocho millones de copias. El juego más vendido de la historia humana. Hoy enseña matemáticas y arquitectura en ciento quince países.",
   "PlayStation 5": "Dos mil veinte. Sony. La siguiente generación llegó con unidad de estado sólido de ochocientos veinticinco gigabytes, ray tracing en tiempo real y carga instantánea. El futuro del gaming ya está aquí.",
   "Elden Ring": "Dos mil veintidós. FromSoftware y George R. R. Martin. Juego del Año dos mil veintidós. Fusionó el mundo abierto con la dificultad extrema. Demostró que los videojuegos son la nueva literatura épica.",
-  "Meta Quest 3": "Dos mil veintitrés. Meta. La realidad mixta permite superponer mundos virtuales sobre el real. El gaming ya no está en una pantalla. Está en todas partes. El futuro comenzó."
+  "Meta Quest 3": "Dos mil veintitrés. Meta. La realidad mixta permite superponer mundos virtuales sobre el real. El gaming ya no está en una pantalla. Está en todas partes. El futuro comenzó.",
+  "Nintendo Switch 2": "Dos mil veinticinco. Nintendo lanzó la Switch dos, una consola híbrida que se juega en el televisor o en la mano. Se convirtió en la consola de Nintendo que más rápido se ha vendido.",
+  "Clair Obscur: Expedition 33": "Dos mil veinticinco. Clair Obscur, del estudio francés Sandfall Interactive, ganó el premio al Juego del Año en The Game Awards, con nueve galardones. Un estudio pequeño compitiendo con las grandes compañías.",
+  "Grand Theft Auto VI": "Dos mil veintiséis. Rockstar Games anunció Grand Theft Auto seis para el diecinueve de noviembre. Es uno de los lanzamientos más esperados de la historia del videojuego."
 };
 
 // Voz de BIT (narrador). Respeta el botón NARRADOR ON/OFF. La voz la elige voz.js.

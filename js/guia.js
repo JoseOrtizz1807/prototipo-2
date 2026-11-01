@@ -42,6 +42,8 @@ const RETOS = {
       e: "Se usa para enseñar matemáticas, historia, arquitectura y programación." },
   ],
   futuro: [
+    { q: "¿Qué juego ganó el premio al Juego del Año en The Game Awards 2025?", o: ["Clair Obscur: Expedition 33", "Grand Theft Auto VI", "Minecraft"], a: 0,
+      e: "Clair Obscur: Expedition 33, del estudio francés Sandfall Interactive, ganó nueve premios esa noche." },
     { q: "¿Cuánto generó la industria del videojuego en 2023?", o: ["18 millones de dólares", "Un billón de dólares", "Unos 184 000 millones de dólares"], a: 2,
       e: "Más que el cine y la música juntos." },
     { q: "Según Green y Bavelier (2003), ¿qué mejoran los videojuegos de acción?", o: ["La atención visual selectiva", "La estatura", "La memoria a largo plazo de idiomas"], a: 0,

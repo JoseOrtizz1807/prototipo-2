@@ -238,7 +238,7 @@ export function sala4Estadisticas(scene, camera, renderer) {
 
       <div class="s4-badge"><span>SALA 04 · BENEFICIOS COGNITIVOS</span></div>
 
-      <div class="s4-title">Los videojuegos<br/><em>entrenan el cerebro</em></div>
+      <div class="s4-title">Los videojuegos<br/><em>y la atención</em></div>
       <p class="s4-subtitle">
         Los estudios de laboratorio muestran que algunos videojuegos, en especial los de acción,
         se asocian con mejoras en la atención visual, la velocidad de procesamiento y otras funciones.

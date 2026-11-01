@@ -226,7 +226,9 @@ export function sala1Historia(scene, camera, renderer) {
     ["2007","#ff4488","Call of Duty 4: MW","Inventó el sistema XP, rangos y killstreaks. 16M copias. Toda la industria lo copió.","16M COPIAS"],
     ["2011","#44dd88","Minecraft — Mojang","Uno de los juegos más vendidos de la historia. Su edición educativa, Minecraft Education, se usa en escuelas de muchos países.","238M COPIAS"],
     ["2022","#ffaa44","Elden Ring — FromSoftware","GOTY 2022. Fusionó mundo abierto con dificultad extrema. 20M copias. La nueva era del RPG.","20M COPIAS"],
-    ["2023","#00ffcc","IA & VR — El Futuro","Según Newzoo, 184.000 millones de dólares de ingresos y 3.380 millones de jugadores en 2023.","$184B GLOBAL"],
+    ["2023","#00ffcc","Realidad mixta — Meta Quest 3","Según Newzoo, 184.000 millones de dólares de ingresos y 3.380 millones de jugadores en 2023.","$184B GLOBAL"],
+    ["2025","#ff4466","Nintendo Switch 2 y Clair Obscur","La Switch 2 se convierte en la consola de Nintendo de venta más rápida y Clair Obscur: Expedition 33 gana el Juego del Año en The Game Awards.","NUEVA GENERACIÓN"],
+    ["2026","#ffcc00","Grand Theft Auto VI","Rockstar Games fija su lanzamiento para el 19 de noviembre de 2026, uno de los más esperados de la historia.","19 NOV 2026"],
   ].map(([year,col,title,desc,tag])=>`
     <div class="s1-event">
       <div class="s1-event-year" style="--ec:${col}">${year}</div>
@@ -247,7 +249,7 @@ export function sala1Historia(scene, camera, renderer) {
       </div>
       <div class="s1-title">70 años que<br/><span class="s1-grad">cambiaron el mundo</span></div>
       <p class="s1-intro">
-        Desde un osciloscopio en 1952 hasta la realidad virtual en 2023 — los videojuegos son el arte más influyente del siglo XXI. Esta es su historia.
+        Desde un osciloscopio en 1952 hasta las consolas de nueva generación de 2026 — los videojuegos son el arte más influyente del siglo XXI. Esta es su historia.
       </p>
 
       <!-- ══ MINIJUEGO PONG ══════════════════════════════════ -->
@@ -265,7 +267,7 @@ export function sala1Historia(scene, camera, renderer) {
       <div class="s1-timeline">${hitosHTML}</div>
 
       <div class="s1-source">
-        Historia de los Videojuegos 1952–2023 · 70+ años de innovación<br/>
+        Historia de los Videojuegos 1952–2026 · 70+ años de innovación<br/>
         Fuentes: Wolf (2012) · Newzoo (2023)
       </div>
     </div>
